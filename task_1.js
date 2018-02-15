@@ -8,4 +8,4 @@ var createArr = function(length) {
     return resArr;
 }
 
-console.log(createArr(7));
+console.log(createArr(6));
