@@ -1,8 +1,10 @@
-function createArr(length) {
-    var resArr = [];
+var createArr = function(length) {
+    var resArr = new Array();
+
     for (var i = 0; i < length; i++) {
-        resArr[i] = i*i;
+        resArr.push(i * i);
     }
+
     return resArr;
 }
 
