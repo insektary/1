@@ -1,21 +1,24 @@
 //Функция-обертка для измерения времени выполнения
-function banchMark(cb, arg) {
+var banchMark = function banchMark(cb, arg) {
     var time = Date.now();
-    cb(arg);
-    return Date.now() - time;
-}
 
-function checkFor(arr) {
+    cb(arg);
+
+    return Date.now() - time;
+};
+
+var checkFor = function checkFor(arr) {
     for (var i = 0; i < 10000; i++) {
         for (var j = 0; j < 10000; j++) {
             arr[j] = true;
         }
     }
-}
+};
 
-function checkWhile(arr) {
-    var i = 0;
-    var j;
+var checkWhile = function checkWhile(arr) {
+    var i = 0,
+        j;
+
     while (i < 10000) {
         j = 0;
         while (j < 10000) {
@@ -24,15 +27,15 @@ function checkWhile(arr) {
         }
         i++;
     }
-}
+};
 
-function checkForEach(arr) {
+var checkForEach = function checkForEach(arr) {
     arr.forEach(function() {
-       arr.forEach(function(elem, index, array) {
-           array[index] = true;
-       })
+        arr.forEach(function(elem, index, array) {
+            array[index] = true;
+        })
     });
-}
+};
 
 var array = new Array(10000).fill(0);
 
