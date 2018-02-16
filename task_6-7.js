@@ -16,8 +16,8 @@ var checkFor = function checkFor(arr) {
 };
 
 var checkWhile = function checkWhile(arr) {
-    var i = 0,
-        j;
+    var i = 0;
+    var j;
 
     while (i < 10000) {
         j = 0;
