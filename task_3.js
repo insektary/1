@@ -6,7 +6,6 @@ var arrayOfProps = [
 ];
 
 function createObj(props) {
-
     return props.reduce(function(result, item, index, array) {
         result[item] = true;
 
