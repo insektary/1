@@ -10,25 +10,18 @@ var createArr = function createArr(length) {
 };
 
 var createOriginalArr = function createOriginalArr(arr) {
-    var resArr = [];
-    var sqr = function sqr() {
+    function shouldHaveCorrectName(arr, result) {
+        result.push(Math.sqrt(arr.shift()));
+
         if (arr.length) {
-            resArr.push(Math.sqrt(arr.shift()));
-            return sqr();
+            return shouldHaveCorrectName(arr, result);
         }
-    };
 
-    sqr();
+        return result;
+    }
 
-    return resArr;
+    return shouldHaveCorrectName(arr, []);
 };
-
-
-//var createOriginalArr = function createOriginalArr(arr) {
-//     if (arr.length) {
-//         return createOriginalArr(arr.slice(0, arr.length - 1)).concat(Math.sqrt(arr.pop()));
-//     } else return [];
-// }
 
 console.log(createArr(5));
 console.log(createOriginalArr(createArr(5)));
