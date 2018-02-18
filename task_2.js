@@ -75,17 +75,18 @@ var banchMark = function(func) {
     var time = Date.now();
 
     for (var i = 0; i < 10000; i++) {
-        eval(func);
+        testArray[func](function() {
+        });
     }
 
     return Date.now() - time;
 };
 
-console.log('forEach: ' + banchMark('testArray.forEach(function(item) {})') + 'ms');
-console.log('polyForEach: ' + banchMark('testArray.polyForEach(function(item) {})') + 'ms');
-console.log('map: ' + banchMark('testArray.map(function(item) {})') + 'ms');
-console.log('polyMap: ' + banchMark('testArray.polyMap(function(item) {})') + 'ms');
-console.log('filter: ' + banchMark('testArray.filter(function(item) {})') + 'ms');
-console.log('polyFilter: ' + banchMark('testArray.polyFilter(function(item) {})') + 'ms');
-console.log('reduce: ' + banchMark('testArray.reduce(function(item) {})') + 'ms');
-console.log('polyReduce: ' + banchMark('testArray.polyReduce(function(item) {})') + 'ms');
+console.log('forEach: ' + banchMark('forEach') + 'ms');
+console.log('polyForEach: ' + banchMark('polyForEach') + 'ms');
+console.log('map: ' + banchMark('map') + 'ms');
+console.log('polyMap: ' + banchMark('polyMap') + 'ms');
+console.log('filter: ' + banchMark('filter') + 'ms');
+console.log('polyFilter: ' + banchMark('polyFilter') + 'ms');
+console.log('reduce: ' + banchMark('reduce') + 'ms');
+console.log('polyReduce: ' + banchMark('polyReduce') + 'ms');
