@@ -1,13 +1,17 @@
-var returnRandomNumber = function(arg) {
-    if (arg in returnRandomNumber) return returnRandomNumber[arg];
+var func = function() {
+    var storage = {};
 
-    else {
-        var res = Math.round(Math.random() * (1000 - 5) + 5);
-        returnRandomNumber[arg] = res;
+    return function(arg) {
+        if (arg in storage) return storage[arg];
+
+        else var res = Math.round(Math.random() * (1000 - 5) + 5);
+        storage[arg] = res;
 
         return res;
     }
 };
+
+var returnRandomNumber = func();
 
 console.log(returnRandomNumber(5));
 console.log(returnRandomNumber(4));
