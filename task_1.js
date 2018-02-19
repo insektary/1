@@ -18,7 +18,6 @@ Array.prototype.polyFilter = function(callback, thisArg) {
     var result = [];
 
     for (var i = 0; i < this.length; i++) {
-
         if (callback.call(thisArg, this[i], i, this)) {
             result.push(this[i]);
         }
@@ -48,9 +47,23 @@ Array.prototype.polyReduce = function(callback, initialValue) {
 
 Function.prototype.polyBind = function(context) {
     var args = Array.prototype.slice.call(arguments, 1);
-    var That = this;
+    var fn = this;
 
     return function() {
-        return That.apply(context, args);
+        for (var key in arguments) {
+            args.push(arguments[key]);
+        }
+
+        return fn.apply(context, args);
     }
 };
+
+
+//Тесты
+var f = function(arg1, arg2) {
+    return arg1/arg2;
+};
+
+var bindFunction = f.polyBind(null, 1);
+
+console.log(bindFunction(2));
