@@ -50,9 +50,9 @@ Function.prototype.polyBind = function(context) {
     var fn = this;
 
     return function() {
-        for (var key in arguments) {
-            args.push(arguments[key]);
-        }
+        Array.prototype.forEach.call(arguments, function(item) {
+            args.push(item);
+        });
 
         return fn.apply(context, args);
     }
