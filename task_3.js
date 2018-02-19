@@ -4,8 +4,10 @@ var func = function() {
     return function(arg) {
         if (arg in storage) return storage[arg];
 
-        else var res = Math.round(Math.random() * (1000 - 5) + 5);
-        storage[arg] = res;
+        else {
+            var res = Math.round(Math.random() * (1000 - 5) + 5);
+            storage[arg] = res;
+        }
 
         return res;
     }
