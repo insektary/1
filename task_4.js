@@ -2,15 +2,10 @@ var func = function() {
     var lastTime = 0;
 
     return function(delay) {
-        if ((Date.now() - lastTime) > delay) {
-            lastTime = Date.now();
+        var interval = Date.now() - lastTime;
+        lastTime = Date.now();
 
-            return 'called';
-        } else {
-            lastTime = Date.now();
-
-            return 'to early!';
-        }
+        if (interval > delay) return 'called';
     }
 };
 
@@ -22,5 +17,5 @@ var returnCalled = func();
 // }, 1000);
 
 setInterval(function() {
-    console.log(returnCalled(2000))
+    console.log(returnCalled(2000));
 }, 3000);
