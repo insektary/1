@@ -1,42 +1,26 @@
-Array.prototype.polyForEach = function polyForEach(callback, thisArg) {
-    var array = (thisArg) ? thisArg : this;
-    var index;
-    var item;
-
-    for (var i = 0; i < array.length; i++) {
-        item = array[i];
-        index = i;
-        callback(item, index, array);
+Array.prototype.polyForEach = function(callback, thisArg) {
+    for (var i = 0; i < this.length; i++) {
+        callback.call(thisArg, this[i], i, this);
     }
 };
 
 Array.prototype.polyMap = function(callback, thisArg) {
-    var array = (thisArg) ? thisArg : this;
     var result = [];
-    var index;
-    var item;
 
-    for (var i = 0; i < array.length; i++) {
-        item = array[i];
-        index = i;
-        result.push(callback(item, index, array));
+    for (var i = 0; i < this.length; i++) {
+        result.push(callback.call(thisArg, this[i], i, this));
     }
 
     return result;
 };
 
 Array.prototype.polyFilter = function(callback, thisArg) {
-    var array = (thisArg) ? thisArg : this;
     var result = [];
-    var index;
-    var item;
 
-    for (var i = 0; i < array.length; i++) {
-        item = array[i];
-        index = i;
+    for (var i = 0; i < this.length; i++) {
 
-        if (callback(item, index, array)) {
-            result.push(array[i]);
+        if (callback.call(thisArg, this[i], i, this)) {
+            result.push(this[i]);
         }
     }
 
@@ -44,24 +28,19 @@ Array.prototype.polyFilter = function(callback, thisArg) {
 };
 
 Array.prototype.polyReduce = function(callback, initialValue) {
-    var array = this;
     var startIndex;
     var result;
-    var index;
-    var item;
 
     if (initialValue) {
-        result = initualValue;
+        result = initialValue;
         startIndex = 0;
     } else {
         result = this[0];
         startIndex = 1;
     }
 
-    for (var i = startIndex; i < array.length; i++) {
-        item = array[i];
-        index = i;
-        result = callback(result, item, index, array);
+    for (var i = startIndex; i < this.length; i++) {
+        result = callback(result, this[i], i, this);
     }
 
     return result;
@@ -71,22 +50,22 @@ Array.prototype.polyReduce = function(callback, initialValue) {
 var testArray = new Array(10000).fill(0);
 
 //Тесты
-var banchMark = function(func) {
+var banchMark = function(func, arg) {
     var time = Date.now();
 
     for (var i = 0; i < 10000; i++) {
-        testArray[func](function() {
+        func.call(arg, function(item) {
         });
     }
 
     return Date.now() - time;
 };
 
-console.log('forEach: ' + banchMark('forEach') + 'ms');
-console.log('polyForEach: ' + banchMark('polyForEach') + 'ms');
-console.log('map: ' + banchMark('map') + 'ms');
-console.log('polyMap: ' + banchMark('polyMap') + 'ms');
-console.log('filter: ' + banchMark('filter') + 'ms');
-console.log('polyFilter: ' + banchMark('polyFilter') + 'ms');
-console.log('reduce: ' + banchMark('reduce') + 'ms');
-console.log('polyReduce: ' + banchMark('polyReduce') + 'ms');
+console.log('forEach: ' + banchMark(Array.prototype.forEach, testArray) + 'ms');
+console.log('polyForEach: ' + banchMark(Array.prototype.polyForEach, testArray) + 'ms');
+console.log('map: ' + banchMark(Array.prototype.map, testArray) + 'ms');
+console.log('polyMap: ' + banchMark(Array.prototype.polyMap, testArray) + 'ms');
+console.log('filter: ' + banchMark(Array.prototype.filter, testArray) + 'ms');
+console.log('polyFilter: ' + banchMark(Array.prototype.polyFilter, testArray) + 'ms');
+console.log('reduce: ' + banchMark(Array.prototype.reduce, testArray) + 'ms');
+console.log('polyReduce: ' + banchMark(Array.prototype.polyReduce, testArray) + 'ms');
