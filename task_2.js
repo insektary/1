@@ -2,26 +2,37 @@
 var createArr = function createArr(length) {
     var resArr = [];
 
-    for (var i = 0; i < length; i++) {
+    for (var i = 3; i < length + 4; i++) {
         resArr.push(i * i);
     }
 
     return resArr;
 };
 
-var createOriginalArr = function createOriginalArr(arr) {
-    function shouldHaveCorrectName(arr, result) {
-        result.push(Math.sqrt(arr.shift()));
-
+var createOriginalArr = function(arr) {
+    var func = function(result, arr) {
         if (arr.length) {
-            return shouldHaveCorrectName(arr, result);
+            result.push(Math.sqrt(arr.shift()));
+
+            func(result, arr);
         }
 
         return result;
-    }
+    };
 
-    return shouldHaveCorrectName(arr, []);
+    return func([], arr);
 };
 
-console.log(createArr(5));
-console.log(createOriginalArr(createArr(5)));
+var createBackOriginalArr = function(arr) {
+    var func = function(result, arr) {
+        if (arr[arr.length - result.length - 1]) {
+            result.push(Math.sqrt(arr[arr.length - result.length - 1]));
+
+            func(result, arr);
+        }
+
+        return result;
+    };
+
+    return func([], arr);
+};
