@@ -15,15 +15,12 @@ var timerInside = function() {
     var lastTime = 0;
 
     return function(arg) {
+        var DELAY = 500; //ms
         var interval = Date.now() - lastTime;
         lastTime = Date.now();
 
-        if (interval > 500) return callback(arg) + ' ' + Date();
+        if (interval > DELAY) return callback(arg) + ' ' + Date();
     }
 };
 
 var timer = timerInside();
-
-setInterval(function() {
-    console.log(timer(Date.now()))
-}, 600);
