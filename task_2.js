@@ -54,8 +54,7 @@ var banchMark = function(func, arg) {
     var time = Date.now();
 
     for (var i = 0; i < 10000; i++) {
-        func.call(arg, function(item) {
-        });
+        func.call(arg, function(item) {});
     }
 
     return Date.now() - time;
