@@ -25,10 +25,12 @@ var createOriginalArr = function(arr) {
 
 var createBackOriginalArr = function(arr) {
     var func = function(result, arr) {
-        if (arr[arr.length - result.length - 1]) {
-            result.push(Math.sqrt(arr[arr.length - result.length - 1]));
+        if (arr.length) {
+            var elem = Math.sqrt(arr.shift());
 
             func(result, arr);
+
+            result.push(elem);
         }
 
         return result;
