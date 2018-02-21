@@ -20,9 +20,10 @@ var timerInside = function() {
 
     var func = function(arg) {
         var interval = Date.now() - lastTime;
+        var DELAY = 2000 //ms
         lastTime = Date.now();
 
-        if (interval > 2000) return callback(arg);
+        if (interval > DELAY) return callback(arg);
     };
 
     return func;
