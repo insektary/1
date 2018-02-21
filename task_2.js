@@ -1,25 +1,25 @@
-Array.prototype.polyForEach = function(callback, thisArg) {
+Array.prototype.polyForEach = function(callback, context) {
     for (var i = 0; i < this.length; i++) {
-        callback.call(thisArg, this[i], i, this);
+        callback.call(context, this[i], i, this);
     }
 };
 
-Array.prototype.polyMap = function(callback, thisArg) {
+Array.prototype.polyMap = function(callback, context) {
     var result = [];
 
     for (var i = 0; i < this.length; i++) {
-        result.push(callback.call(thisArg, this[i], i, this));
+        result.push(callback.call(context, this[i], i, this));
     }
 
     return result;
 };
 
-Array.prototype.polyFilter = function(callback, thisArg) {
+Array.prototype.polyFilter = function(callback, context) {
     var result = [];
 
     for (var i = 0; i < this.length; i++) {
 
-        if (callback.call(thisArg, this[i], i, this)) {
+        if (callback.call(context, this[i], i, this)) {
             result.push(this[i]);
         }
     }
