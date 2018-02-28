@@ -1,101 +1,59 @@
-var Network = function(networkAddress) {
+function Network(networkAddress) {
     this.networkAddress = networkAddress;
+    this.listOfClients = {};
+}
 
-    var listOfClients = {};
+Network.prototype.getAddress = function(typeOfClient, name, link, status) {
+    var buffer = 0;
+    var newAddress;
 
-    this.getAddress = function(typeOfClient, status) {
-        var buffer = 0;
-        var newAddress;
-
-        for (var key in listOfClients) {
-            if (+key - buffer !== 1) {
-                newAddress = buffer + 1;
-
-                break;
-            } else buffer = +key;
-        }
-
-        if (!newAddress) {
+    for (var key in this.listOfClients) {
+        if (+key - buffer !== 1) {
             newAddress = buffer + 1;
-        }
 
-        listOfClients[newAddress] = {type: typeOfClient, status: status};
-        console.log('Your address is ' + networkAddress + '.' + newAddress);
-
-        return networkAddress + '.' + newAddress;
-    };
-
-    this.removeClient = function(clientIP) {
-        var address = clientIP.split('.')[3];
-        delete(listOfClients[address]);
-    };
-
-    this.getListOfClients = function() {
-        for (var key in listOfClients) {
-            var status = (listOfClients[key].status) ? listOfClients[key].status : '';
-
-            console.log(networkAddress + '.' + key + ' ' + listOfClients[key].type + ' ' + status);
-        }
+            break;
+        } else buffer = +key;
     }
 
+    if (!newAddress) {
+        newAddress = buffer + 1;
+    }
 
+    this.listOfClients[newAddress] = {type: typeOfClient, status: status, name: name, link: link};
+
+    return this.networkAddress + '.' + newAddress;
 };
 
-var Server = function(login, password) {
-    this.login = login;
-    this.password = password;
+Network.prototype.removeClient = function(clientIP) {
+    var address = clientIP.split('.')[3];
+    delete(this.listOfClients[address]);
+};
 
-    var status = 'public';
-    var address;
+Network.prototype.getListOfClients = function() {
+    for (var key in this.listOfClients) {
+        var status = (this.listOfClients[key].status) ? this.listOfClients[key].status : '';
 
-    this.setPublic = function(login, password) {
-        if (this.login === login && this.password === password) {
-            status = 'public';
-            console.log('status was changed on "public"');
-        } else {
-            console.log('login or password are incorrect');
-        }
-    };
-
-    this.setProtected = function(login, password) {
-        if (this.login === login && this.password === password) {
-            status = 'protected';
-            console.log('status was changed on "protected"');
-        } else {
-            console.log('login or password are incorrect');
-        }
-    };
-
-    this.registerInNetwork = function(network) {
-        address = network.getAddress('server', status);
-        console.log('my address is ' + address);
+        console.log(this.networkAddress + '.' + key + ' ' + this.listOfClients[key].type + ' ' + status);
     }
 };
 
-var User = function() {
-    var address;
+Network.prototype._findAddress = function(name) {
+    for (var key in this.listOfClients) {
+        if (this.listOfClients[key].name === name) {
 
-    this.registerInNetwork = function(network) {
-        address = network.getAddress('user');
-        console.log('my address is ' + address);
+            return key;
+        }
     }
 };
 
-var server1 = new Server('admin', 'pass');
-server1.setProtected('admin', 'pass');
+Network.prototype._actionWithServer = function(address, action, login, password) {
+    switch (action) {
 
-var myNetwork = new Network('192.168.0');
+        case 'connectToServer':
+            this.listOfClients[address].link.setPublic(login, password);
+            break;
+    }
+};
 
-server1.registerInNetwork(myNetwork);
 
-var user1 = new User();
-user1.registerInNetwork(myNetwork);
-//
-// myNetwork.getAddress('client');
-// myNetwork.getAddress('client');
-// myNetwork.getAddress('client');
-// myNetwork.getAddress('server', 'public');
-myNetwork.getListOfClients();
-
-// var myNetwork2 = new Network('192.112.0');
-// myNetwork2.getAddress();
+module.exports = Network;
