@@ -2,12 +2,12 @@ var User = function(name) {
     this.name = name;
 };
 
-User.prototype.registerInNetwork = function(network, link) {
-    this.address = network.getAddress('user', this.name, link);
+User.prototype.registerInNetwork = function(network) {
+    this.address = network._getAddress('user', this);
     console.log(this.name + ' has get address ' + this.address);
 };
 
-User.prototype.requestServerAddress = function(network, server, action, login, password) {
+User.prototype.requestToServer = function(network, server, action, login, password) {
     var address = network._findAddress(server);
 
     if (!address) {

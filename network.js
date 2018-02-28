@@ -3,7 +3,7 @@ function Network(networkAddress) {
     this.listOfClients = {};
 }
 
-Network.prototype.getAddress = function(typeOfClient, name, link, status) {
+Network.prototype._getAddress = function(typeOfClient, link) {
     var buffer = 0;
     var newAddress;
 
@@ -19,7 +19,7 @@ Network.prototype.getAddress = function(typeOfClient, name, link, status) {
         newAddress = buffer + 1;
     }
 
-    this.listOfClients[newAddress] = {type: typeOfClient, status: status, name: name, link: link};
+    this.listOfClients[newAddress] = {type: typeOfClient, status: link.status, name: link.name, link: link};
 
     return this.networkAddress + '.' + newAddress;
 };
@@ -49,8 +49,14 @@ Network.prototype._findAddress = function(name) {
 Network.prototype._actionWithServer = function(address, action, login, password) {
     switch (action) {
 
-        case 'connectToServer':
+        case 'setPublic':
+            this.listOfClients[address].status = 'public';
             this.listOfClients[address].link.setPublic(login, password);
+            break;
+
+        case 'setProtected':
+            this.listOfClients[address].status = 'protected';
+            this.listOfClients[address].link.setProtected(login, password);
             break;
     }
 };

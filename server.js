@@ -3,6 +3,7 @@ function Server(name, login, password) {
     this.password = password;
     this.status = 'public';
     this.name = name;
+    this.address = undefined;
 }
 
 Server.prototype.setPublic = function(login, password) {
@@ -17,15 +18,19 @@ Server.prototype.setPublic = function(login, password) {
 Server.prototype.setProtected = function(login, password) {
     if (this.login === login && this.password === password) {
         this.status = 'protected';
-        console.log('status was changed on "protected"');
+        console.log(this.name + ' status was changed on "protected"');
     } else {
         console.log('login or password are incorrect');
     }
 };
 
-Server.prototype.registerInNetwork = function(network, link) {
-    this.address = network.getAddress('server', this.name, link, this.status);
+Server.prototype.registerInNetwork = function(network) {
+    this.address = network._getAddress('server', this);
     console.log(this.name + ' has get address ' + this.address);
+};
+
+Server.prototype.turnOff = function(network) {
+    network.removeClient(this.address);
 };
 
 module.exports = Server;
