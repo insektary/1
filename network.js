@@ -1,6 +1,6 @@
 function Network(name, networkAddress) {
     this.networkAddress = networkAddress;
-    this.listOfClients = {};
+    this.listOfClients = [];
     this.name = name;
 }
 
@@ -13,7 +13,9 @@ Network.prototype._getAddress = function(typeOfClient, link) {
             newAddress = buffer + 1;
 
             break;
-        } else buffer = +key;
+        } else {
+            buffer = +key;
+        }
     }
 
     if (!newAddress) {
@@ -27,6 +29,7 @@ Network.prototype._getAddress = function(typeOfClient, link) {
 
 Network.prototype._removeClient = function(clientIP) {
     var address = clientIP.split('.')[3];
+
     console.log(this.listOfClients[address].name + ' log out');
     delete(this.listOfClients[address]);
 };
@@ -44,7 +47,6 @@ Network.prototype.getListOfClients = function() {
 Network.prototype._findAddress = function(name) {
     for (var key in this.listOfClients) {
         if (this.listOfClients[key].name === name) {
-
             return key;
         }
     }
@@ -67,15 +69,26 @@ Network.prototype._actionWithServer = function(address, action, login, password,
 
         case 'turnOff':
             this.listOfClients[address].link._turnOff(this, login, password);
-
             break;
 
         case 'signIn':
             this.listOfClients[address].link._signIn(user, login, password);
-
             break;
     }
 };
 
+Network.prototype.changeAddress = function(previousAddress, wishAddress) {
+    var subAddress = previousAddress.split('.')[3];
+
+    if (wishAddress in this.listOfClients) {
+        console.log('addres is busy');
+        return 'address is busy';
+    } else {
+        this.listOfClients[wishAddress] = {};
+        Object.assign(this.listOfClients[wishAddress], this.listOfClients[subAddress]);
+        this._removeClient(previousAddress);
+
+    }
+};
 
 module.exports = Network;

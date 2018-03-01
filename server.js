@@ -36,7 +36,7 @@ Server.prototype._setProtected = function(login, password) {
 
 Server.prototype.registerInNetwork = function(network) {
     this.address = network._getAddress('server', this);
-    this.myNetworks[network.name] = network;
+    this.myNetworks[network.name] = network; //TODO
 
     console.log(this.name + ' has get address ' + this.address);
 };
@@ -87,6 +87,10 @@ Server.prototype._signIn = function(user, login, password) {
     } else {
         console.log('login or password are incorrect')
     }
+};
+
+Server.prototype.changeAddress = function(network, wishAddress) {
+    network.changeAddress(this.address, wishAddress);
 };
 
 module.exports = Server;

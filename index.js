@@ -26,7 +26,8 @@ user1.requestToServer(myNetwork, 'server1', 'signIn', 'admin', 'pass');
 
 user2.exitTheNetwork(myNetwork);
 
-//myNetwork.getListOfClients();
-//server1.turnOff(myNetwork, 'admin', 'pass');
-server1.showMyNetworks();
-server1.showMyUsers();
+server1.changeAddress(myNetwork, '7');
+//server1._turnOff(myNetwork, 'admin', 'pass');
+//server1.showMyNetworks();
+//server1.showMyUsers();
+myNetwork.getListOfClients();
