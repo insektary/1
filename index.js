@@ -3,7 +3,7 @@ var Server = require('./server.js');
 var User = require('./user.js');
 
 
-var myNetwork = new Network('192.168.0');
+var myNetwork = new Network('myNetwork', '192.168.0');
 
 var server1 = new Server('server1', 'admin', 'pass');
 server1.registerInNetwork(myNetwork);
@@ -22,6 +22,11 @@ user3.registerInNetwork(myNetwork);
 
 user1.requestToServer(myNetwork, 'server1', 'setProtected', 'admin', 'pass');
 
-//server2.turnOff(myNetwork);
+user1.requestToServer(myNetwork, 'server1', 'signIn', 'admin', 'pass');
 
-myNetwork.getListOfClients();
+user2.exitTheNetwork(myNetwork);
+
+//myNetwork.getListOfClients();
+//server1.turnOff(myNetwork, 'admin', 'pass');
+server1.showMyNetworks();
+server1.showMyUsers();

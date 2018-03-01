@@ -15,7 +15,11 @@ User.prototype.requestToServer = function(network, server, action, login, passwo
 
         return;
     }
-    network._actionWithServer(address, action, login, password);
+    network._actionWithServer(address, action, login, password, this);
+};
+
+User.prototype.exitTheNetwork = function(network) {
+    network._removeClient(this.address);
 };
 
 module.exports = User;
