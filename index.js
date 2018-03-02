@@ -21,7 +21,6 @@ guest4.registerInNetwork(myNetwork);
 var server1 = new PublicServer('server1', 'admin', 'pass');
 server1.registerInNetwork(myNetwork);
 
-server1.rebase('8');
 
 
 var admin1 = new Admin('admin1');
@@ -32,10 +31,16 @@ server2.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
 
-admin1.requestToServer('server1', 'rebase', 9);
+admin1.requestToServer('server1', 'rebase', 14);
+
+myNetwork.showAllClients();
 
 server1.logOut();
+myNetwork.showAllClients();
 server1.registerInNetwork(myNetwork);
+
+// var admin2 = new Admin('admin2');
+// admin2.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
 
