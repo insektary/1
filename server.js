@@ -1,12 +1,12 @@
 function Server(name, login, password) {
     this.login = login;
     this.password = password;
-    this.status = 'public';
     this.name = name;
-    this.address = undefined;
     this.network;
     this.myClients = [];
 }
+
+Server.prototype.type = 'server';
 
 Server.prototype.registerInNetwork = function(network) {
     this.address = network.getAddress('server', this);
@@ -27,6 +27,5 @@ Server.prototype.rebase = function(wishAddress) {
         console.log('address in busy');
     }
 };
-
 
 module.exports = Server;

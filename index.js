@@ -1,33 +1,39 @@
 var Network = require('./network.js');
-var Server = require('./server.js');
-var User = require('./user.js');
+var PublicServer = require('./publicServer.js');
+var ProtectedServer = require('./protectedServer.js');
+var Guest = require('./guest.js');
+var Admin = require('./admin.js');
+
+
 
 var myNetwork = new Network('myNetwork', '192.168.0');
+//
+var guest1 = new Guest('guest1');
+guest1.registerInNetwork(myNetwork);
+var guest2 = new Guest('guest2');
+guest2.registerInNetwork(myNetwork);
+var guest3 = new Guest('guest3');
+guest3.registerInNetwork(myNetwork);
+var guest4 = new Guest('guest4');
+guest4.registerInNetwork(myNetwork);
 
-var user1 = new User('user1');
-user1.registerInNetwork(myNetwork);
-var user2 = new User('user2');
-user2.registerInNetwork(myNetwork);
-var user3 = new User('user3');
-user3.registerInNetwork(myNetwork);
-var user4 = new User('user4');
-user4.registerInNetwork(myNetwork);
 
-// var admin1 = new Admin('admin1');
-// admin1.registerInNetwork(myNetwork);
-//myNetwork.showAllClients();
-
-user3.logOut(myNetwork);
-//myNetwork.showAllClients();
-
-user3.registerInNetwork(myNetwork);
-//myNetwork.showAllClients();
-
-var server1 = new Server('server1');
+var server1 = new PublicServer('server1', 'admin', 'pass');
 server1.registerInNetwork(myNetwork);
 
+server1.rebase('8');
+
+
+var admin1 = new Admin('admin1');
+admin1.registerInNetwork(myNetwork);
+
+var server2 = new ProtectedServer('server2');
+server2.registerInNetwork(myNetwork);
+
 myNetwork.showAllClients();
 
-server1.rebase('0');
-//myNetwork.showAllClients();
-myNetwork.showAllClients();
+guest4.requestToServer('server1', myNetwork);
+
+
+
+

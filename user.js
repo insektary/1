@@ -3,17 +3,19 @@ var User = function(name) {
 };
 
 User.prototype.registerInNetwork = function(network) {
-    this.address = network.getAddress('user', this);
+    this.address = network.getAddress(this.type, this);
 };
 
 User.prototype.logOut = function(network) {
     network.removeClient(this.address);
 };
 
+User.prototype.requestToServer = function(server, network) {
+    if (!network.findServer(server)) {
+        console.log('server not found');
 
-// var Admin = function(name) {
-//     //Admin.prototype = Object.create(User.prototype);
-// };
+        return;
+    }
+};
 
 module.exports = User;
-//module.exports = Admin;

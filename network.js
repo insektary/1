@@ -6,12 +6,20 @@ function Network(name, networkAddress) {
 
 Network.prototype.getAddress = function(clientType, link) {
     var newAddress = this.listOfClients.length;
+    var RANGE = 999;
 
-    this.listOfClients.forEach(function(item, index) {
-        if (!item) {
-            newAddress = index;
+    for (var i = 0; i < this.listOfClients.length; i++) {
+        if (!this.listOfClients[i]) {
+            newAddress = i;
+            break;
         }
-    });
+    }
+
+    if (newAddress > RANGE) {
+        console.log('sorry, network are overloaded');
+
+        return;
+    }
 
     this.listOfClients[newAddress] = {type: clientType, status: link.status, name: link.name, link: link};
 
@@ -19,7 +27,7 @@ Network.prototype.getAddress = function(clientType, link) {
 };
 
 Network.prototype.removeClient = function(clientIP) {
-    this.listOfClients[clientIP] = null;
+    this.listOfClients[clientIP] = undefined;
 };
 
 Network.prototype.changeAddress = function(previousAddress, wishAddress) {
@@ -36,8 +44,21 @@ Network.prototype.showAllClients = function() {
     for (var i = 0; i < this.listOfClients.length; i++) {
         if (!this.listOfClients[i]) continue;
 
-        console.log(i + ' ' + this.listOfClients[i].name + ' ' + this.listOfClients[i].type);
+        var status = (this.listOfClients[i].status) ? this.listOfClients[i].status : '';
+        console.log(i + ' ' + this.listOfClients[i].name + ' ' + this.listOfClients[i].type + ' ' + status);
     }
+};
+
+Network.prototype.findServer = function(server) {
+    var res;
+
+    this.listOfClients.forEach(function(item, index) {
+        if (item.name === server) {
+            res = index;
+        }
+    });
+
+    return res;
 };
 
 module.exports = Network;
