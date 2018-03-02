@@ -13,15 +13,45 @@ Server.prototype.registerInNetwork = function(network) {
     this.network = network;
 };
 
-Server.prototype.logOut = function(network) {
-    network.removeClient(this.address);
+Server.prototype.logOut = function() {
+    this.network.removeClient(this.address);
+};
+
+Server.prototype.executeInstruction = function(user, package) {
+    var userStatus = user.type;
+
+    switch (package.instruction) {
+
+        case 'reset':
+            if (userStatus === 'admin') {
+                console.log('server will be restarted');
+            } else {
+                console.log('access denied');
+            }
+            break;
+        case 'logIn':
+            if (this.login === package.login && this.password === package.password) {
+                this.myClients.push(user);
+                console.log('succsessfully!');
+            } else {
+                console.log('login or password are incorrect');
+            }
+            break;
+        case 'rebase':
+            if (userStatus === 'admin') {
+                this.rebase(package.target);
+            } else {
+                console.log('access denied');
+            }
+            break;
+    }
 };
 
 Server.prototype.rebase = function(wishAddress) {
     var res = this.network.changeAddress(this.address, wishAddress);
 
     if (res) {
-        console.log('successful!');
+        console.log('successful on address ' + res);
         this.address = res;
     } else {
         console.log('address in busy');

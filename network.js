@@ -49,16 +49,23 @@ Network.prototype.showAllClients = function() {
     }
 };
 
-Network.prototype.findServer = function(server) {
-    var res;
+Network.prototype.findServer = function() {
+    var res = {};
 
     this.listOfClients.forEach(function(item, index) {
-        if (item.name === server) {
-            res = index;
+        if (item.type === 'server') {
+            res[item.name] = {};
+            res[item.name].address = index;
+            res[item.name].status = item.status;
         }
     });
 
     return res;
+};
+
+Network.prototype.requestToServer = function(server, user, package) {
+    var link = this.listOfClients[server].link;
+    link.executeInstruction(user, package);
 };
 
 module.exports = Network;

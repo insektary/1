@@ -32,7 +32,12 @@ server2.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
 
-guest4.requestToServer('server1', myNetwork);
+admin1.requestToServer('server1', 'rebase', 9);
+
+server1.logOut();
+server1.registerInNetwork(myNetwork);
+
+myNetwork.showAllClients();
 
 
 
