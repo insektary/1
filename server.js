@@ -2,8 +2,8 @@ function Server(name, login, password) {
     this.login = login;
     this.password = password;
     this.name = name;
-    this.network;
     this.myClients = [];
+    this.blackList = [];
 }
 
 Server.prototype.type = 'server';
@@ -19,6 +19,15 @@ Server.prototype.logOut = function() {
 
 Server.prototype.executeInstruction = function(user, requestInfo) {
     var userStatus = user.type;
+
+    if (
+        (userStatus === 'guest' && this.status === 'protected')
+        || this.blackList.indexOf(user.name) !== -1
+    ) {
+        console.log(user.name + ' access denied');
+
+        return;
+    }
 
     switch (requestInfo.instruction) {
         case 'reset': {
@@ -55,6 +64,16 @@ Server.prototype.executeInstruction = function(user, requestInfo) {
             this.myClients.forEach(function(item, index) {
                 console.log(prefix + '.' + index + ' ' + item.name + ' ' + item.type);
             });
+            break;
+        }
+        case 'toBlackList': {
+            if (user.type !== 'admin') {
+                console.log('access denied');
+
+                return;
+            }
+            this.blackList.push(requestInfo.target);
+            console.log(requestInfo.target + ' has been added to black list');
             break;
         }
         default: {

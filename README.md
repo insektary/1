@@ -24,8 +24,10 @@ redirect to the required server and send instructions ti this server. Method tak
         1. logIn. Request to sign in on required server. If server is protected, need to specify login and password.
         2. reset. This instruction reboot required server.
         3. rebase. This instruction is rebase required server on new address. New address input in field 'target'.
-        this instructions need to admin's access.
+        This instructions need to admin's access.
         4. showClients. This instructions show all clients of this server.
+        5. toBlackList. This instruction adds user into black list. User won't be have access to this server.
+        Name of user is specified in field 'target'. This instructions need to admin's access.
     3 - 4(optionality). login and password. Login and password to administrator rights.
     
     

@@ -1,6 +1,7 @@
 function Network(name, networkAddress) {
     this.networkAddress = networkAddress;
     this.listOfClients = [];
+    this.listOfRemoved = [];
     this.name = name;
 }
 
@@ -18,6 +19,15 @@ Network.prototype.getAddress = function(clientType, link) {
                     throw(e);
                 }
             });
+        } else {
+            var previousAddress = this.listOfRemoved.indexOf(link.name);
+
+            if (previousAddress !== -1) {
+                this.listOfClients[previousAddress].online = 'true';
+                clearTimeout(this.timer);
+
+                return previousAddress;
+            }
         }
     } catch (e) {
         return newAddress;
@@ -31,7 +41,7 @@ Network.prototype.getAddress = function(clientType, link) {
     }
 
     if (newAddress > RANGE) {
-        console.log('sorry, network are overloaded');
+        console.log('sorry, network is overload');
 
         return;
     }
@@ -48,7 +58,15 @@ Network.prototype.getAddress = function(clientType, link) {
 };
 
 Network.prototype.removeClient = function(clientIP) {
+    this.listOfRemoved[clientIP] = this.listOfClients[clientIP].name;
     this.listOfClients[clientIP].online = undefined;
+
+    var DELAY = 10000; //ms
+    var context = this;
+
+    this.timer = setTimeout(function() {
+        context.listOfRemoved[clientIP] = undefined;
+    }, DELAY);
 };
 
 Network.prototype.changeAddress = function(previousAddress, wishAddress) {
@@ -56,7 +74,7 @@ Network.prototype.changeAddress = function(previousAddress, wishAddress) {
         this.listOfClients[wishAddress] = {};
         Object.assign(this.listOfClients[wishAddress], this.listOfClients[previousAddress]);
         this.listOfClients[previousAddress].name = '';
-        this.removeClient(previousAddress);
+        this.listOfClients[previousAddress].online = undefined;
 
         return wishAddress;
     }
@@ -69,7 +87,8 @@ Network.prototype.showAllClients = function() {
         if (!this.listOfClients[i] || !this.listOfClients[i].online) continue;
 
         var status = this.listOfClients[i].status || '';
-        console.log(i + ' ' + this.listOfClients[i].name + ' ' + this.listOfClients[i].type + ' ' + status);
+        console.log(this.networkAddress + '.' + i + ' '
+            + this.listOfClients[i].name + ' ' + this.listOfClients[i].type + ' ' + status);
     }
 };
 
