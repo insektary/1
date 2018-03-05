@@ -21,29 +21,45 @@ Server.prototype.executeInstruction = function(user, requestInfo) {
     var userStatus = user.type;
 
     switch (requestInfo.instruction) {
-
-        case 'reset':
+        case 'reset': {
             if (userStatus === 'admin') {
                 console.log('server will be restarted');
             } else {
                 console.log('access denied');
             }
             break;
-        case 'logIn':
+        }
+        case 'logIn': {
             if (this.login === requestInfo.login && this.password === requestInfo.password) {
                 this.myClients.push(user);
-                console.log('succsessfully!');
+                console.log(user.name + ', welcome to the ' + this.name);
             } else {
                 console.log('login or password are incorrect');
             }
             break;
-        case 'rebase':
+        }
+        case 'rebase': {
             if (userStatus === 'admin') {
                 this.rebase(requestInfo.target);
             } else {
                 console.log('access denied');
             }
             break;
+        }
+        case 'showClients': {
+            var prefix = this.network.networkAddress;
+
+            console.log('');
+            console.log(this.name+ ':');
+
+            this.myClients.forEach(function(item, index) {
+                console.log(prefix + '.' + index + ' ' + item.name + ' ' + item.type);
+            });
+            break;
+        }
+        default: {
+            console.log('incorrect instruction');
+        }
     }
 };
 

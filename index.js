@@ -39,10 +39,13 @@ server1.logOut();
 myNetwork.showAllClients();
 server1.registerInNetwork(myNetwork);
 
-// var admin2 = new Admin('admin2');
-// admin2.registerInNetwork(myNetwork);
+var admin2 = new Admin('admin2');
+admin2.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
+
+admin2.requestToServer('server1', 'logIn', '', 'admin', 'pass');
+admin2.requestToServer('server1', 'showClients');
 
 
 

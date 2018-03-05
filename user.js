@@ -20,10 +20,12 @@ User.prototype.requestToServer = function(server, instruction, target, login, pa
         return;
     }
 
-    var requestInfo = {instruction: instruction,
-                    login: login,
-                    password: password,
-                    target: target};
+    var requestInfo = {
+        instruction: instruction,
+        login: login,
+        password: password,
+        target: target
+    };
 
     this.network.requestToServer(this.listOfServers[server].address, this, requestInfo);
 };

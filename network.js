@@ -24,7 +24,7 @@ Network.prototype.getAddress = function(clientType, link) {
     }
 
     for (var i = 0; i < this.listOfClients.length; i++) {
-        if (this.listOfClients[i] === undefined) {
+        if (!this.listOfClients[i]) {
             newAddress = i;
             break;
         }
@@ -36,7 +36,13 @@ Network.prototype.getAddress = function(clientType, link) {
         return;
     }
 
-    this.listOfClients[newAddress] = {type: clientType, status: link.status, name: link.name, link: link, online: 'true'};
+    this.listOfClients[newAddress] = {
+        type: clientType,
+        status: link.status,
+        name: link.name,
+        link: link,
+        online: 'true'
+    };
 
     return newAddress;
 };
@@ -62,7 +68,7 @@ Network.prototype.showAllClients = function() {
     for (var i = 0; i < this.listOfClients.length; i++) {
         if (!this.listOfClients[i] || !this.listOfClients[i].online) continue;
 
-        var status = (this.listOfClients[i].status) ? this.listOfClients[i].status : '';
+        var status = this.listOfClients[i].status || '';
         console.log(i + ' ' + this.listOfClients[i].name + ' ' + this.listOfClients[i].type + ' ' + status);
     }
 };
