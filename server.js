@@ -17,10 +17,10 @@ Server.prototype.logOut = function() {
     this.network.removeClient(this.address);
 };
 
-Server.prototype.executeInstruction = function(user, package) {
+Server.prototype.executeInstruction = function(user, requestInfo) {
     var userStatus = user.type;
 
-    switch (package.instruction) {
+    switch (requestInfo.instruction) {
 
         case 'reset':
             if (userStatus === 'admin') {
@@ -30,7 +30,7 @@ Server.prototype.executeInstruction = function(user, package) {
             }
             break;
         case 'logIn':
-            if (this.login === package.login && this.password === package.password) {
+            if (this.login === requestInfo.login && this.password === requestInfo.password) {
                 this.myClients.push(user);
                 console.log('succsessfully!');
             } else {
@@ -39,7 +39,7 @@ Server.prototype.executeInstruction = function(user, package) {
             break;
         case 'rebase':
             if (userStatus === 'admin') {
-                this.rebase(package.target);
+                this.rebase(requestInfo.target);
             } else {
                 console.log('access denied');
             }

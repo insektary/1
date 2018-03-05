@@ -81,9 +81,9 @@ Network.prototype.findServer = function() {
     return res;
 };
 
-Network.prototype.requestToServer = function(server, user, package) {
+Network.prototype.requestToServer = function(server, user, requestInfo) {
     var link = this.listOfClients[server].link;
-    link.executeInstruction(user, package);
+    link.executeInstruction(user, requestInfo);
 };
 
 module.exports = Network;
