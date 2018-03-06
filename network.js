@@ -1,80 +1,66 @@
 function Network(name, networkAddress) {
     this.networkAddress = networkAddress;
-    this.listOfClients = [];
+    this.listOfClients = new Array(999);
     this.listOfRemoved = [];
     this.name = name;
 }
 
 Network.prototype.getAddress = function(clientType, link) {
-    var newAddress = this.listOfClients.length;
-    var RANGE = 999;
+    var context = this;
+    var newAddress = this.listOfClients.findIndex(function(user, address) {
+        if ((user)
+            && (link.name === user.name)) {
+            clearTimeout(context.timer);
 
-    try {
-        if (clientType === 'server') {
-            this.listOfClients.forEach(function (item, index, array) {
-                if (item.name === link.name) {
-                    array[index].online = 'true';
-                    newAddress = index;
+            return true;
+        }
+    });
 
-                    throw(e);
-                }
-            });
-        } else {
-            var previousAddress = this.listOfRemoved.indexOf(link.name);
+    if (newAddress === -1) {
+        newAddress = this.listOfRemoved.indexOf(link.name);
+    }
 
-            if (previousAddress !== -1) {
-                this.listOfClients[previousAddress].online = 'true';
-                clearTimeout(this.timer);
-
-                return previousAddress;
+    if (newAddress !== -1) {
+        this.listOfRemoved[newAddress] = undefined;
+    } else {
+        newAddress = this.listOfClients.findIndex(function(user) {
+            if (!user) {
+                return true;
             }
-        }
-    } catch (e) {
-        return newAddress;
+        });
     }
 
-    for (var i = 0; i < this.listOfClients.length; i++) {
-        if (!this.listOfClients[i]) {
-            newAddress = i;
-            break;
-        }
-    }
-
-    if (newAddress > RANGE) {
-        console.log('sorry, network is overload');
-
-        return;
-    }
+    console.log(link.name + ' was registered on address ' + this.networkAddress + '.' + newAddress);
 
     this.listOfClients[newAddress] = {
         type: clientType,
-        status: link.status,
         name: link.name,
         link: link,
-        online: 'true'
+        status: 'online'
     };
+    this.listOfRemoved[newAddress] = undefined;
 
     return newAddress;
 };
 
 Network.prototype.removeClient = function(clientIP) {
-    this.listOfRemoved[clientIP] = this.listOfClients[clientIP].name;
-    this.listOfClients[clientIP].online = undefined;
-
     var DELAY = 10000; //ms
+    var user = this.listOfClients[clientIP];
     var context = this;
 
     this.timer = setTimeout(function() {
         context.listOfRemoved[clientIP] = undefined;
     }, DELAY);
+
+    console.log(user.name + ' log out');
+    this.listOfClients[clientIP].status = 'temporarilyOffline';
 };
 
 Network.prototype.changeAddress = function(previousAddress, wishAddress) {
     if (!this.listOfClients[wishAddress]) {
         this.listOfClients[wishAddress] = {};
         Object.assign(this.listOfClients[wishAddress], this.listOfClients[previousAddress]);
-        this.listOfClients[previousAddress].name = '';
-        this.listOfClients[previousAddress].online = undefined;
+        this.listOfClients[previousAddress] = undefined;
 
         return wishAddress;
     }
@@ -83,32 +69,29 @@ Network.prototype.changeAddress = function(previousAddress, wishAddress) {
 Network.prototype.showAllClients = function() {
     console.log('');
 
-    for (var i = 0; i < this.listOfClients.length; i++) {
-        if (!this.listOfClients[i] || !this.listOfClients[i].online) continue;
-
-        var status = this.listOfClients[i].status || '';
-        console.log(this.networkAddress + '.' + i + ' '
-            + this.listOfClients[i].name + ' ' + this.listOfClients[i].type + ' ' + status);
-    }
+    this.listOfClients.forEach(function(user, address) {
+        if (user && (user.status === 'online')) {
+            console.log(this.networkAddress + '.' + address + ' ' + user.name);
+        }
+    }, this);
 };
 
-Network.prototype.findServer = function() {
-    var res = {};
+Network.prototype.findServers = function() {
+    var response = [];
 
-    this.listOfClients.forEach(function(item, index) {
-        if (item.online) {
-            res[item.name] = {};
-            res[item.name].address = index;
-            res[item.name].status = item.status;
+    this.listOfClients.forEach(function(client, address) {
+        if (client.type === 'server') {
+            response[address] = client.name;
         }
     });
 
-    return res;
+    return response;
 };
 
-Network.prototype.requestToServer = function(server, user, requestInfo) {
+Network.prototype.requestToServer = function(server, requestInfo) {
     var link = this.listOfClients[server].link;
-    link.executeInstruction(user, requestInfo);
+
+    link.executeInstruction(requestInfo);
 };
 
 module.exports = Network;

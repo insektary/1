@@ -17,22 +17,41 @@ guest3.registerInNetwork(myNetwork);
 var guest4 = new Guest('guest4');
 guest4.registerInNetwork(myNetwork);
 
+//myNetwork.showAllClients();
+
+guest1.logOut();
+myNetwork.showAllClients();
+
+var guest66 = new Guest('guest66');
+guest66.registerInNetwork(myNetwork);
+
+guest1.registerInNetwork(myNetwork);
+myNetwork.showAllClients();
+guest1.registerInNetwork(myNetwork);
+
+myNetwork.showAllClients();
+
 
 var server1 = new PublicServer('server1', 'admin', 'pass');
 server1.registerInNetwork(myNetwork);
 
 
-
+//
+//
+//
 var admin1 = new Admin('admin1');
 admin1.registerInNetwork(myNetwork);
-
+//
 var server2 = new ProtectedServer('server2');
 server2.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
-
+//
 admin1.requestToServer('server1', 'rebase', '14');
 
+
+myNetwork.showAllClients();
+//
 myNetwork.showAllClients();
 
 var admin2 = new Admin('admin2');

@@ -1,6 +1,5 @@
 function Server(name, login) {
     this.login = login;
-    this.password = password;
     this.name = name;
     this.myClients = [];
     this.blackList = [];
@@ -17,14 +16,14 @@ Server.prototype.logOut = function() {
     this.network.removeClient(this.address);
 };
 
-Server.prototype.executeInstruction = function(user, requestInfo) {
-    var userRights = user.type;
-    var userName = user.name;
+Server.prototype.executeInstruction = function(requestInfo) {
+    var userRights = requestInfo.type;
+    var userName = requestInfo.name;
     var userLogin = requestInfo.login;
     var target = requestInfo.target;
 
     if (this.blackList.includes(userName)) {
-        console.log(userName + ' in a black list of ' + this.name);
+        return console.log(userName + ' in a black list of ' + this.name);
     }
 
     switch (requestInfo.instruction) {

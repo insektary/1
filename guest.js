@@ -1,6 +1,6 @@
 var User = require('./user.js');
 
-var Guest = function(name) {
+function Guest(name) {
     this.name = name;
 };
 

@@ -1,4 +1,4 @@
-var User = function(name) {
+function User(name) {
     this.name = name;
 };
 
@@ -12,22 +12,24 @@ User.prototype.logOut = function() {
 };
 
 User.prototype.requestToServer = function(server, instruction, target, login, password) {
-    this.listOfServers = this.network.findServer();
+    var addressOfServer = (this.network.findServers()).indexOf(server);
 
-    if (!(server in this.listOfServers)) {
+    if (addressOfServer === -1) {
         console.log('server not found');
 
         return;
     }
 
     var requestInfo = {
+        name: this.name,
+        type: this.type,
         instruction: instruction,
         login: login,
         password: password,
         target: target
     };
 
-    this.network.requestToServer(this.listOfServers[server].address, this, requestInfo);
+    this.network.requestToServer(addressOfServer, requestInfo);
 };
 
 module.exports = User;
