@@ -1,4 +1,4 @@
-function Server(name, login, password) {
+function Server(name, login) {
     this.login = login;
     this.password = password;
     this.name = name;
@@ -18,62 +18,34 @@ Server.prototype.logOut = function() {
 };
 
 Server.prototype.executeInstruction = function(user, requestInfo) {
-    var userStatus = user.type;
+    var userRights = user.type;
+    var userName = user.name;
+    var userLogin = requestInfo.login;
+    var target = requestInfo.target;
 
-    if (
-        (userStatus === 'guest' && this.status === 'protected')
-        || this.blackList.indexOf(user.name) !== -1
-    ) {
-        console.log(user.name + ' access denied');
-
-        return;
+    if (this.blackList.includes(userName)) {
+        console.log(userName + ' in a black list of ' + this.name);
     }
 
     switch (requestInfo.instruction) {
         case 'reset': {
-            if (userStatus === 'admin') {
-                console.log('server will be restarted');
-            } else {
-                console.log('access denied');
-            }
+            this.reset(userRights);
             break;
         }
         case 'logIn': {
-            if (this.login === requestInfo.login && this.password === requestInfo.password) {
-                this.myClients.push(user);
-                console.log(user.name + ', welcome to the ' + this.name);
-            } else {
-                console.log('login or password are incorrect');
-            }
+            this.logIn(userLogin, userName);
             break;
         }
         case 'rebase': {
-            if (userStatus === 'admin') {
-                this.rebase(requestInfo.target);
-            } else {
-                console.log('access denied');
-            }
+            this.rebase(userRights, target);
             break;
         }
         case 'showClients': {
-            var prefix = this.network.networkAddress;
-
-            console.log('');
-            console.log(this.name+ ':');
-
-            this.myClients.forEach(function(item, index) {
-                console.log(prefix + '.' + index + ' ' + item.name + ' ' + item.type);
-            });
+            this.showClients(userRights);
             break;
         }
         case 'toBlackList': {
-            if (user.type !== 'admin') {
-                console.log('access denied');
-
-                return;
-            }
-            this.blackList.push(requestInfo.target);
-            console.log(requestInfo.target + ' has been added to black list');
+            this.toBlackList(userRights, target);
             break;
         }
         default: {
@@ -82,14 +54,58 @@ Server.prototype.executeInstruction = function(user, requestInfo) {
     }
 };
 
-Server.prototype.rebase = function(wishAddress) {
-    var res = this.network.changeAddress(this.address, wishAddress);
+Server.prototype.rebase = function(userRights, wishAddress) {
+    if (userRights !== 'admin') {
+        return console.log('access denied');
+    }
 
-    if (res) {
-        console.log('successful on address ' + res);
-        this.address = res;
+    var newAddress = this.network.changeAddress(this.address, wishAddress);
+
+    if (newAddress) {
+        console.log('successful on address ' + newAddress);
+
+        this.address = newAddress;
     } else {
         console.log('address in busy');
+    }
+};
+
+Server.prototype.reset = function(userRights) {
+    if (userRights === 'admin') {
+        console.log('server will be rebooted');
+    } else {
+        console.log('access denied');
+    }
+};
+
+Server.prototype.logIn = function(userLogin, userName) {
+    if (this.login === userLogin) {
+        this.myClients.push(userName);
+
+        console.log(userName + ' is registered on ' + this.name);
+    }
+    else {
+        console.log('login incorrect');
+    }
+};
+
+Server.prototype.showClients = function(userRights) {
+    if (userRights === 'admin') {
+        this.myClients.forEach(function(userName) {
+            console.log(userName);
+        });
+    } else {
+        console.log('access denied');
+    }
+};
+
+Server.prototype.toBlackList = function(userRights, blockedUserName) {
+    if (userRights === 'admin') {
+        this.blackList.push(blockedUserName);
+
+        console.log(blockedUserName + ' was blocked on ' + this.name);
+    } else {
+        console.log('access denied');
     }
 };
 
