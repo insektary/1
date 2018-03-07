@@ -1,60 +1,81 @@
 function Network(name, networkAddress) {
     this.networkAddress = networkAddress;
-    this.listOfClients = new Array(999);
-    this.listOfRemoved = [];
+    this.listOfClients = [];
     this.name = name;
     this.DELAY = 10000;
 }
 
-Network.prototype.getAddress = function(clientType, link) {
-    var newAddress = this.listOfClients.findIndex(function(user, address) {
-        if ((user)
-            && (link.name === user.name)) {
-            clearTimeout(this.timer);
+Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMethod) {
+    var newAddress;
+
+    var res = this.listOfClients.find(function(client, clientIndex, arrayOfClients) {
+        if (client.name === clientName) {
+            arrayOfClients[clientIndex].status = 'online';
+            clearTimeout(arrayOfClients[clientIndex].timer);
 
             return true;
         }
-    }, this);
+    });
 
-    if (newAddress === -1) {
-        newAddress = this.listOfRemoved.indexOf(link.name);
-    }
+    if (res) return;
 
-    if (newAddress === -1) {
-        newAddress = this.listOfClients.findIndex(function(user) {
-            if (!user) {
-                return true;
-            }
-        });
-    } else {
-        this.listOfRemoved[newAddress] = undefined;
-    }
+    newAddress = this.findFreeAddress(this.listOfClients);
 
-    console.log(link.name + ' was registered on address ' + this.networkAddress + '.' + newAddress);
-
-    this.listOfClients[newAddress] = {
+    this.listOfClients.push({
+        name: clientName,
+        address: newAddress,
         type: clientType,
-        name: link.name,
-        link: link,
-        status: 'online'
-    };
-    this.listOfRemoved[newAddress] = undefined;
+        status: 'online',
+        feedbackMethod: clientFeedbackMethod
+    });
 
     return newAddress;
 };
 
+Network.prototype.findFreeAddress = function(array) {
+    var freeAddress;
+    var arrayOfAddresses = array.map(function(client) {
+        return client.address;
+    });
+
+    arrayOfAddresses.sort(function(a, b) {
+        return a - b;
+    });
+
+    freeAddress = arrayOfAddresses.find(function(address, numberOfAddress) {
+        if (address !== numberOfAddress) {
+            return true;
+        }
+    });
+
+    return freeAddress || arrayOfAddresses.length;
+};
+
 Network.prototype.removeClient = function(clientIP) {
-    var LOG_OUT_MESSAGE = ' log out';
-    var user = this.listOfClients[clientIP];
-    var func = function() {
-        this.listOfRemoved[clientIP] = undefined;
-    };
-    var fn = func.bind(this);
+    this.listOfClients.find(function(client, clientIndex, arrayOfClients) {
+        if (client.address === clientIP) {
+            arrayOfClients[clientIndex].status = 'temporarilyOffline';
 
-    this.timer = setTimeout(fn, this.DELAY);
+            arrayOfClients[clientIndex].timer = setTimeout(function() {
+                console.log('deleted');
+            }, this.DELAY);
 
-    console.log(user.name + LOG_OUT_MESSAGE);
-    this.listOfClients[clientIP].status = 'temporarilyOffline';
+            return true;
+        }
+    });
+
+
+    // var LOG_OUT_MESSAGE = ' log out';
+    // var user = this.listOfClients[clientIP];
+    // var func = function() {
+    //     this.listOfRemoved[clientIP] = undefined;
+    // };
+    // var fn = func.bind(this);
+    //
+    // this.timer = setTimeout(fn, this.DELAY);
+    //
+    // console.log(user.name + LOG_OUT_MESSAGE);
+    // this.listOfClients[clientIP].status = 'temporarilyOffline';
 };
 
 Network.prototype.changeAddress = function(previousAddress, wishAddress) {
@@ -70,9 +91,10 @@ Network.prototype.changeAddress = function(previousAddress, wishAddress) {
 Network.prototype.showAllClients = function() {
     console.log('\n');
 
-    this.listOfClients.forEach(function(user, address) {
-        if (user && (user.status === 'online')) {
-            console.log(this.networkAddress + '.' + address + ' ' + user.name);
+    this.listOfClients.forEach(function(client) {
+        if ((client) &&
+            client.status === 'online') {
+            console.log(this.networkAddress + '.' + client.address + ' ' + client.name + ' ' + client.type);
         }
     }, this);
 };

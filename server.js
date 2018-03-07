@@ -8,16 +8,16 @@ function Server(name, login) {
 }
 
 
-Server.prototype.registerInNetwork = function(network) {
-    this.address = network.getAddress('server', this);
+Server.prototype.registerInNetwork = function (network) {
+    this.address = network.getAddress(this.name, this.type);
     this.network = network;
 };
 
-Server.prototype.logOut = function() {
+Server.prototype.logOut = function () {
     this.network.removeClient(this.address);
 };
 
-Server.prototype.executeInstruction = function(requestInfo) {
+Server.prototype.executeInstruction = function (requestInfo) {
     var userRights = requestInfo.type;
     var userName = requestInfo.name;
     var userLogin = requestInfo.login;
@@ -54,7 +54,7 @@ Server.prototype.executeInstruction = function(requestInfo) {
     }
 };
 
-Server.prototype.rebase = function(userRights, wishAddress) {
+Server.prototype.rebase = function (userRights, wishAddress) {
     if (userRights !== this.ADMIN_RIGHTS) {
         return console.log('access denied');
     }
@@ -70,7 +70,7 @@ Server.prototype.rebase = function(userRights, wishAddress) {
     }
 };
 
-Server.prototype.reset = function(userRights) {
+Server.prototype.reset = function (userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
         console.log('server will be rebooted');
     } else {
@@ -78,7 +78,7 @@ Server.prototype.reset = function(userRights) {
     }
 };
 
-Server.prototype.logIn = function(userLogin, userName) {
+Server.prototype.logIn = function (userLogin, userName) {
     if (this.login === userLogin) {
         this.myClients.push(userName);
 
@@ -89,9 +89,9 @@ Server.prototype.logIn = function(userLogin, userName) {
     }
 };
 
-Server.prototype.showClients = function(userRights) {
+Server.prototype.showClients = function (userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
-        this.myClients.forEach(function(userName) {
+        this.myClients.forEach(function (userName) {
             console.log(userName);
         });
     } else {
@@ -99,7 +99,7 @@ Server.prototype.showClients = function(userRights) {
     }
 };
 
-Server.prototype.toBlackList = function(userRights, blockedUserName) {
+Server.prototype.toBlackList = function (userRights, blockedUserName) {
     if (userRights === this.ADMIN_RIGHTS) {
         this.blackList.push(blockedUserName);
 

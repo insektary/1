@@ -4,7 +4,7 @@ function User(name) {
 
 User.prototype.registerInNetwork = function(network) {
     this.network = network;
-    this.address = this.network.getAddress(this.type, this);
+    this.address = this.network.getAddress(this.name, this.type);
 };
 
 User.prototype.logOut = function() {
