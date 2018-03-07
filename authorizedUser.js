@@ -1,10 +1,10 @@
 var User = require('./user.js');
 
 var AuthorizedUser = function(name) {
-    this.name = name;
+    User.call(this, name);
+    this.type = 'authorizedUser';
 };
 
 AuthorizedUser.prototype = Object.create(User.prototype);
-AuthorizedUser.prototype.type = 'authorizedUser';
 
 module.exports = AuthorizedUser;

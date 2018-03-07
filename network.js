@@ -3,31 +3,31 @@ function Network(name, networkAddress) {
     this.listOfClients = new Array(999);
     this.listOfRemoved = [];
     this.name = name;
+    this.DELAY = 10000;
 }
 
 Network.prototype.getAddress = function(clientType, link) {
-    var context = this;
     var newAddress = this.listOfClients.findIndex(function(user, address) {
         if ((user)
             && (link.name === user.name)) {
-            clearTimeout(context.timer);
+            clearTimeout(this.timer);
 
             return true;
         }
-    });
+    }, this);
 
     if (newAddress === -1) {
         newAddress = this.listOfRemoved.indexOf(link.name);
     }
 
-    if (newAddress !== -1) {
-        this.listOfRemoved[newAddress] = undefined;
-    } else {
+    if (newAddress === -1) {
         newAddress = this.listOfClients.findIndex(function(user) {
             if (!user) {
                 return true;
             }
         });
+    } else {
+        this.listOfRemoved[newAddress] = undefined;
     }
 
     console.log(link.name + ' was registered on address ' + this.networkAddress + '.' + newAddress);
@@ -44,15 +44,16 @@ Network.prototype.getAddress = function(clientType, link) {
 };
 
 Network.prototype.removeClient = function(clientIP) {
-    var DELAY = 10000; //ms
+    var LOG_OUT_MESSAGE = ' log out';
     var user = this.listOfClients[clientIP];
-    var context = this;
+    var func = function() {
+        this.listOfRemoved[clientIP] = undefined;
+    };
+    var fn = func.bind(this);
 
-    this.timer = setTimeout(function() {
-        context.listOfRemoved[clientIP] = undefined;
-    }, DELAY);
+    this.timer = setTimeout(fn, this.DELAY);
 
-    console.log(user.name + ' log out');
+    console.log(user.name + LOG_OUT_MESSAGE);
     this.listOfClients[clientIP].status = 'temporarilyOffline';
 };
 
@@ -67,7 +68,7 @@ Network.prototype.changeAddress = function(previousAddress, wishAddress) {
 };
 
 Network.prototype.showAllClients = function() {
-    console.log('');
+    console.log('\n');
 
     this.listOfClients.forEach(function(user, address) {
         if (user && (user.status === 'online')) {

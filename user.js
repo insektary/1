@@ -1,10 +1,10 @@
 function User(name) {
     this.name = name;
-};
+}
 
 User.prototype.registerInNetwork = function(network) {
-    this.address = network.getAddress(this.type, this);
     this.network = network;
+    this.address = this.network.getAddress(this.type, this);
 };
 
 User.prototype.logOut = function() {
@@ -15,9 +15,7 @@ User.prototype.requestToServer = function(server, instruction, target, login, pa
     var addressOfServer = (this.network.findServers()).indexOf(server);
 
     if (addressOfServer === -1) {
-        console.log('server not found');
-
-        return;
+        return console.log('server not found');
     }
 
     var requestInfo = {

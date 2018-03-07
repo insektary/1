@@ -3,9 +3,10 @@ function Server(name, login) {
     this.name = name;
     this.myClients = [];
     this.blackList = [];
+    this.type = 'server';
+    this.ADMIN_RIGHTS = 'admin';
 }
 
-Server.prototype.type = 'server';
 
 Server.prototype.registerInNetwork = function(network) {
     this.address = network.getAddress('server', this);
@@ -22,7 +23,7 @@ Server.prototype.executeInstruction = function(requestInfo) {
     var userLogin = requestInfo.login;
     var target = requestInfo.target;
 
-    if (this.blackList.includes(userName)) {
+    if (this.blackList.indexOf(userName) !== -1) {
         return console.log(userName + ' in a black list of ' + this.name);
     }
 
@@ -54,7 +55,7 @@ Server.prototype.executeInstruction = function(requestInfo) {
 };
 
 Server.prototype.rebase = function(userRights, wishAddress) {
-    if (userRights !== 'admin') {
+    if (userRights !== this.ADMIN_RIGHTS) {
         return console.log('access denied');
     }
 
@@ -70,7 +71,7 @@ Server.prototype.rebase = function(userRights, wishAddress) {
 };
 
 Server.prototype.reset = function(userRights) {
-    if (userRights === 'admin') {
+    if (userRights === this.ADMIN_RIGHTS) {
         console.log('server will be rebooted');
     } else {
         console.log('access denied');
@@ -89,7 +90,7 @@ Server.prototype.logIn = function(userLogin, userName) {
 };
 
 Server.prototype.showClients = function(userRights) {
-    if (userRights === 'admin') {
+    if (userRights === this.ADMIN_RIGHTS) {
         this.myClients.forEach(function(userName) {
             console.log(userName);
         });
@@ -99,7 +100,7 @@ Server.prototype.showClients = function(userRights) {
 };
 
 Server.prototype.toBlackList = function(userRights, blockedUserName) {
-    if (userRights === 'admin') {
+    if (userRights === this.ADMIN_RIGHTS) {
         this.blackList.push(blockedUserName);
 
         console.log(blockedUserName + ' was blocked on ' + this.name);

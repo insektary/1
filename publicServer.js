@@ -1,10 +1,10 @@
 var Server = require('./server.js');
 
-var PublicServer = function(name, login, password) {
-    Server.apply(this, arguments);
+var PublicServer = function(name, login) {
+    Server.call(this, name, login);
+    this.status = 'public';
 };
 
 PublicServer.prototype = Object.create(Server.prototype);
-PublicServer.prototype.status = 'public';
 
 module.exports = PublicServer;

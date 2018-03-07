@@ -1,10 +1,10 @@
 var Server = require('./server.js');
 
-var ProtectedServer = function(name, login, password) {
-    Server.apply(this, arguments);
+var ProtectedServer = function(name, login) {
+    Server.call(this, name, login);
+    this.status = 'protected';
 };
 
 ProtectedServer.prototype = Object.create(Server.prototype);
-ProtectedServer.prototype.status = 'protected';
 
 module.exports = ProtectedServer;

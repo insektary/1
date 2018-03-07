@@ -64,9 +64,6 @@ admin2.requestToServer('server1', 'showClients');
 
 guest1.logOut();
 
-var guest66 = new Guest('guest66');
-guest66.registerInNetwork(myNetwork);
-
 guest1.registerInNetwork(myNetwork);
 
 myNetwork.showAllClients();
