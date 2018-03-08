@@ -5,47 +5,49 @@ function Server(name, login) {
     this.blackList = [];
     this.type = 'server';
     this.ADMIN_RIGHTS = 'admin';
+    this.exBind = Server.prototype._executeInstruction.bind(this);
 }
 
 
-Server.prototype.registerInNetwork = function (network) {
-    this.address = network.getAddress(this.name, this.type);
+Server.prototype.registerInNetwork = function(network) {
+    this.address = network.getAddress(this.name, this.type, this.exBind);
     this.network = network;
 };
 
-Server.prototype.logOut = function () {
+Server.prototype.logOut = function() {
     this.network.removeClient(this.address);
 };
 
-Server.prototype.executeInstruction = function (requestInfo) {
-    var userRights = requestInfo.type;
-    var userName = requestInfo.name;
-    var userLogin = requestInfo.login;
-    var target = requestInfo.target;
+Server.prototype._executeInstruction = function(requestInfo) {
+    var USER_RIGHTS = requestInfo.type;
+    var USER_NAME = requestInfo.name;
+    var USER_LOGIN = requestInfo.login;
+    var WISH_ADDRESS = requestInfo.wishAddress;
+    var USER_FOR_BLACK_LIST = requestInfo.userForBlackList;
 
-    if (this.blackList.indexOf(userName) !== -1) {
-        return console.log(userName + ' in a black list of ' + this.name);
+    if (this.blackList.indexOf(USER_NAME) !== -1) {
+        return console.log(USER_NAME + ' in a black list of ' + this.name);
     }
 
     switch (requestInfo.instruction) {
         case 'reset': {
-            this.reset(userRights);
+            this._reset(USER_RIGHTS);
             break;
         }
         case 'logIn': {
-            this.logIn(userLogin, userName);
+            this._logIn(USER_LOGIN, USER_NAME);
             break;
         }
         case 'rebase': {
-            this.rebase(userRights, target);
+            this._rebase(USER_RIGHTS, WISH_ADDRESS);
             break;
         }
         case 'showClients': {
-            this.showClients(userRights);
+            this._showClients(USER_RIGHTS);
             break;
         }
         case 'toBlackList': {
-            this.toBlackList(userRights, target);
+            this._toBlackList(USER_RIGHTS, USER_FOR_BLACK_LIST);
             break;
         }
         default: {
@@ -54,7 +56,7 @@ Server.prototype.executeInstruction = function (requestInfo) {
     }
 };
 
-Server.prototype.rebase = function (userRights, wishAddress) {
+Server.prototype._rebase = function(userRights, wishAddress) {
     if (userRights !== this.ADMIN_RIGHTS) {
         return console.log('access denied');
     }
@@ -70,7 +72,7 @@ Server.prototype.rebase = function (userRights, wishAddress) {
     }
 };
 
-Server.prototype.reset = function (userRights) {
+Server.prototype._reset = function(userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
         console.log('server will be rebooted');
     } else {
@@ -78,7 +80,7 @@ Server.prototype.reset = function (userRights) {
     }
 };
 
-Server.prototype.logIn = function (userLogin, userName) {
+Server.prototype._logIn = function(userLogin, userName) {
     if (this.login === userLogin) {
         this.myClients.push(userName);
 
@@ -89,9 +91,9 @@ Server.prototype.logIn = function (userLogin, userName) {
     }
 };
 
-Server.prototype.showClients = function (userRights) {
+Server.prototype._showClients = function(userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
-        this.myClients.forEach(function (userName) {
+        this.myClients.forEach(function(userName) {
             console.log(userName);
         });
     } else {
@@ -99,7 +101,7 @@ Server.prototype.showClients = function (userRights) {
     }
 };
 
-Server.prototype.toBlackList = function (userRights, blockedUserName) {
+Server.prototype._toBlackList = function(userRights, blockedUserName) {
     if (userRights === this.ADMIN_RIGHTS) {
         this.blackList.push(blockedUserName);
 

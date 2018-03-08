@@ -11,21 +11,15 @@ User.prototype.logOut = function() {
     this.network.removeClient(this.address);
 };
 
-User.prototype.requestToServer = function(server, instruction, target, login, password) {
+User.prototype.requestToServer = function(server, requestInfo) {
     var addressOfServer = (this.network.findServers()).indexOf(server);
 
     if (addressOfServer === -1) {
         return console.log('server not found');
     }
 
-    var requestInfo = {
-        name: this.name,
-        type: this.type,
-        instruction: instruction,
-        login: login,
-        password: password,
-        target: target
-    };
+    requestInfo.name = this.name;
+    requestInfo.type = this.type;
 
     this.network.requestToServer(addressOfServer, requestInfo);
 };

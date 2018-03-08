@@ -8,7 +8,7 @@ function Network(name, networkAddress) {
 Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMethod) {
     var newAddress;
 
-    var res = this.listOfClients.find(function(client, clientIndex, arrayOfClients) {
+    var res = this.listOfClients.some(function(client, clientIndex, arrayOfClients) {
         if (client.name === clientName) {
             arrayOfClients[clientIndex].status = 'online';
             clearTimeout(arrayOfClients[clientIndex].timer);
@@ -19,7 +19,7 @@ Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMe
 
     if (res) return;
 
-    newAddress = this.findFreeAddress(this.listOfClients);
+    newAddress = this._findFreeAddress(this.listOfClients);
 
     this.listOfClients.push({
         name: clientName,
@@ -32,7 +32,7 @@ Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMe
     return newAddress;
 };
 
-Network.prototype.findFreeAddress = function(array) {
+Network.prototype._findFreeAddress = function(array) {
     var freeAddress;
     var arrayOfAddresses = array.map(function(client) {
         return client.address;
@@ -42,7 +42,7 @@ Network.prototype.findFreeAddress = function(array) {
         return a - b;
     });
 
-    freeAddress = arrayOfAddresses.find(function(address, numberOfAddress) {
+    freeAddress = arrayOfAddresses.some(function(address, numberOfAddress) {
         if (address !== numberOfAddress) {
             return true;
         }
@@ -52,37 +52,36 @@ Network.prototype.findFreeAddress = function(array) {
 };
 
 Network.prototype.removeClient = function(clientIP) {
-    this.listOfClients.find(function(client, clientIndex, arrayOfClients) {
+    this.listOfClients.some(function(client, clientIndex, arrayOfClients) {
         if (client.address === clientIP) {
             arrayOfClients[clientIndex].status = 'temporarilyOffline';
 
             arrayOfClients[clientIndex].timer = setTimeout(function() {
-                console.log('deleted');
+                arrayOfClients.splice(clientIndex, 1);
             }, this.DELAY);
 
             return true;
         }
-    });
-
-
-    // var LOG_OUT_MESSAGE = ' log out';
-    // var user = this.listOfClients[clientIP];
-    // var func = function() {
-    //     this.listOfRemoved[clientIP] = undefined;
-    // };
-    // var fn = func.bind(this);
-    //
-    // this.timer = setTimeout(fn, this.DELAY);
-    //
-    // console.log(user.name + LOG_OUT_MESSAGE);
-    // this.listOfClients[clientIP].status = 'temporarilyOffline';
+    }, this);
 };
 
 Network.prototype.changeAddress = function(previousAddress, wishAddress) {
-    if (!this.listOfClients[wishAddress]) {
-        this.listOfClients[wishAddress] = {};
-        Object.assign(this.listOfClients[wishAddress], this.listOfClients[previousAddress]);
-        this.listOfClients[previousAddress] = undefined;
+    var impossibilityOfChange = this.listOfClients.some(function(client) {
+        if (client.address === wishAddress) {
+            return true;
+        }
+    });
+
+    if (impossibilityOfChange) {
+        return;
+    } else {
+        this.listOfClients.some(function(client) {
+            if (client.address === previousAddress) {
+                client.address = wishAddress;
+
+                return true;
+            }
+        });
 
         return wishAddress;
     }
@@ -111,10 +110,17 @@ Network.prototype.findServers = function() {
     return response;
 };
 
-Network.prototype.requestToServer = function(server, requestInfo) {
-    var link = this.listOfClients[server].link;
+Network.prototype.requestToServer = function(addressOfServer, requestInfo) {
+    var indexOfServer = undefined;
 
-    link.executeInstruction(requestInfo);
+    this.listOfClients.some(function(client, currentIndex) {
+        if (client.address === addressOfServer) {
+            indexOfServer = currentIndex;
+            return true;
+        }
+    });
+
+    this.listOfClients[indexOfServer].feedbackMethod(requestInfo);
 };
 
 module.exports = Network;
