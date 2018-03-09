@@ -1,3 +1,23 @@
+Array.prototype.polySome = function(callback, context) {
+    for (var i = 0; i < this.length; i++) {
+        if (callback.call(context, this[i], i, this)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+Array.prototype.polyEvery = function(callback, context) {
+    for (var i = 0; i < this.length; i++) {
+        if (!callback.call(context, this[i], i, this)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
 Array.prototype.polyForEach = function(callback, context) {
     for (var i = 0; i < this.length; i++) {
         callback.call(context, this[i], i, this);
