@@ -1,6 +1,5 @@
 var Network = require('./network.js');
 var PublicServer = require('./publicServer.js');
-var ProtectedServer = require('./protectedServer.js');
 var Guest = require('./guest.js');
 var Admin = require('./admin.js');
 

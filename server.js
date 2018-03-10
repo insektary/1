@@ -30,29 +30,29 @@ Server.prototype._executeInstruction = function(requestInfo) {
     }
 
     switch (requestInfo.instruction) {
-        case 'reset': {
-            this._reset(USER_RIGHTS);
-            break;
-        }
-        case 'logIn': {
-            this._logIn(USER_LOGIN, USER_NAME);
-            break;
-        }
-        case 'rebase': {
-            this._rebase(USER_RIGHTS, WISH_ADDRESS);
-            break;
-        }
-        case 'showClients': {
-            this._showClients(USER_RIGHTS);
-            break;
-        }
-        case 'toBlackList': {
-            this._toBlackList(USER_RIGHTS, USER_FOR_BLACK_LIST);
-            break;
-        }
-        default: {
-            console.log('incorrect instruction');
-        }
+    case 'reset': {
+        this._reset(USER_RIGHTS);
+        break;
+    }
+    case 'logIn': {
+        this._logIn(USER_LOGIN, USER_NAME);
+        break;
+    }
+    case 'rebase': {
+        this._rebase(USER_RIGHTS, WISH_ADDRESS);
+        break;
+    }
+    case 'showClients': {
+        this._showClients(USER_RIGHTS);
+        break;
+    }
+    case 'toBlackList': {
+        this._toBlackList(USER_RIGHTS, USER_FOR_BLACK_LIST);
+        break;
+    }
+    default: {
+        console.log('incorrect instruction');
+    }
     }
 };
 
