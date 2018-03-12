@@ -1,12 +1,12 @@
 var PORT = 3000;
 var EXPECTED_VALUE = 'EXPECTED_VALUE';
 
-var express = function() {
-    var server = 'off';
+var express = function () {
+    var server = false;
 
     return {
         req: {},
-        res: {},
+        res: null,
         currentRequestMethod: '',
         routeTable: {
             get: {},
@@ -14,39 +14,48 @@ var express = function() {
         },
         index: null,
         listen: function(port) {
-            server = 'on';
+            console.log('server is running on ' + port);
+            server = true;
         },
         getResponse: function(url, method) {
-            if (server === 'off') {
+            var METHOD = method.toLowerCase();
+
+            if (!server) {
                 console.log('server in not started');
-            } else if (url in this.routeTable.use) {
+            } else if (this.routeTable.use[url]) {
                 this.currentRequestMethod = method;
                 this.index = 0;
 
                 this.routeTable.use[url][0]();
+            } else {
+                this.routeTable[METHOD][url]();
             }
         },
         use: function(url, callback) {
-            var obj = this;
+            var pushedFunction = function() {
+                var pathToMethod = this.routeTable.use[url][this.index];
+                var METHOD = this.currentRequestMethod.toLowerCase();
+                this.index++;
 
-            if (!(url in this.routeTable.use)) {
+                if (pathToMethod) {
+                    callback(this.req, this.res, pathToMethod);
+                } else {
+                    callback(this.req, this.res, this.routeTable[METHOD][url]);
+                }
+            };
+
+            var bindFunction = pushedFunction.bind(this);
+
+            if (!this.routeTable.use[url]) {
                 this.routeTable.use[url] = [];
             }
 
-            this.routeTable.use[url].push(function() {
-                obj.index++;
-
-                if (obj.routeTable.use[url][obj.index]) {
-                    callback(obj.req, obj.res, obj.routeTable.use[url][obj.index]);
-                } else {
-                    callback(obj.req, obj.res, obj.routeTable[obj.currentRequestMethod.toLowerCase()][url]);
-                }
-            });
+            this.routeTable.use[url].push(bindFunction);
         },
         get: function(url, callback) {
             this.routeTable.get[url] = callback.bind(this, this.req, this.res);
         }
-    }
+    };
 };
 
 
@@ -64,8 +73,8 @@ app.use('/', function(req, res, next) {
     next();
 });
 
-app.get('/', function(req, res) {
-    console.log(req.input === EXPECTED_VALUE) // true
+app.get('/', function(req) {
+    console.log(req.input === EXPECTED_VALUE); // true
 });
 
 app.listen(PORT);
