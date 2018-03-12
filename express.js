@@ -6,7 +6,6 @@ var express = function () {
 
     return {
         res: null,
-        currentRequestMethod: '',
         routeTable: {
             get: {},
             use: {}
@@ -21,13 +20,23 @@ var express = function () {
                 console.log('server in not started');
             } else {
                 this.req = {};
-                this.next = function() {};
+                this.counter1 = 0;
+                this.counter2 = 0;
+                this.fn = function() {
+                    this.counter1++;
+                };
+                this.next = this.fn.bind(this);
 
                 this.routeTable.use[url].forEach(function(middleware) {
-                    middleware(this.req, null, this.next);
+                    if (this.counter1 === this.counter2) {
+                        middleware(this.req, null, this.next);
+                        this.counter2++;
+                    }
                 }, this);
 
-                this.routeTable.get[url](this.req, null);
+                if (this.counter1 === this.counter2) {
+                    this.routeTable[method.toLowerCase()][url](this.req, null);
+                }
             }
         },
         use: function(url, callback) {
