@@ -5,7 +5,6 @@ var express = function () {
     var server = false;
 
     return {
-        req: {},
         res: null,
         currentRequestMethod: '',
         routeTable: {
@@ -18,42 +17,28 @@ var express = function () {
             server = true;
         },
         getResponse: function(url, method) {
-            var METHOD = method.toLowerCase();
-
             if (!server) {
                 console.log('server in not started');
-            } else if (this.routeTable.use[url]) {
-                this.currentRequestMethod = method;
-                this.index = 0;
-
-                this.routeTable.use[url][0]();
             } else {
-                this.routeTable[METHOD][url]();
+                this.req = {};
+                this.next = function() {};
+
+                this.routeTable.use[url].forEach(function(middleware) {
+                    middleware(this.req, null, this.next);
+                }, this);
+
+                this.routeTable.get[url](this.req, null);
             }
         },
         use: function(url, callback) {
-            var pushedFunction = function() {
-                var pathToMethod = this.routeTable.use[url][this.index];
-                var METHOD = this.currentRequestMethod.toLowerCase();
-                this.index++;
-
-                if (pathToMethod) {
-                    callback(this.req, this.res, pathToMethod);
-                } else {
-                    callback(this.req, this.res, this.routeTable[METHOD][url]);
-                }
-            };
-
-            var bindFunction = pushedFunction.bind(this);
-
             if (!this.routeTable.use[url]) {
                 this.routeTable.use[url] = [];
             }
 
-            this.routeTable.use[url].push(bindFunction);
+            this.routeTable.use[url].push(callback);
         },
         get: function(url, callback) {
-            this.routeTable.get[url] = callback.bind(this, this.req, this.res);
+            this.routeTable.get[url] = callback;
         }
     };
 };

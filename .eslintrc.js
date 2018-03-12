@@ -1,6 +1,7 @@
 module.exports = {
     "env": {
-        "node": true
+        "node": true,
+        "es6": false
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -17,8 +18,8 @@ module.exports = {
             "single"
         ],
         "semi": [
-            "error",
-            "always"
+            0,
+            "never"
         ],
         "no-console": "off"
     }
