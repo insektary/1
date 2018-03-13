@@ -1,15 +1,16 @@
 module.exports = {
     "env": {
-        "browser": false
+        "node": true,
+        "es6": false
     },
-    "extends": "eslint:recommended",
+    "extends": "eslint-config-airbnb-es5",
     "rules": {
         "indent": [
             "error",
             4
         ],
         "linebreak-style": [
-            "error",
+            "off",
             "windows"
         ],
         "quotes": [
@@ -17,11 +18,15 @@ module.exports = {
             "single"
         ],
         "semi": [
+            0,
+            "never"
+        ],
+        "func-names": [
             "error",
-            "always"
+            "never"
         ],
         "no-console": "off",
         "no-require": "off",
-        "no-undef": "off"
+        "consistent-return": "off"
     }
 };

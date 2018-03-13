@@ -1,6 +1,6 @@
 var AuthorizedUser = require('./authorizedUser.js');
 
-var Admin = function(name) {
+var Admin = function (name) {
     AuthorizedUser.call(this, name);
     this.type = 'admin';
 };

@@ -9,16 +9,16 @@ function Server(name, login) {
 }
 
 
-Server.prototype.registerInNetwork = function(network) {
+Server.prototype.registerInNetwork = function (network) {
     this.address = network.getAddress(this.name, this.type, this.exBind);
     this.network = network;
 };
 
-Server.prototype.logOut = function() {
+Server.prototype.logOut = function () {
     this.network.removeClient(this.address);
 };
 
-Server.prototype._executeInstruction = function(requestInfo) {
+Server.prototype._executeInstruction = function (requestInfo) {
     var USER_RIGHTS = requestInfo.type;
     var USER_NAME = requestInfo.name;
     var USER_LOGIN = requestInfo.login;
@@ -56,7 +56,7 @@ Server.prototype._executeInstruction = function(requestInfo) {
     }
 };
 
-Server.prototype._rebase = function(userRights, wishAddress) {
+Server.prototype._rebase = function (userRights, wishAddress) {
     if (userRights !== this.ADMIN_RIGHTS) {
         return console.log('access denied');
     }
@@ -72,7 +72,7 @@ Server.prototype._rebase = function(userRights, wishAddress) {
     }
 };
 
-Server.prototype._reset = function(userRights) {
+Server.prototype._reset = function (userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
         console.log('server will be rebooted');
     } else {
@@ -80,20 +80,19 @@ Server.prototype._reset = function(userRights) {
     }
 };
 
-Server.prototype._logIn = function(userLogin, userName) {
+Server.prototype._logIn = function (userLogin, userName) {
     if (this.login === userLogin) {
         this.myClients.push(userName);
 
         console.log(userName + ' is registered on ' + this.name);
-    }
-    else {
+    } else {
         console.log('login incorrect');
     }
 };
 
-Server.prototype._showClients = function(userRights) {
+Server.prototype._showClients = function (userRights) {
     if (userRights === this.ADMIN_RIGHTS) {
-        this.myClients.forEach(function(userName) {
+        this.myClients.forEach(function (userName) {
             console.log(userName);
         });
     } else {
@@ -101,7 +100,7 @@ Server.prototype._showClients = function(userRights) {
     }
 };
 
-Server.prototype._toBlackList = function(userRights, blockedUserName) {
+Server.prototype._toBlackList = function (userRights, blockedUserName) {
     if (userRights === this.ADMIN_RIGHTS) {
         this.blackList.push(blockedUserName);
 

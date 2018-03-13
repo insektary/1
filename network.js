@@ -5,10 +5,10 @@ function Network(name, networkAddress) {
     this.DELAY = 10000;
 }
 
-Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMethod) {
+Network.prototype.getAddress = function (clientName, clientType, clientFeedbackMethod) {
     var newAddress;
 
-    var res = this.listOfClients.some(function(client, clientIndex, arrayOfClients) {
+    var res = this.listOfClients.some(function (client, clientIndex, arrayOfClients) {
         if (client.name === clientName) {
             arrayOfClients[clientIndex].status = 'online';
             clearTimeout(arrayOfClients[clientIndex].timer);
@@ -32,17 +32,17 @@ Network.prototype.getAddress = function(clientName, clientType, clientFeedbackMe
     return newAddress;
 };
 
-Network.prototype._findFreeAddress = function(array) {
+Network.prototype._findFreeAddress = function (array) {
     var freeAddress;
-    var arrayOfAddresses = array.map(function(client) {
+    var arrayOfAddresses = array.map(function (client) {
         return client.address;
     });
 
-    arrayOfAddresses.sort(function(a, b) {
+    arrayOfAddresses.sort(function (a, b) {
         return a - b;
     });
 
-    freeAddress = arrayOfAddresses.some(function(address, numberOfAddress) {
+    freeAddress = arrayOfAddresses.some(function (address, numberOfAddress) {
         if (address !== numberOfAddress) {
             return true;
         }
@@ -51,12 +51,12 @@ Network.prototype._findFreeAddress = function(array) {
     return freeAddress || arrayOfAddresses.length;
 };
 
-Network.prototype.removeClient = function(clientIP) {
-    this.listOfClients.some(function(client, clientIndex, arrayOfClients) {
+Network.prototype.removeClient = function (clientIP) {
+    this.listOfClients.some(function (client, clientIndex, arrayOfClients) {
         if (client.address === clientIP) {
             arrayOfClients[clientIndex].status = 'temporarilyOffline';
 
-            arrayOfClients[clientIndex].timer = setTimeout(function() {
+            arrayOfClients[clientIndex].timer = setTimeout(function () {
                 arrayOfClients.splice(clientIndex, 1);
             }, this.DELAY);
 
@@ -65,8 +65,8 @@ Network.prototype.removeClient = function(clientIP) {
     }, this);
 };
 
-Network.prototype.changeAddress = function(previousAddress, wishAddress) {
-    var impossibilityOfChange = this.listOfClients.some(function(client) {
+Network.prototype.changeAddress = function (previousAddress, wishAddress) {
+    var impossibilityOfChange = this.listOfClients.some(function (client) {
         if (client.address === wishAddress) {
             return true;
         }
@@ -74,23 +74,20 @@ Network.prototype.changeAddress = function(previousAddress, wishAddress) {
 
     if (impossibilityOfChange) {
         return;
-    } else {
-        this.listOfClients.some(function(client) {
-            if (client.address === previousAddress) {
-                client.address = wishAddress;
-
-                return true;
-            }
-        });
-
-        return wishAddress;
     }
+    this.listOfClients.some(function (client) {
+        if (client.address === previousAddress) {
+            client.address = wishAddress;
+            return true;
+        }
+    });
+    return wishAddress;
 };
 
-Network.prototype.showAllClients = function() {
+Network.prototype.showAllClients = function () {
     console.log('\n');
 
-    this.listOfClients.forEach(function(client) {
+    this.listOfClients.forEach(function (client) {
         if ((client) &&
             client.status === 'online') {
             console.log(this.networkAddress + '.' + client.address + ' ' + client.name + ' ' + client.type);
@@ -98,10 +95,10 @@ Network.prototype.showAllClients = function() {
     }, this);
 };
 
-Network.prototype.findServers = function() {
+Network.prototype.findServers = function () {
     var response = [];
 
-    this.listOfClients.forEach(function(client, address) {
+    this.listOfClients.forEach(function (client, address) {
         if (client.type === 'server') {
             response[address] = client.name;
         }
@@ -110,10 +107,10 @@ Network.prototype.findServers = function() {
     return response;
 };
 
-Network.prototype.requestToServer = function(addressOfServer, requestInfo) {
-    var indexOfServer = undefined;
+Network.prototype.requestToServer = function (addressOfServer, requestInfo) {
+    var indexOfServer;
 
-    this.listOfClients.some(function(client, currentIndex) {
+    this.listOfClients.some(function (client, currentIndex) {
         if (client.address === addressOfServer) {
             indexOfServer = currentIndex;
             return true;

@@ -3,8 +3,6 @@ var PublicServer = require('./publicServer.js');
 var Guest = require('./guest.js');
 var Admin = require('./admin.js');
 
-
-
 var myNetwork = new Network('myNetwork', '192.168.0');
 
 var server1 = new PublicServer('server1', 'admin');

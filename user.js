@@ -2,16 +2,16 @@ function User(name) {
     this.name = name;
 }
 
-User.prototype.registerInNetwork = function(network) {
+User.prototype.registerInNetwork = function (network) {
     this.network = network;
     this.address = this.network.getAddress(this.name, this.type);
 };
 
-User.prototype.logOut = function() {
+User.prototype.logOut = function () {
     this.network.removeClient(this.address);
 };
 
-User.prototype.requestToServer = function(server, requestInfo) {
+User.prototype.requestToServer = function (server, requestInfo) {
     var addressOfServer = (this.network.findServers()).indexOf(server);
 
     if (addressOfServer === -1) {
