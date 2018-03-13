@@ -2,7 +2,7 @@ var PORT = 3000;
 var EXPECTED_VALUE = 'EXPECTED_VALUE';
 
 var express = function () {
-    var server = false;
+    var serverIsOn = false;
 
     return {
         res: null,
@@ -11,63 +11,56 @@ var express = function () {
             use: {}
         },
         index: null,
-        listen: function(port) {
+        listen: function (port) {
             console.log('server is running on ' + port);
-            server = true;
+            serverIsOn = true;
         },
-        getResponse: function(url, method) {
-            if (!server) {
+        getResponse: function (url, method) {
+            if (!serverIsOn) {
                 console.log('server in not started');
             } else {
-                this.req = {};
-                this.counterOfNext = 0;
-                this.counterOfMiddleware = 0;
-                this.fn = function() {
-                    this.counterOfNext++;
-                };
-                this.next = this.fn.bind(this);
+                var req = {};
 
-                this.routeTable.use[url].forEach(function(middleware) {
-                    if (this.counterOfNext === this.counterOfMiddleware) {
-                        middleware(this.req, null, this.next);
-                        this.counterOfMiddleware++;
-                    }
-                }, this);
+                if (this.routeTable.use[url].every(function (middleware) {
+                    var flagOfExecutionNext = false;
+                    var next = function () {
+                        flagOfExecutionNext = true;
+                    };
 
-                if (this.counterOfNext === this.counterOfMiddleware) {
-                    this.routeTable[method.toLowerCase()][url](this.req, null);
+                    middleware(req, null, next);
+
+                    return flagOfExecutionNext;
+                })) {
+                    this.routeTable[method.toLowerCase()][url](req, null);
                 }
             }
         },
-        use: function(url, callback) {
+        use: function (url, callback) {
             if (!this.routeTable.use[url]) {
                 this.routeTable.use[url] = [];
             }
 
             this.routeTable.use[url].push(callback);
         },
-        get: function(url, callback) {
+        get: function (url, callback) {
             this.routeTable.get[url] = callback;
         }
     };
 };
 
-
-
-
 var app = express();
 
-app.use('/', function(req, res, next) {
+app.use('/', function (req, res, next) {
     req.input = EXPECTED_VALUE;
     next();
 });
 
-app.use('/', function(req, res, next) {
+app.use('/', function (req, res, next) {
     console.log(req.input);
     next();
 });
 
-app.get('/', function(req) {
+app.get('/', function (req) {
     console.log(req.input === EXPECTED_VALUE); // true
 });
 

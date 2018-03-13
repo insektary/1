@@ -3,17 +3,14 @@ module.exports = {
         "node": true,
         "es6": false
     },
-    "parserOptions": {
-        "ecmaVersion": 5
-    },
-    "extends": "eslint:recommended",
+    "extends": "eslint-config-airbnb-es5",
     "rules": {
         "indent": [
             "error",
             4
         ],
         "linebreak-style": [
-            "error",
+            "off",
             "windows"
         ],
         "quotes": [
@@ -22,6 +19,10 @@ module.exports = {
         ],
         "semi": [
             0,
+            "never"
+        ],
+        "func-names": [
+            "error",
             "never"
         ],
         "no-console": "off"
