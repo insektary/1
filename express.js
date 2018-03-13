@@ -20,21 +20,21 @@ var express = function () {
                 console.log('server in not started');
             } else {
                 this.req = {};
-                this.counter1 = 0;
-                this.counter2 = 0;
+                this.counterOfNext = 0;
+                this.counterOfMiddleware = 0;
                 this.fn = function() {
-                    this.counter1++;
+                    this.counterOfNext++;
                 };
                 this.next = this.fn.bind(this);
 
                 this.routeTable.use[url].forEach(function(middleware) {
-                    if (this.counter1 === this.counter2) {
+                    if (this.counterOfNext === this.counterOfMiddleware) {
                         middleware(this.req, null, this.next);
-                        this.counter2++;
+                        this.counterOfMiddleware++;
                     }
                 }, this);
 
-                if (this.counter1 === this.counter2) {
+                if (this.counterOfNext === this.counterOfMiddleware) {
                     this.routeTable[method.toLowerCase()][url](this.req, null);
                 }
             }

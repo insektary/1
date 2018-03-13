@@ -3,6 +3,9 @@ module.exports = {
         "node": true,
         "es6": false
     },
+    "parserOptions": {
+        "ecmaVersion": 5
+    },
     "extends": "eslint:recommended",
     "rules": {
         "indent": [
