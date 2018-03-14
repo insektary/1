@@ -8,8 +8,8 @@ function Network(name, networkAddress) {
     this.SERVER = 'server';
 }
 
-Network.prototype.getAddress = function (name, type, feedbackMethod) {
-    var newAddress;
+Network.prototype.getAddress = function (name, type, callback) {
+    var address;
 
     var res = this.listOfClients.some(function (client) {
         if (client.name === name) {
@@ -22,41 +22,51 @@ Network.prototype.getAddress = function (name, type, feedbackMethod) {
 
     if (res) return;
 
-    newAddress = this._findFreeAddress(this.listOfClients);
+    address = this._findFreeAddress();
 
     this.listOfClients.push({
         name: name,
-        address: newAddress,
+        address: address,
         type: type,
         status: this.ONLINE,
-        feedbackMethod: feedbackMethod
+        feedbackMethod: callback
     });
 
-    return newAddress;
+    return address;
 };
 
-Network.prototype._findFreeAddress = function (array) {
+Network.prototype._findFreeAddress = function () {
     var freeAddress = 0;
 
-    while (array.some(function (client) {
-        if (client.address === freeAddress) {
-            freeAddress++;
+    var check = function (array) {
+        return array.some(function (client) {
+            if (client.address === freeAddress) {
+                return true;
+            }
+        });
+    };
 
-            return true;
-        }
-    }));
+    while (check(this.listOfClients)) {
+        freeAddress++;
+    }
 
     return freeAddress;
 };
 
 Network.prototype.removeClient = function (clientIP) {
-    this.listOfClients.some(function (client, clientIndex, arrayOfClients) {
-        if (client.address === clientIP) {
-            client.status = this.TEMPORARILY_OFFLINE;
+    var finalRemove = function (clientName, arrayOfClients) {
+        arrayOfClients.some(function (currentClient, clientIndex, array) {
+            if (clientName === currentClient.name) {
+                array.slice(clientIndex, 1);
+            }
+        })
+    };
 
-            client.timer = setTimeout(function () {
-                arrayOfClients.splice(clientIndex, 1);
-            }, this.DELAY);
+    this.listOfClients.some(function (currentClient, clientIndex, arrayOfClients) {
+        if (currentClient.address === clientIP) {
+            currentClient.status = this.TEMPORARILY_OFFLINE;
+
+            currentClient.timer = setTimeout(finalRemove, this.DELAY, currentClient.name, arrayOfClients);
 
             return true;
         }

@@ -25,9 +25,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "no-console": [
-            "off"
-        ],
+        "no-console": "off",
         "no-require": [
             "off"
         ],
