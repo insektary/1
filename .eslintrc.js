@@ -25,8 +25,17 @@ module.exports = {
             "error",
             "never"
         ],
-        "no-console": "off",
-        "no-require": "off",
-        "consistent-return": "off"
+        "no-console": [
+            "off"
+        ],
+        "no-require": [
+            "off"
+        ],
+        "consistent-return": [
+            "off"
+        ],
+        "no-loop-func": [
+            "off"
+        ]
     }
 };

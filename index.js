@@ -26,8 +26,8 @@ guest2.registerInNetwork(myNetwork);
 
 
 var requestInfo = {
-    instruction: 'toBlackList',
-    login: '',
+    instruction: 'rebase',
+    login: 'admin',
     wishAddress: 20,
     userForBlackList: 'guest1'
 };

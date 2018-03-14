@@ -5,12 +5,17 @@ function Server(name, login) {
     this.blackList = [];
     this.type = 'server';
     this.ADMIN_RIGHTS = 'admin';
-    this.exBind = Server.prototype._executeInstruction.bind(this);
+    this.RESET = 'reset';
+    this.LOG_IN = 'logIn';
+    this.REBASE = 'rebase';
+    this.SHOW_CLIENTS = 'showClients';
+    this.TO_BLACK_LIST = 'toBlackList';
+    this.feedbackMethod = Server.prototype._executeInstruction.bind(this);
 }
 
 
 Server.prototype.registerInNetwork = function (network) {
-    this.address = network.getAddress(this.name, this.type, this.exBind);
+    this.address = network.getAddress(this.name, this.type, this.feedbackMethod);
     this.network = network;
 };
 
@@ -30,23 +35,23 @@ Server.prototype._executeInstruction = function (requestInfo) {
     }
 
     switch (requestInfo.instruction) {
-    case 'reset': {
+    case this.RESET: {
         this._reset(USER_RIGHTS);
         break;
     }
-    case 'logIn': {
+    case this.LOG_IN: {
         this._logIn(USER_LOGIN, USER_NAME);
         break;
     }
-    case 'rebase': {
+    case this.REBASE: {
         this._rebase(USER_RIGHTS, WISH_ADDRESS);
         break;
     }
-    case 'showClients': {
+    case this.SHOW_CLIENTS: {
         this._showClients(USER_RIGHTS);
         break;
     }
-    case 'toBlackList': {
+    case this.TO_BLACK_LIST: {
         this._toBlackList(USER_RIGHTS, USER_FOR_BLACK_LIST);
         break;
     }

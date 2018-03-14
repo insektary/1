@@ -12,16 +12,14 @@ User.prototype.logOut = function () {
 };
 
 User.prototype.requestToServer = function (server, requestInfo) {
-    var addressOfServer = (this.network.findServers()).indexOf(server);
-
-    if (addressOfServer === -1) {
+    if (this.network.findServers().indexOf(server) === -1) {
         return console.log('server not found');
     }
 
     requestInfo.name = this.name;
     requestInfo.type = this.type;
 
-    this.network.requestToServer(addressOfServer, requestInfo);
+    this.network.requestToServer(server, requestInfo);
 };
 
 module.exports = User;
