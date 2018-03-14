@@ -53,20 +53,21 @@ Network.prototype._findFreeAddress = function () {
     return freeAddress;
 };
 
-Network.prototype.removeClient = function (clientIP) {
-    var finalRemove = function (clientName, arrayOfClients) {
-        arrayOfClients.some(function (currentClient, clientIndex, array) {
-            if (clientName === currentClient.name) {
-                array.slice(clientIndex, 1);
-            }
-        })
-    };
-
+Network.prototype._finalRemoveClient = function (clientIP) {
     this.listOfClients.some(function (currentClient, clientIndex, arrayOfClients) {
         if (currentClient.address === clientIP) {
-            currentClient.status = this.TEMPORARILY_OFFLINE;
+            arrayOfClients.slice(clientIndex, 1);
 
-            currentClient.timer = setTimeout(finalRemove, this.DELAY, currentClient.name, arrayOfClients);
+            return true;
+        }
+    })
+};
+
+Network.prototype.removeClient = function (clientIP) {
+    this.listOfClients.some(function (currentClient) {
+        if (currentClient.address === clientIP) {
+            currentClient.status = this.TEMPORARILY_OFFLINE;
+            currentClient.timer = setTimeout(this._finalRemoveClient, this.DELAY, clientIP);
 
             return true;
         }
@@ -118,7 +119,7 @@ Network.prototype.findServers = function () {
 };
 
 Network.prototype.requestToServer = function (server, requestInfo) {
-    var requestedServer;
+    var requestedServer = null;
 
     this.listOfClients.some(function (client) {
         if (client.name === server) {
