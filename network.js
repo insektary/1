@@ -77,7 +77,7 @@ Network.prototype.removeClient = function (clientIP) {
     this.listOfClients.some(function (client) {
         if (client.address === clientIP) {
             client.status = this.CONSTS.TEMPORARILY_OFFLINE;
-            client.timer = setTimeout(this._finalRemoveClient, this.DELAY, clientIP);
+            client.timer = setTimeout(this._finalRemoveClient.bind(this), this.DELAY, clientIP);
 
             return true;
         }

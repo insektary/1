@@ -75,12 +75,12 @@ Server.prototype._rebase = function (userRights, wishAddress) {
         return console.log('access denied');
     }
 
-    var changedAddress = this.network.changeAddress(this.address, wishAddress);
+    var address = this.network.changeAddress(this.address, wishAddress);
 
-    if (changedAddress) {
-        console.log('successful on address ' + changedAddress);
+    if (address) {
+        console.log('successful on address ' + address);
 
-        this.address = changedAddress;
+        this.address = address;
     } else {
         console.log('address in busy');
     }
