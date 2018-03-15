@@ -3,8 +3,14 @@ function User(name) {
 }
 
 User.prototype.registerInNetwork = function (network) {
-    this.network = network;
-    this.address = this.network.getAddress(this.name, this.type);
+    var address = network.registerInNetwork(this.name, this.type);
+
+    if (address) {
+        this.address = address;
+        this.network = network;
+    } else {
+        console.log('no free addresses');
+    }
 };
 
 User.prototype.logOut = function () {
@@ -12,7 +18,9 @@ User.prototype.logOut = function () {
 };
 
 User.prototype.requestToServer = function (server, requestInfo) {
-    if (this.network.findServers().indexOf(server) === -1) {
+    var noServer = (this.network.findServers().indexOf(server) === -1);
+
+    if (noServer) {
         return console.log('server not found');
     }
 

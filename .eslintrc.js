@@ -5,10 +5,6 @@ module.exports = {
     },
     "extends": "eslint-config-airbnb-es5",
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
         "linebreak-style": [
             "off",
             "windows"
@@ -34,6 +30,11 @@ module.exports = {
         ],
         "no-loop-func": [
             "off"
+        ],
+        "indent": [
+            "error",
+            4,
+            { "SwitchCase": 1 }
         ]
     }
 };

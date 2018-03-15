@@ -2,25 +2,35 @@ function Network(name, networkAddress) {
     this.networkAddress = networkAddress;
     this.listOfClients = [];
     this.name = name;
-    this.DELAY = 10000;
-    this.ONLINE = 'online';
-    this.TEMPORARILY_OFFLINE = 'temporarilyOffline';
-    this.SERVER = 'server';
+    this.CONSTS = {
+        DELAY: 10000,
+        ONLINE: 'online',
+        TEMPORARILY_OFFLINE: 'temporarilyOffline',
+        SERVER: 'server',
+        ADDRESS_CAPACITY: 999
+    };
 }
 
-Network.prototype.getAddress = function (name, type, callback) {
+Network.prototype.registerInNetwork = function (name, type, callback) {
     var address;
 
-    var res = this.listOfClients.some(function (client) {
+    var isClientInList = this.listOfClients.some(function (client) {
         if (client.name === name) {
-            client.status = this.ONLINE;
+            address = client.address;
+            client.status = this.CONSTS.ONLINE;
             clearTimeout(client.timer);
 
             return true;
         }
     }, this);
 
-    if (res) return;
+    if (isClientInList) {
+        return address;
+    }
+
+    if (this.listOfClients.length > this.CONSTS.ADDRESS_CAPACITY) {
+        return;
+    }
 
     address = this._findFreeAddress();
 
@@ -28,7 +38,7 @@ Network.prototype.getAddress = function (name, type, callback) {
         name: name,
         address: address,
         type: type,
-        status: this.ONLINE,
+        status: this.CONSTS.ONLINE,
         feedbackMethod: callback
     });
 
@@ -36,9 +46,9 @@ Network.prototype.getAddress = function (name, type, callback) {
 };
 
 Network.prototype._findFreeAddress = function () {
-    var freeAddress = 0;
+    var freeAddress = 1;
 
-    var check = function (array) {
+    var checkFreeAddress = function (array) {
         return array.some(function (client) {
             if (client.address === freeAddress) {
                 return true;
@@ -46,7 +56,7 @@ Network.prototype._findFreeAddress = function () {
         });
     };
 
-    while (check(this.listOfClients)) {
+    while (checkFreeAddress(this.listOfClients)) {
         freeAddress++;
     }
 
@@ -54,9 +64,9 @@ Network.prototype._findFreeAddress = function () {
 };
 
 Network.prototype._finalRemoveClient = function (clientIP) {
-    this.listOfClients.some(function (currentClient, clientIndex, arrayOfClients) {
-        if (currentClient.address === clientIP) {
-            arrayOfClients.slice(clientIndex, 1);
+    this.listOfClients.some(function (client, clientIndex, listOfClients) {
+        if (client.address === clientIP) {
+            listOfClients.slice(clientIndex, 1);
 
             return true;
         }
@@ -64,10 +74,10 @@ Network.prototype._finalRemoveClient = function (clientIP) {
 };
 
 Network.prototype.removeClient = function (clientIP) {
-    this.listOfClients.some(function (currentClient) {
-        if (currentClient.address === clientIP) {
-            currentClient.status = this.TEMPORARILY_OFFLINE;
-            currentClient.timer = setTimeout(this._finalRemoveClient, this.DELAY, clientIP);
+    this.listOfClients.some(function (client) {
+        if (client.address === clientIP) {
+            client.status = this.CONSTS.TEMPORARILY_OFFLINE;
+            client.timer = setTimeout(this._finalRemoveClient, this.DELAY, clientIP);
 
             return true;
         }
@@ -99,7 +109,7 @@ Network.prototype.showAllClients = function () {
 
     this.listOfClients.forEach(function (client) {
         if ((client) &&
-            client.status === this.ONLINE) {
+            client.status === this.CONSTS.ONLINE) {
             console.log(this.networkAddress + '.' + client.address + ' ' + client.name + ' ' + client.type);
         }
     }, this);
@@ -109,8 +119,8 @@ Network.prototype.findServers = function () {
     var servers = [];
 
     this.listOfClients.forEach(function (client) {
-        if (client.type === this.SERVER
-        && client.status === this.ONLINE) {
+        if (client.type === this.CONSTS.SERVER
+        && client.status === this.CONSTS.ONLINE) {
             servers.push(client.name);
         }
     }, this);
@@ -118,11 +128,11 @@ Network.prototype.findServers = function () {
     return servers;
 };
 
-Network.prototype.requestToServer = function (server, requestInfo) {
-    var requestedServer = null;
+Network.prototype.requestToServer = function (serverName, requestInfo) {
+    var requestedServer;
 
     this.listOfClients.some(function (client) {
-        if (client.name === server) {
+        if (client.name === serverName) {
             requestedServer = client;
 
             return true;
