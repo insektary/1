@@ -3,13 +3,8 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "script",
-        "ecmaFeatures": {
-            "jsx": false
-        }
-    },
+    "extends": ["eslint-config-es6",
+        "eslint-config-airbnb-es5"],
     "rules": {
         "linebreak-style": [
             "off",
