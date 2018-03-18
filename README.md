@@ -86,7 +86,7 @@ Multifunctional method. Method send network request for redirect to the required
 | "toBlackList" | --- | --- | * | revents the user from accessing the server. Requires a parameter 'userForBlackList' |
 | showClients | --- | * | * | Shows a list of all clients of this server |
 
-* ### Classes PublicServer([name])
+* ### Class PublicServer([name])
 -----------------------------------------------------------------------
 Create a new server of 'public' type
 **Kind:** constructor
@@ -103,9 +103,38 @@ Send a network request to receive IP-address
 | --- | --- | --- |
 | [network] | object | link to a network |
     
-* ### Classes ProtectedServer([name])
+#### exitTheNetwork([network]) 
+Log out of the network.
+**Kind:** method
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | object | link to a network |
+
+**To objects of a class the 'PublicServer' have access to all types of users: 'Guest', 'AuthorizedUser', 'Admin'**
+* ### Class ProtectedServer([name])
 -----------------------------------------------------------------------
-Create a new server of 'public' type
+Create a new server of 'protected' type
 **Kind:** constructor
 
-**This class is similar to the PublicServer, but it does not accept requests from the users 'Guest' type.**
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | string | name of server |
+
+#### registerInNetwork([network])
+Send a network request to receive IP-address
+**Kind:** method
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [network] | object | link to a network |
+    
+#### exitTheNetwork([network]) 
+Log out of the network.
+**Kind:** method
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | object | link to a network |
+
+**To objects of a class the 'PurotectedServer' have access to all types of users: 'AuthorizedUser' and 'Admin'**
