@@ -3,8 +3,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": ["eslint-config-es6",
-    "eslint-config-airbnb-es5"],
+    "extends": "eslint-config-es6",
     "rules": {
         "linebreak-style": [
             "off",
