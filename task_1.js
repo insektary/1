@@ -48,15 +48,12 @@ Array.prototype.polyFilter = function (callback, context) {
 };
 
 Array.prototype.polyReduce = function (callback, initialValue) {
-    let startIndex;
-    let result;
+    let startIndex = 1;
+    let [result] = this;
 
     if (initialValue) {
         result = initialValue;
         startIndex = 0;
-    } else {
-        result = this[0];
-        startIndex = 1;
     }
 
     for (let i = startIndex; i < this.length; i++) {
@@ -66,23 +63,21 @@ Array.prototype.polyReduce = function (callback, initialValue) {
     return result;
 };
 
-Function.prototype.polyBind = function (context, ...rest) {
+Function.prototype.polyBind = function (context, ...args) {
     const fn = this;
 
-    return (...insideRest) => {
-        insideRest.forEach((arg) => {
-            rest.push(arg);
-        });
+    return (...restArgs) => {
+            args.push(...restArgs);
 
-        return fn.apply(context, rest);
+        return fn.apply(context, args);
     }
 };
 
-const banchMark = (func, arg) => {
+const banchMark = (func) => {
     const time = Date.now();
 
     for (let i = 0; i < 10000; i++) {
-        func.call(arg, () => {});
+        func.call(testArray, () => {});
     }
 
     return Date.now() - time;
@@ -90,15 +85,15 @@ const banchMark = (func, arg) => {
 
 const testArray = new Array(10000).fill(0);
 
-console.log(`some: ${banchMark(Array.prototype.some, testArray)} ms`);
-console.log(`polySome: ${banchMark(Array.prototype.polySome, testArray)} ms`);
-console.log(`every: ${banchMark(Array.prototype.every, testArray)} ms`);
-console.log(`polyEvery: ${banchMark(Array.prototype.polyEvery, testArray)} ms`);
-console.log(`forEach: ${banchMark(Array.prototype.forEach, testArray)} ms`);
-console.log(`polyForEach: ${banchMark(Array.prototype.polyForEach, testArray)} ms`);
-console.log(`map: ${banchMark(Array.prototype.map, testArray)} ms`);
-console.log(`polyMap: ${banchMark(Array.prototype.polyMap, testArray)} ms`);
-console.log(`filter: ${banchMark(Array.prototype.filter, testArray)} ms`);
-console.log(`polyFilter: ${banchMark(Array.prototype.polyFilter, testArray)} ms`);
-console.log(`reduce: ${banchMark(Array.prototype.reduce, testArray)} ms`);
-console.log(`polyReduce: ${banchMark(Array.prototype.polyReduce, testArray)} ms`);
+console.log(`some: ${banchMark(Array.prototype.some)} ms`);
+console.log(`polySome: ${banchMark(Array.prototype.polySome)} ms`);
+console.log(`every: ${banchMark(Array.prototype.every)} ms`);
+console.log(`polyEvery: ${banchMark(Array.prototype.polyEvery)} ms`);
+console.log(`forEach: ${banchMark(Array.prototype.forEach)} ms`);
+console.log(`polyForEach: ${banchMark(Array.prototype.polyForEach)} ms`);
+console.log(`map: ${banchMark(Array.prototype.map)} ms`);
+console.log(`polyMap: ${banchMark(Array.prototype.polyMap)} ms`);
+console.log(`filter: ${banchMark(Array.prototype.filter)} ms`);
+console.log(`polyFilter: ${banchMark(Array.prototype.polyFilter)} ms`);
+console.log(`reduce: ${banchMark(Array.prototype.reduce)} ms`);
+console.log(`polyReduce: ${banchMark(Array.prototype.polyReduce)} ms`);
