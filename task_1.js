@@ -67,7 +67,7 @@ Function.prototype.polyBind = function (context, ...args) {
     const fn = this;
 
     return (...restArgs) => {
-        args.push(...restArgs);
+        args = [...args, ...restArgs];
 
         return fn.apply(context, args);
     }
