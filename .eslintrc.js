@@ -3,7 +3,13 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint-config-es6",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
     "rules": {
         "linebreak-style": [
             "off",

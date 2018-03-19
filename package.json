@@ -6,7 +6,6 @@
   "dependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.19.0",
-    "eslint-config-airbnb-es5": "^1.2.0",
     "eslint-config-es6": "^1.10.3",
     "eslint-plugin-react": "^7.7.0"
   },
