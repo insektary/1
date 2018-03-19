@@ -66,11 +66,8 @@ Array.prototype.polyReduce = function (callback, initialValue) {
 Function.prototype.polyBind = function (context, ...args) {
     const fn = this;
 
-    return (...restArgs) => {
-        args = [...args, ...restArgs];
-
-        return fn.apply(context, args);
-    }
+    return (...restArgs) =>
+        fn.apply(context, [...args, ...restArgs]);
 };
 
 const banchMark = (func) => {
