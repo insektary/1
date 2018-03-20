@@ -4,24 +4,24 @@ const EXPECTED_VALUE = 'EXPECTED_VALUE';
 const express = () => {
     let serverIsOn = false;
 
+    const res = null;
     const routeTable = {
         get: {},
-        use: {},
+        use: {}
     };
 
-    const listen = port => {
-        console.log(`server is running on ${port}`);
+    const listen = (port) => {
+        console.log(`server is running on ${ port }`);
         serverIsOn = true;
     };
 
     const getResponse = (url, method) => {
         if (!serverIsOn) {
-            return console.log('server in not started');
-        }
-        const req = {};
+            console.log('server in not started');
+        } else {
+            const req = {};
 
-        if (
-            routeTable.use[url].every(middleware => {
+            if (routeTable.use[url].every(function (middleware) {
                 let isNextCalled = false;
                 const next = () => {
                     isNextCalled = true;
@@ -30,9 +30,9 @@ const express = () => {
                 middleware(req, null, next);
 
                 return isNextCalled;
-            })
-        ) {
-            routeTable[method.toLowerCase()][url](req, null);
+            })) {
+                routeTable[method.toLowerCase()][url](req, null);
+            }
         }
     };
 
@@ -52,8 +52,8 @@ const express = () => {
         listen,
         getResponse,
         use,
-        get,
-    };
+        get
+    }
 };
 
 const app = express();
@@ -68,7 +68,7 @@ app.use('/', (req, res, next) => {
     next();
 });
 
-app.get('/', req => {
+app.get('/', (req) => {
     console.log(req.input === EXPECTED_VALUE); // true
 });
 
