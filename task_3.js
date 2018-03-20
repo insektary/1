@@ -4,51 +4,56 @@ const EXPECTED_VALUE = 'EXPECTED_VALUE';
 const express = () => {
     let serverIsOn = false;
 
-    return {
-        res: null,
-        routeTable: {
-            get: {},
-            use: {}
-        },
+    const res = null;
+    const routeTable = {
+        get: {},
+        use: {}
+    };
 
-        listen(port) {
-            console.log(`server is running on ${ port }`);
-            serverIsOn = true;
-        },
+    const listen = (port) => {
+        console.log(`server is running on ${ port }`);
+        serverIsOn = true;
+    };
 
-        getResponse(url, method) {
-            if (!serverIsOn) {
-                console.log('server in not started');
-            } else {
-                const req = {};
+    const getResponse = (url, method) => {
+        if (!serverIsOn) {
+            console.log('server in not started');
+        } else {
+            const req = {};
 
-                if (this.routeTable.use[url].every(function (middleware) {
-                    let flagOfExecutionNext = false;
-                    const next = () => {
-                        flagOfExecutionNext = true;
-                    };
+            if (routeTable.use[url].every(function (middleware) {
+                let isNextCalled = false;
+                const next = () => {
+                    isNextCalled = true;
+                };
 
-                    middleware(req, null, next);
+                middleware(req, null, next);
 
-                    return flagOfExecutionNext;
-                })) {
-                    this.routeTable[method.toLowerCase()][url](req, null);
-                }
+                return isNextCalled;
+            })) {
+                routeTable[method.toLowerCase()][url](req, null);
             }
-        },
-
-        use(url, callback) {
-            if (!this.routeTable.use[url]) {
-                this.routeTable.use[url] = [];
-            }
-
-            this.routeTable.use[url].push(callback);
-        },
-
-        get(url, callback) {
-            this.routeTable.get[url] = callback;
         }
     };
+
+    const use = (url, callback) => {
+        if (routeTable.use[url]) {
+            routeTable.use[url].push(callback);
+        } else {
+            routeTable.use[url] = [callback];
+        }
+    };
+
+    const get = (url, callback) => {
+        routeTable.get[url] = callback;
+    };
+
+    return {
+        listen,
+        getResponse,
+        use,
+        get
+    }
 };
 
 const app = express();
