@@ -1,29 +1,33 @@
 {
-  "name": "maxim_dashkov_innergroup",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "babel-eslint": "^8.2.2",
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-airbnb-es5": "^1.2.0",
-    "eslint-config-es6": "^1.10.3",
-    "eslint-config-google": "^0.9.1",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-react": "^7.7.0",
-    "lodash": "^4.17.5",
-    "node-fetch": "^2.1.1",
-    "request": "^2.85.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "eslint ./"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://git.epam.com/Maxim_Dashkov/Maxim_Dashkov_InnerGroup"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "maxim_dashkov_innergroup",
+	"version": "1.0.0",
+	"description": "This project emulates the operation of a computer network",
+	"main": "index.js",
+	"dependencies": {
+		"babel-eslint": "^8.2.2",
+		"eslint-config-es6": "^1.10.3",
+		"eslint-plugin-react": "^7.7.0",
+		"esm": "^3.0.7",
+        "@std/esm": "^0.25.5"
+	},
+	"devDependencies": {
+		"@std/esm": "^0.25.5",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb-base": "^12.1.0",
+		"eslint-config-google": "^0.9.1",
+		"eslint-plugin-import": "^2.9.0",
+		"prettier": "^1.11.1"
+	},
+	"scripts": {
+		"test": "eslint ./",
+		"start": "node start.js",
+		"prettier": "prettier --single-quote --use-tabs --trailing-comma --write \"*.js\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://git.epam.com/Maxim_Dashkov/Maxim_Dashkov_InnerGroup"
+	},
+	"author": "",
+	"license": "ISC",
+	"@std/esm": "cjs"
 }
