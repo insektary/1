@@ -4,7 +4,6 @@ const EXPECTED_VALUE = 'EXPECTED_VALUE';
 const express = () => {
     let serverIsOn = false;
 
-    const res = null;
     const routeTable = {
         get: {},
         use: {}
@@ -17,22 +16,21 @@ const express = () => {
 
     const getResponse = (url, method) => {
         if (!serverIsOn) {
-            console.log('server in not started');
-        } else {
-            const req = {};
+            return console.log('server in not started');
+        }
+        const req = {};
 
-            if (routeTable.use[url].every(function (middleware) {
-                let isNextCalled = false;
-                const next = () => {
-                    isNextCalled = true;
-                };
+        if (routeTable.use[url].every(middleware => {
+            let isNextCalled = false;
+            const next = () => {
+                isNextCalled = true;
+            };
 
-                middleware(req, null, next);
+            middleware(req, null, next);
 
-                return isNextCalled;
-            })) {
-                routeTable[method.toLowerCase()][url](req, null);
-            }
+            return isNextCalled;
+        })) {
+            routeTable[method.toLowerCase()][url](req, null);
         }
     };
 
