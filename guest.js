@@ -1,12 +1,10 @@
-var User = require('./user.js');
+const User = require('./user.js');
 
-function Guest(name) {
-    var GUEST = 'guest';
-
-    User.call(this, name);
-    this.type = GUEST;
+class Guest extends User {
+	constructor(name) {
+		super(name);
+		this.type = 'guest';
+	}
 }
-
-Guest.prototype = Object.create(User.prototype);
 
 module.exports = Guest;

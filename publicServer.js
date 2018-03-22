@@ -1,10 +1,10 @@
-var Server = require('./server.js');
+const Server = require('./server.js');
 
-var PublicServer = function (name, login) {
-    Server.call(this, name, login);
-    this.status = 'public';
-};
-
-PublicServer.prototype = Object.create(Server.prototype);
+class PublicServer extends Server {
+	constructor(name, login) {
+		super(name, login);
+		this.status = 'public';
+	}
+}
 
 module.exports = PublicServer;

@@ -1,33 +1,36 @@
-function User(name) {
-    this.name = name;
+class User {
+	constructor(name) {
+		this.name = name;
+		this.type = 'user';
+	}
+
+	registerInNetwork(network) {
+		const address = network.registerInNetwork(this.name, this.type);
+
+		if (address) {
+			this.address = address;
+			this.network = network;
+		} else {
+			console.log('no free addresses');
+		}
+	}
+
+	logOut() {
+		this.network.removeClient(this.address);
+	}
+
+	requestToServer(server, requestInfo) {
+		const isServer = this.network.findServers().includes(server);
+
+		if (isServer) {
+			requestInfo.name = this.name;
+			requestInfo.type = this.type;
+
+			this.network.requestToServer(server, requestInfo);
+		} else {
+			console.log('server not found');
+		}
+	}
 }
-
-User.prototype.registerInNetwork = function (network) {
-    var address = network.registerInNetwork(this.name, this.type);
-
-    if (address) {
-        this.address = address;
-        this.network = network;
-    } else {
-        console.log('no free addresses');
-    }
-};
-
-User.prototype.logOut = function () {
-    this.network.removeClient(this.address);
-};
-
-User.prototype.requestToServer = function (server, requestInfo) {
-    var noServer = (this.network.findServers().indexOf(server) === -1);
-
-    if (noServer) {
-        return console.log('server not found');
-    }
-
-    requestInfo.name = this.name;
-    requestInfo.type = this.type;
-
-    this.network.requestToServer(server, requestInfo);
-};
 
 module.exports = User;
