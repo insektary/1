@@ -25,10 +25,10 @@ guest66.registerInNetwork(myNetwork);
 guest2.registerInNetwork(myNetwork);
 
 const requestInfo = {
-	instruction: 'REBASE',
-	login: 'admin',
-	wishAddress: 20,
-	userForBlackList: 'guest1',
+    instruction: 'REBASE',
+    login: 'admin',
+    wishAddress: 20,
+    userForBlackList: 'guest1',
 };
 
 const admin1 = new Admin('admin1');
