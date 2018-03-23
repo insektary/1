@@ -5,42 +5,35 @@ class Network {
 		this.name = name;
 		this.CONSTS = {
 			DELAY: 10000,
-			ONLINE: 'online',
-			TEMPORARILY_OFFLINE: 'temporarilyOffline',
-			SERVER: 'server',
+			ONLINE: 'ONLINE',
+			TEMPORARILY_OFFLINE: 'TEMPORARILY_OFFLINE',
+			SERVER: 'SERVER',
 			ADDRESS_CAPACITY: 999,
 		};
 	}
 
-	registerInNetwork(name, type, callback) {
-		let address;
+	registerInNetwork(name, type, feedbackMethod) {
+		const foundClient = this.listOfClients.find(client => client.name === name);
 
-		const isClientInList = this.listOfClients.some(client => {
-			if (client.name === name) {
-				address = client.address;
-				client.status = this.CONSTS.ONLINE;
-				clearTimeout(client.timer);
+		if (foundClient) {
+			foundClient.status = this.CONSTS.ONLINE;
+			clearTimeout(foundClient.timer);
 
-				return true;
-			}
-		}, this);
-
-		if (isClientInList) {
-			return address;
+			return foundClient.address;
 		}
 
 		if (this.listOfClients.length > this.CONSTS.ADDRESS_CAPACITY) {
 			return;
 		}
 
-		address = this._findFreeAddress();
+		const address = this._findFreeAddress();
 
 		this.listOfClients.push({
-			name: name,
-			address: address,
-			type: type,
+			name,
+			address,
+			type,
 			status: this.CONSTS.ONLINE,
-			feedbackMethod: callback,
+			feedbackMethod,
 		});
 
 		return address;
@@ -50,11 +43,7 @@ class Network {
 		let freeAddress = 1;
 
 		const checkFreeAddress = array => {
-			return array.some(client => {
-				if (client.address === freeAddress) {
-					return true;
-				}
-			});
+			return array.find(client => client.address === freeAddress);
 		};
 
 		while (checkFreeAddress(this.listOfClients)) {
@@ -65,47 +54,37 @@ class Network {
 	}
 
 	_finalRemoveClient(clientIP) {
-		this.listOfClients.some((client, clientIndex, listOfClients) => {
-			if (client.address === clientIP) {
-				listOfClients.splice(clientIndex, 1);
-
-				return true;
-			}
-		});
+		this.listOfClients.splice(
+			this.listOfClients.findIndex(client => client.address === clientIP),
+			1
+		);
 	}
 
 	removeClient(clientIP) {
-		this.listOfClients.some(client => {
-			if (client.address === clientIP) {
-				client.status = this.CONSTS.TEMPORARILY_OFFLINE;
-				client.timer = setTimeout(
-					this._finalRemoveClient.bind(this),
-					this.CONSTS.DELAY,
-					clientIP
-				);
+		const foundClient = this.listOfClients.find(
+			client => client.address === clientIP
+		);
 
-				return true;
-			}
-		}, this);
+		foundClient.status = this.CONSTS.TEMPORARILY_OFFLINE;
+		foundClient.timer = setTimeout(
+			this._finalRemoveClient.bind(this),
+			this.CONSTS.DELAY,
+			clientIP
+		);
 	}
 
 	changeAddress(currentAddress, wishAddress) {
-		const isBusyAddress = this.listOfClients.some(client => {
-			if (client.address === wishAddress) {
-				return true;
-			}
-		});
+		const isBusyAddress = this.listOfClients.find(
+			client => client.address === wishAddress
+		);
 
 		if (isBusyAddress) {
 			return;
 		}
 
-		this.listOfClients.some(client => {
-			if (client.address === currentAddress) {
-				client.address = wishAddress;
-				return true;
-			}
-		});
+		this.listOfClients.find(
+			client => client.address === currentAddress
+		).address = wishAddress;
 
 		return wishAddress;
 	}
@@ -116,46 +95,29 @@ class Network {
 		this.listOfClients.forEach(client => {
 			if (client && client.status === this.CONSTS.ONLINE) {
 				console.log(
-					this.networkAddress +
-						'.' +
-						client.address +
-						' ' +
-						client.name +
-						' ' +
+					`${this.networkAddress}.${client.address} ${client.name} ${
 						client.type
+					}`
 				);
 			}
-		}, this);
+		});
 	}
 
 	findServers() {
-		const servers = [];
-
-		this.listOfClients.forEach(client => {
-			if (
+		return this.listOfClients.filter(
+			client =>
 				client.type === this.CONSTS.SERVER &&
 				client.status === this.CONSTS.ONLINE
-			) {
-				servers.push(client.name);
-			}
-		}, this);
-
-		return servers;
+		);
 	}
 
 	requestToServer(serverName, requestInfo) {
-		let requestedServer;
-
-		this.listOfClients.some(client => {
-			if (client.name === serverName) {
-				requestedServer = client;
-
-				return true;
-			}
-		});
+		let requestedServer = this.listOfClients.find(
+			client => client.name === serverName
+		);
 
 		requestedServer.feedbackMethod(requestInfo);
 	}
 }
 
-module.exports = Network;
+export default Network;

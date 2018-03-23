@@ -1,7 +1,7 @@
-const Network = require('./network.js');
-const PublicServer = require('./publicServer.js');
-const Guest = require('./guest.js');
-const Admin = require('./admin.js');
+import Network from './network.js';
+import PublicServer from './publicServer.js';
+import Guest from './guest.js';
+import Admin from './admin.js';
 
 const myNetwork = new Network('myNetwork', '192.168.0');
 
@@ -24,8 +24,8 @@ guest66.registerInNetwork(myNetwork);
 
 guest2.registerInNetwork(myNetwork);
 
-let requestInfo = {
-	instruction: 'rebase',
+const requestInfo = {
+	instruction: 'REBASE',
 	login: 'admin',
 	wishAddress: 20,
 	userForBlackList: 'guest1',
@@ -36,7 +36,7 @@ admin1.registerInNetwork(myNetwork);
 
 admin1.requestToServer('server1', requestInfo);
 
-requestInfo.instruction = 'logIn';
+requestInfo.instruction = 'LOG_IN';
 guest1.requestToServer('server1', requestInfo);
 
 console.log('end');

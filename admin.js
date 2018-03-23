@@ -1,10 +1,10 @@
-const AuthorizedUser = require('./authorizedUser.js');
+import AuthorizedUser from './authorizedUser.js';
 
 class Admin extends AuthorizedUser {
 	constructor(name) {
 		super(name);
-		this.type = 'admin';
+		this.type = 'ADMIN_RIGHTS';
 	}
 }
 
-module.exports = Admin;
+export default Admin;

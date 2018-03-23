@@ -6,9 +6,12 @@
 	"dependencies": {
 		"babel-eslint": "^8.2.2",
 		"eslint-config-es6": "^1.10.3",
-		"eslint-plugin-react": "^7.7.0"
+		"eslint-plugin-react": "^7.7.0",
+		"esm": "^3.0.7",
+        "@std/esm": "^0.25.5"
 	},
 	"devDependencies": {
+		"@std/esm": "^0.25.5",
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-config-google": "^0.9.1",
@@ -17,7 +20,7 @@
 	},
 	"scripts": {
 		"test": "eslint ./",
-		"start": "node index.js",
+		"start": "node start.js",
 		"prettier": "prettier --single-quote --use-tabs --trailing-comma --write \"*.js\""
 	},
 	"repository": {
@@ -25,5 +28,6 @@
 		"url": "https://git.epam.com/Maxim_Dashkov/Maxim_Dashkov_InnerGroup"
 	},
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"@std/esm": "cjs"
 }

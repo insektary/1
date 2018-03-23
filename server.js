@@ -4,15 +4,15 @@ class Server {
 		this.name = name;
 		this.myClients = [];
 		this.blackList = [];
-		this.type = 'server';
+		this.type = 'SERVER';
 		this.feedbackMethod = Server.prototype._executeInstruction.bind(this);
 		this.CONSTS = {
-			ADMIN_RIGHTS: 'admin',
-			RESET: 'reset',
-			LOG_IN: 'logIn',
-			REBASE: 'rebase',
-			SHOW_CLIENTS: 'showClients',
-			TO_BLACK_LIST: 'toBlackList',
+			ADMIN_RIGHTS: 'ADMIN_RIGHTS',
+			RESET: 'RESET',
+			LOG_IN: 'LOG_IN',
+			REBASE: 'REBASE',
+			SHOW_CLIENTS: 'SHOW_CLIENTS',
+			TO_BLACK_LIST: 'TO_BLACK_LIST',
 		};
 	}
 
@@ -36,12 +36,15 @@ class Server {
 	}
 
 	_executeInstruction(requestInfo) {
-		const USER_RIGHTS = requestInfo.type;
-		const USER_NAME = requestInfo.name;
-		const USER_LOGIN = requestInfo.login;
-		const WISH_ADDRESS = requestInfo.wishAddress;
-		const USER_FOR_BLACK_LIST = requestInfo.userForBlackList;
-		const userInBlackList = this.blackList.indexOf(USER_NAME) !== -1;
+		const {
+			type: USER_RIGHTS,
+			name: USER_NAME,
+			login: USER_LOGIN,
+			wishAddress: WISH_ADDRESS,
+			userForBlackList: USER_FOR_BLACK_LIST,
+		} = requestInfo;
+
+		const userInBlackList = this.blackList.includes(USER_NAME);
 
 		if (userInBlackList) {
 			return console.log(`${USER_NAME} in a black list of ${this.name}`);
@@ -110,9 +113,7 @@ class Server {
 
 	_showClients(userRights) {
 		if (userRights === this.CONSTS.ADMIN_RIGHTS) {
-			this.myClients.forEach(userName => {
-				console.log(userName);
-			});
+			this.myClients.forEach(userName => console.log(userName));
 		} else {
 			console.log('access denied');
 		}
@@ -129,4 +130,4 @@ class Server {
 	}
 }
 
-module.exports = Server;
+export default Server;

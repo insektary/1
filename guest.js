@@ -1,4 +1,4 @@
-const User = require('./user.js');
+import User from './user.js';
 
 class Guest extends User {
 	constructor(name) {
@@ -7,4 +7,4 @@ class Guest extends User {
 	}
 }
 
-module.exports = Guest;
+export default Guest;

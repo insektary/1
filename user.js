@@ -19,18 +19,20 @@ class User {
 		this.network.removeClient(this.address);
 	}
 
-	requestToServer(server, requestInfo) {
-		const isServer = this.network.findServers().includes(server);
+	requestToServer(serverName, requestInfo) {
+		const isServer = this.network
+			.findServers()
+			.find(server => serverName === server.name);
 
 		if (isServer) {
 			requestInfo.name = this.name;
 			requestInfo.type = this.type;
 
-			this.network.requestToServer(server, requestInfo);
+			this.network.requestToServer(serverName, requestInfo);
 		} else {
 			console.log('server not found');
 		}
 	}
 }
 
-module.exports = User;
+export default User;

@@ -1,4 +1,4 @@
-const Server = require('./server.js');
+import Server from './server.js';
 
 class ProtectedServer extends Server {
 	constructor(name, login) {
@@ -7,4 +7,4 @@ class ProtectedServer extends Server {
 	}
 }
 
-module.exports = ProtectedServer;
+export default ProtectedServer;

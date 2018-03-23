@@ -1,4 +1,4 @@
-const Server = require('./server.js');
+import Server from './server.js';
 
 class PublicServer extends Server {
 	constructor(name, login) {
@@ -7,4 +7,4 @@ class PublicServer extends Server {
 	}
 }
 
-module.exports = PublicServer;
+export default PublicServer;
