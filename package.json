@@ -21,7 +21,7 @@
 	"scripts": {
 		"test": "eslint ./",
 		"start": "node start.js",
-		"prettier": "prettier --single-quote --use-tabs --trailing-comma --write \"*.js\""
+		"prettier": "prettier --single-quote --tab-width 4 --trailing-comma --write \"*.js\""
 	},
 	"repository": {
 		"type": "git",

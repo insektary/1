@@ -6,11 +6,11 @@ const express = () => {
 
     const routeTable = {
         get: {},
-        use: {}
+        use: {},
     };
 
-    const listen = (port) => {
-        console.log(`server is running on ${ port }`);
+    const listen = port => {
+        console.log(`server is running on ${port}`);
         serverIsOn = true;
     };
 
@@ -20,16 +20,18 @@ const express = () => {
         }
         const req = {};
 
-        if (routeTable.use[url].every(middleware => {
-            let isNextCalled = false;
-            const next = () => {
-                isNextCalled = true;
-            };
+        if (
+            routeTable.use[url].every(middleware => {
+                let isNextCalled = false;
+                const next = () => {
+                    isNextCalled = true;
+                };
 
-            middleware(req, null, next);
+                middleware(req, null, next);
 
-            return isNextCalled;
-        })) {
+                return isNextCalled;
+            })
+        ) {
             routeTable[method.toLowerCase()][url](req, null);
         }
     };
@@ -50,8 +52,8 @@ const express = () => {
         listen,
         getResponse,
         use,
-        get
-    }
+        get,
+    };
 };
 
 const app = express();
@@ -66,7 +68,7 @@ app.use('/', (req, res, next) => {
     next();
 });
 
-app.get('/', (req) => {
+app.get('/', req => {
     console.log(req.input === EXPECTED_VALUE); // true
 });
 
