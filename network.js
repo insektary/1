@@ -12,10 +12,8 @@ class Network {
         };
     }
 
-    registerInNetwork(clientName, type, feedbackMethod) {
-        const foundClient = this.listOfClients.find(
-            ({ name }) => name === clientName
-        );
+    registerInNetwork(name, type, feedbackMethod) {
+        const foundClient = this._findClient(name);
 
         if (foundClient) {
             foundClient.status = this.CONSTS.ONLINE;
@@ -31,7 +29,7 @@ class Network {
         const address = this._findFreeAddress();
 
         this.listOfClients.push({
-            name: clientName,
+            name,
             address,
             type,
             status: this.CONSTS.ONLINE,
@@ -41,11 +39,18 @@ class Network {
         return address;
     }
 
+    _findClient(clientName) {
+        return this.listOfClients.find(
+            ({ name }) => name === clientName
+        );
+    }
+
     _findFreeAddress() {
         let freeAddress = 1;
 
         const checkFreeAddress = array => {
-            return array.find(client => client.address === freeAddress);
+            return array.find(
+                ({ address }) => address === freeAddress);
         };
 
         while (checkFreeAddress(this.listOfClients)) {
@@ -57,7 +62,8 @@ class Network {
 
     _finalRemoveClient(clientIP) {
         this.listOfClients.splice(
-            this.listOfClients.findIndex(({ address }) => address === clientIP),
+            this.listOfClients.findIndex(
+                ({ address }) => address === clientIP),
             1
         );
     }
