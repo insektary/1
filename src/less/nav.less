@@ -3,7 +3,7 @@
     background-color: @testColor;
     border-bottom: 0.3rem solid #9dcfff;
 
-    .menu {
+    &_menu {
         padding-left: 0;
         display: flex;
         justify-content: center;
@@ -27,7 +27,8 @@
                 &::after {
                     content: '';
                     position: absolute;
-                    left: 43%; bottom: -1.25rem;
+                    left: 43%;
+                    bottom: -1.25rem;
                     border: 0.6rem solid transparent;
                     border-top: 0.6rem solid @hoverColor;
                     opacity: 0;
