@@ -1,82 +1,87 @@
 .info {
-    width: 16rem;
+    width: 28.8rem;
+    padding-top: 5.4rem;
+}
 
-    &__post {
-        padding-top: 3.4rem;
+.info-content {
+    font-size: 1.6rem;
+    color: @fontColor;
+    font-weight: 500;
+    font-family: Arial-narrow;
+    text-align: justify;
+}
 
-        &__title {
-            display: inline-flex;
+.info-header {
+    border-bottom: 0.5rem solid @logoColor;
+    display: flex;
 
-            &__marker {
-                width: 2rem;
-                height: 2rem;
-                background-color: @logoColor;
-                color: white;
-                font-family: 'PT Sans Narrow', sans-serif;
-                font-size: 1.4rem;
-                text-align: center;
-                line-height: 2rem;
-            }
+    &__marker {
+        background: url('/src/svg/sprite-media.svg') no-repeat;
+        background-position-y: -1.15rem;
+        background-color: @logoColor;
+        background-size: 64rem;
+        width: 3rem;
+        flex-shrink: 0;
+        height: inherit;
 
-            &--header {
-                color: @logoColor;
-                font-weight: bolder;
-                font-family: Trend-Sans-One;
-                font-size: 1.05rem;
-                width: 13.4rem;
-                margin: 0;
-                padding: 0 0 0 0.5rem;
-                border-bottom: 5px solid @logoColor;
-            }
+        &--about {
+            background-position-x: -55.3rem;
         }
-
-        &--content {
-            font-size: 1rem;
-            color: @fontColor;
-            font-weight: 500;
-            font-family: Arial-narrow;
-            text-align: justify;
+        &--some {
+            background-position-x: -47.8rem;
         }
     }
 
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        height: 6rem;
-        padding-left: 0;
-
-        .tag {
-            font-family: Arial-narrow;
-            color: white;
-            background-color: @logoColor;
-            font-size: 0.8rem;
-            height: 1.2rem;
-            padding-left: 0.8rem;
-            display: flex;
-
-            span {
-                line-height: 1.2rem;
-                margin-right: 0rem;
-            }
-
-            &::after {
-                content: '';
-                border: 9px solid transparent;
-                border-left: 9px solid @logoColor;
-                position: relative;
-                left: 18px;
-            }
-
-            .marker {
-                background-color: white;
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                position: relative;
-                top: 6px;
-                left: 1rem;
-            }
-        }
+    &__title {
+        font-family: Trend-Sans-One;
+        color: @logoColor;
+        font-size: 2rem;
+        padding-left: 1rem;
     }
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 25.6rem;
+    padding-left: 0;
+}
+
+.tag {
+    font-family: Arial-narrow;
+    color: white;
+    background-color: @logoColor;
+    font-size: 1.3rem;
+    height: 1.9rem;
+    padding-left: 1.8rem;
+    display: flex;
+    margin: 0 1.5rem 0.6rem 0;
+
+    &__title {
+        line-height: 1.9rem;
+        margin-right: 0rem;
+    }
+
+    &::after {
+        content: '';
+        border: 0.9rem solid transparent;
+        border-left: 0.9rem solid @logoColor;
+        position: relative;
+        left: 1.8rem;
+    }
+
+    &__marker {
+        background-color: white;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        position: relative;
+        top: 0.52rem;
+        left: 1.6rem;
+    }
+}
+
+.info-button {
+    display: none;
 }

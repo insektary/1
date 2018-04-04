@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: './index.js',
@@ -23,10 +24,24 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [
-                    'css-hot-loader', MiniCssExtractPlugin.loader,  "css-loader", "less-loader"
+                    'css-hot-loader',
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer({
+                                    browsers:['last 2 version']
+                                })
+                            ],
+                            sourceMap: true
+                        }
+                    },
+                    "less-loader"
                 ]
             }
-        ]
+        ],
     },
     mode: 'development',
     devServer: {

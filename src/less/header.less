@@ -1,22 +1,25 @@
 .header {
-    height: 5rem;
+    height: 9.1rem;
+    display: flex;
+    justify-content: center;
+}
 
-    .logo {
-        width: 24.8rem;
-        line-height: 5rem;
-        height: 100%;
-        position: relative;
-        left: calc(50% - 11.5rem);
-        cursor: pointer;
-        background: url(/src/svg/racoon-positive.svg) no-repeat;
-        background-size: 3.5rem;
-        background-position-x: 10.6rem;
-        background-position-y: 1.2rem;
+.logo {
+    cursor: pointer;
+    background: url(/src/svg/racoon-positive.svg) no-repeat;
+    font-family: Trend-Sans-One;
+    font-weight: lighter;
+}
 
-
-        color: @logoColor;
-        font-size: 2.5rem;
-        font-family: Trend-Sans-One;
-        font-weight: lighter;
-    }
+.logo--header {
+    position: relative;
+    color: @logoColor;
+    font-size: 4rem;
+    padding-left: 3.0rem;
+    width: 40rem;
+    height: 9rem;
+    line-height: 8.3rem;
+    background-size: 5.6rem;
+    background-position-x: 20rem;
+    background-position-y: 1.6rem;
 }
