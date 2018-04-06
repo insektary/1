@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Trend-Sans-One';
+    src: url(/src/fonts/trend-sans-one-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Arial-narrow';
+    src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
+}
+
+@testColor: #6B9AD0;
+@logoColor: #6795B8;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+@fontColor: #69747C;
+@borderLineColor: #E2E5E8;
+@mediaBlock: #D1DAE3;
+@mediaHover: #ff6400;
+
+@facebook: #3c5a98;
+@google: #c25234;
+@twitter: #00aced;
+@vk: #48729e;
+@yandex: #d83933;
+
+.header {
+    height: 9.1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    cursor: pointer;
+    background: url(/src/svg/racoon-positive.svg) no-repeat;
+    font-family: Trend-Sans-One;
+    font-weight: lighter;
+}
+
+.logo--header {
+    position: relative;
+    color: @logoColor;
+    font-size: 4rem;
+    padding-left: 3.0rem;
+    width: 40rem;
+    height: 9rem;
+    line-height: 8.3rem;
+    background-size: 5.6rem;
+    background-position-x: 20rem;
+    background-position-y: 1.6rem;
+}

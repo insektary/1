@@ -1,0 +1,204 @@
+@font-face {
+    font-family: 'Trend-Sans-One';
+    src: url(/src/fonts/trend-sans-one-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Arial-narrow';
+    src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
+}
+
+@testColor: #6B9AD0;
+@logoColor: #6795B8;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+@fontColor: #69747C;
+@borderLineColor: #E2E5E8;
+@mediaBlock: #D1DAE3;
+@mediaHover: #ff6400;
+
+@facebook: #3c5a98;
+@google: #c25234;
+@twitter: #00aced;
+@vk: #48729e;
+@yandex: #d83933;
+
+.content {
+    width: 96rem;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
+    width: 64rem;
+    padding-top: 2rem;
+    font-family: Arial-narrow;
+    color: @fontColor;
+}
+
+.post {
+    padding-bottom: 5.4rem;
+}
+
+.post-image {
+    width: 64rem;
+    height: 25rem;
+}
+
+.post-title {
+    font-size: 2.6rem;
+    height: 4.8rem;
+    line-height: 4.8rem;
+    font-weight: 500;
+}
+
+.post-info {
+    height: 4.3rem;
+    line-height: 4.3rem;
+    width: 100%;
+    border-top: 1px solid @borderLineColor;
+    border-bottom: 1px solid @borderLineColor;
+    background-position-y: -0.2rem;
+    background-position-x: 0.6rem;
+}
+
+.post-time, .post-author {
+    background: url('/src/svg/sprite-clock.svg') no-repeat;
+    background-size: 40.5rem;
+    background-position-y: -1.4rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    display: inline;
+}
+
+.post {
+    &-time__text {
+        margin-left: 3.2rem;
+    }
+    &-author__text {
+        margin-left: 3.2rem;
+    }
+    &-time {
+        background-position-x: 0.8rem;
+    }
+    &-author {
+        background-position-x: -37.6rem;
+    }
+}
+
+.post-content {
+    font-weight: 500;
+    font-size: 1.6rem;
+    text-align: justify;
+    padding-top: 1.6rem;
+}
+
+.post-media {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 32rem;
+    float: right;
+    background-position-x: 0.8rem;
+}
+
+.media-item {
+    background: url('/src/svg/sprite-media.svg') no-repeat;
+    background-color: @mediaBlock;
+    background-size: 64rem;
+    background-position-y: -1.1rem;
+    color: white;
+    font-size: 1.4rem;
+    border: 0;
+    border-radius: 0.4rem;
+    height: 2.6rem;
+    cursor: pointer;
+    outline: 0;
+
+    &__counter {
+        margin: 0 0 0 2.6rem;
+        line-height: 1.6rem;
+    }
+
+    &--facebook {
+        background-position-x: -2.8rem;
+        &:hover {
+            background-color: @facebook;
+        }
+    }
+    &--google {
+        background-position-x: -12.5rem;
+        &:hover {
+            background-color: @google;
+        }
+    }
+    &--twitter {
+        background-position-x: -22.6rem;
+        &:hover {
+            background-color: @twitter;
+        }
+    }
+    &--vk {
+        background-position-x: -31.7rem;
+        &:hover {
+            background-color: @vk;
+        }
+    }
+    &--yandex {
+        background-position-x: -40.3rem;
+        &:hover {
+            background-color: @yandex;
+        }
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .content {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .main {
+        width: 64rem;
+        padding-top: 2rem;
+        margin: auto;
+    }
+
+    .post-image {
+        width: 64rem;
+        height: 23rem;
+    }
+
+    .post-media {
+        position: absolute;
+        justify-content: flex-start;
+        flex-direction: column;
+        height: 22rem;
+        width: 6rem;
+        right: 0;
+        align-items: flex-end;
+    }
+
+    .media-item {
+        margin-bottom: 1rem;
+        position: relative;
+        top: -36.9rem;
+
+        &--facebook {
+            background-color: @facebook;
+        }
+        &--google {
+            background-color: @google;
+        }
+        &--twitter {
+            background-color: @twitter;
+        }
+        &--vk {
+            background-color: @vk;
+        }
+        &--yandex {
+            background-color: @yandex;
+        }
+    }
+}

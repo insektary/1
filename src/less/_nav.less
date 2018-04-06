@@ -1,0 +1,93 @@
+@font-face {
+    font-family: 'Trend-Sans-One';
+    src: url(/src/fonts/trend-sans-one-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Arial-narrow';
+    src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
+}
+
+@testColor: #6B9AD0;
+@logoColor: #6795B8;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+@fontColor: #69747C;
+@borderLineColor: #E2E5E8;
+@mediaBlock: #D1DAE3;
+@mediaHover: #ff6400;
+
+@facebook: #3c5a98;
+@google: #c25234;
+@twitter: #00aced;
+@vk: #48729e;
+@yandex: #d83933;
+
+.nav {
+    height: 6rem;
+    width: 100%;
+    background-color: @testColor;
+}
+
+.nav-border {
+    background-color: #9dcfff;
+    height: 0.5rem;
+}
+
+.menu {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+.menu-item {
+    position: relative;
+    font-size: 2rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 43%;
+        bottom: -2rem;
+        border: 1rem solid transparent;
+        border-top: 1rem solid @hoverColor;
+        opacity: 0;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: calc(43% - 0.8rem); bottom: -3.6rem;
+        border: 1.8rem solid transparent;
+        border-top: 1.8rem solid @arrowColor;
+        opacity: 0;
+    }
+
+    &:hover {
+        background-color: @hoverColor;
+
+        &:after {
+            opacity: 1;
+        }
+
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    &__link {
+        color: white;
+        font-family: Arial;
+        padding: 1.9rem 3.5rem 1.9rem 3.5rem;
+        font-stretch: extra-condensed;
+        text-decoration: none;
+        line-height: 6rem;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .menu-item__link {
+        padding: 1.9rem 3rem 1.9rem 3rem;
+    }
+}
