@@ -41,19 +41,18 @@
     display: flex;
 
     &__marker {
-        background: url('/src/svg/sprite-media.svg') no-repeat;
-        background-position-y: -1.15rem;
-        background-color: @logoColor;
-        background-size: 64rem;
+        background: url('/src/svg/sprite-media.svg') no-repeat @logoColor;
+        background-position-y: -20.5rem;
+        background-size: 9rem;
         width: 3rem;
         flex-shrink: 0;
         height: inherit;
 
         &--about {
-            background-position-x: -55.3rem;
+            background-position-x: -3rem;
         }
         &--some {
-            background-position-x: -47.8rem;
+            background-position-x: -6.7rem;
         }
     }
 
@@ -90,7 +89,7 @@
     &::after {
         content: '';
         border: 0.9rem solid transparent;
-        border-left: 0.9rem solid @logoColor;
+        border-left-color: @logoColor;
         position: relative;
         left: 1.8rem;
     }
@@ -153,12 +152,13 @@
             height: 5.7rem;
             width: 5rem;
             background-color: #7ca7d9;
-            background-position-y: 0.3rem;
+            background-size: 12rem;
+            background-position-y: -35.8rem;
             &--about {
-                background-position-x: -54.4rem;
+                background-position-x: -3.45rem;
             }
             &--some {
-                background-position-x: -46.7rem;
+                background-position-x: -8.4rem;
             }
             &::after {
                 content: '';
@@ -191,7 +191,7 @@
             left: 29%;
             bottom: -2.2rem;
             border: 1rem solid transparent;
-            border-top: 1rem solid @testColor;
+            border-top-color: @testColor;
             z-index: 3;
             opacity: 0;
         }
@@ -200,7 +200,7 @@
             position: absolute;
             left: calc(29% - 0.8rem); bottom: -3.8rem;
             border: 1.8rem solid transparent;
-            border-top: 1.8rem solid @arrowColor;
+            border-top-color: @arrowColor;
             z-index: 2;
             opacity: 0;
         }

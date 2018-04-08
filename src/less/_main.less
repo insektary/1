@@ -100,14 +100,12 @@
     align-items: center;
     width: 32rem;
     float: right;
-    background-position-x: 0.8rem;
 }
 
 .media-item {
-    background: url('/src/svg/sprite-media.svg') no-repeat;
-    background-color: @mediaBlock;
-    background-size: 64rem;
-    background-position-y: -1.1rem;
+    background: url('/src/svg/sprite-media.svg') no-repeat @mediaBlock;
+    background-size: 9rem;
+    background-position-x: -0.7rem;
     color: white;
     font-size: 1.4rem;
     border: 0;
@@ -122,31 +120,31 @@
     }
 
     &--facebook {
-        background-position-x: -2.8rem;
+        background-position-y: -0.9rem;
         &:hover {
             background-color: @facebook;
         }
     }
     &--google {
-        background-position-x: -12.5rem;
+        background-position-y: -4.5rem;
         &:hover {
             background-color: @google;
         }
     }
     &--twitter {
-        background-position-x: -22.6rem;
+        background-position-y: -8.7rem;
         &:hover {
             background-color: @twitter;
         }
     }
     &--vk {
-        background-position-x: -31.7rem;
+        background-position-y: -12.8rem;
         &:hover {
             background-color: @vk;
         }
     }
     &--yandex {
-        background-position-x: -40.3rem;
+        background-position-y: -16.8rem;
         &:hover {
             background-color: @yandex;
         }
