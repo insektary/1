@@ -1,14 +1,13 @@
 .info {
     width: 28.8rem;
     padding-top: 5.4rem;
-}
 
-.info-content {
-    font-size: 1.6rem;
-    color: @fontColor;
-    font-weight: 500;
-    font-family: Arial-narrow;
-    text-align: justify;
+    &__content {
+        font-size: 1.6rem;
+        color: @fontColor;
+        font-family: Arial-narrow;
+        text-align: justify;
+    }
 }
 
 .info-header {
@@ -16,19 +15,18 @@
     display: flex;
 
     &__marker {
-        background: url('/src/svg/sprite-media.svg') no-repeat;
-        background-position-y: -1.15rem;
-        background-color: @logoColor;
-        background-size: 64rem;
+        background: url('/src/svg/sprite-buttons.svg') no-repeat @logoColor;
+        background-position-y: 0.3rem;
+        background-size: 20rem;
         width: 3rem;
         flex-shrink: 0;
         height: inherit;
 
         &--about {
-            background-position-x: -55.3rem;
+            background-position-x: -9.2rem;
         }
         &--some {
-            background-position-x: -47.8rem;
+            background-position-x: -12rem;
         }
     }
 
@@ -45,7 +43,6 @@
     flex-wrap: wrap;
     align-content: flex-start;
     height: 25.6rem;
-    padding-left: 0;
 }
 
 .tag {
@@ -60,19 +57,18 @@
 
     &__title {
         line-height: 1.9rem;
-        margin-right: 0rem;
     }
 
     &::after {
         content: '';
-        border: 0.9rem solid transparent;
-        border-left: 0.9rem solid @logoColor;
+        border: 9px solid transparent;
+        border-left-color: @logoColor;
         position: relative;
         left: 1.8rem;
     }
 
     &__marker {
-        background-color: white;
+        background-color: @defaultColor;
         width: 0.8rem;
         height: 0.8rem;
         border-radius: 50%;
