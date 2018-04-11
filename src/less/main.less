@@ -1,0 +1,263 @@
+@font-face {
+    font-family: 'Trend-Sans-One';
+    src: url(/src/fonts/trend-sans-one-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Arial-narrow';
+    src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
+}
+
+@titleFont: Trend-Sans-One, sans-serif;
+@regularFont: Arial-narrow, sans-serif;
+
+@testColor: #6B9AD0;
+@logoColor: #6795B8;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+@fontColor: #69747C;
+@borderLineColor: #E2E5E8;
+@mediaBlock: #D1DAE3;
+@mediaHover: #ff6400;
+@menuHover: #e1eefc;
+@titleBackground: #f4f5f6;
+@secondArrowColor: #7ca7d9;
+
+@facebook: #3c5a98;
+@google: #c25234;
+@twitter: #00aced;
+@vk: #48729e;
+@yandex: #d83933;
+
+.content {
+    width: 96rem;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
+    width: 64rem;
+    padding-top: 5.4rem;
+    font-family: @regularFont;
+    color: @fontColor;
+}
+
+.post {
+    padding-bottom: 5.4rem;
+
+    &__image {
+        width: 64rem;
+        height: 25rem;
+    }
+
+    &__title {
+        font-size: 2.6rem;
+        line-height: 4.8rem;
+        font-weight: 500;
+    }
+
+    &__content {
+        font-weight: 500;
+        font-size: 1.6rem;
+        text-align: justify;
+        padding-top: 1.6rem;
+    }
+}
+
+.post-info {
+    height: 4.3rem;
+    width: 100%;
+    border-top: 1px solid @borderLineColor;
+    border-bottom: 1px solid @borderLineColor;
+    background-position-y: -0.2rem;
+    background-position-x: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-time, .post-author {
+    background: url('/src/svg/sprite-media.svg') no-repeat;
+    background-size: 3.8rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.post {
+    &-time__text {
+        margin-left: 3.2rem;
+    }
+    &-author__text {
+        margin-left: 3.2rem;
+    }
+    &-time {
+        background-position-y: -18.8rem;
+    }
+    &-author {
+        background-position-y: -22rem;
+    }
+}
+
+.media {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 30rem;
+}
+
+.media-button {
+    background: url('/src/svg/sprite-media.svg') no-repeat @mediaBlock;
+    background-size: 3.7rem;
+    background-position-x: -0.6rem;
+    color: white;
+    font-size: 1.4rem;
+    border: 0;
+    border-radius: 0.4rem;
+    height: 2.6rem;
+    cursor: pointer;
+    outline: 0;
+
+    &__counter {
+        margin: 0 0 0 2.6rem;
+        line-height: 1.6rem;
+    }
+
+    &--facebook {
+        background-position-y: -0.8rem;
+        &:hover {
+            background-color: @facebook;
+        }
+    }
+    &--google {
+        background-position-y: -3.8rem;
+        &:hover {
+            background-color: @google;
+        }
+    }
+    &--twitter {
+        background-position-y: -7.5rem;
+        &:hover {
+            background-color: @twitter;
+        }
+    }
+    &--vk {
+        background-position-y: -11rem;
+        &:hover {
+            background-color: @vk;
+        }
+    }
+    &--yandex {
+        background-position-y: -14.4rem;
+        &:hover {
+            background-color: @yandex;
+        }
+    }
+}
+
+.media--outdoor,  .media--mobile {
+    display: none;
+}
+
+@media screen and (max-width: 1100px) {
+    .content {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .main {
+        width: 64rem;
+        padding-top: 2rem;
+        margin: auto;
+    }
+
+    .post__image {
+        width: 64rem;
+        height: 23rem;
+    }
+
+    .media--post {
+        visibility: hidden;
+    }
+
+    .media--outdoor {
+        display: flex;
+        position: absolute;
+        justify-content: space-between;
+        flex-direction: column;
+        right: 0;
+        align-items: flex-end;
+        height: 16rem;
+    }
+
+    .media-button {
+        border-radius: 0.4rem 0 0 0.4rem;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .main {
+        width: 28rem;
+    }
+
+    .post {
+        padding-bottom: 4rem;
+    }
+
+    .post__title {
+        font-size: 2rem;
+        text-align: center;
+        line-height: 3rem;
+        font-weight: 600;
+        padding: 1rem 0 1rem 0;
+        background-color: @titleBackground;
+    }
+
+    .post__image {
+        width: 28rem;
+        height: 10rem;
+    }
+
+    .post-info {
+        border-top: none;
+    }
+
+    .media--mobile {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 2rem;
+    }
+
+    .media--outdoor, .media--post {
+        display: none;
+    }
+
+    .media-button {
+        background-size: 3rem;
+        border-radius: 0.4rem;
+        background-position-x: -0.5rem;
+        height: 2.2rem;
+        width: 4.4rem;
+
+        &__counter {
+            margin: 0 0 0 1.8rem;
+            line-height: 1.4rem;
+        }
+
+        &--facebook {
+            background-position-y: -0.6rem;
+        }
+        &--google {
+            background-position-y: -3rem;
+        }
+        &--twitter {
+            background-position-y: -6rem;
+        }
+        &--vk {
+            background-position-y: -8.9rem;
+        }
+        &--yandex {
+            background-position-y: -11.6rem;
+        }
+    }
+}
