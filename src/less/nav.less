@@ -112,7 +112,7 @@
     }
 }
 
-@media screen and (max-width: 370px) {
+@media screen and (max-width: 860px) {
     .nav {
         height: 3.6rem;
         border: none;
@@ -173,7 +173,7 @@
             opacity: 0;
         }
 
-        &:hover ~ .tags-container {
+        &:focus ~ .tags-container {
             display: flex;
         }
 
@@ -189,8 +189,7 @@
     }
 
     .tags-hide {
-        left: 6.6rem;
-        top: 5.6rem;
+        left: 9.6rem;
         background-position-x: -3rem;
         background-position-y: 1rem;
 
@@ -213,7 +212,7 @@
         background-position-y: 1rem;
         background-color: @testColor;
 
-        &:hover ~ .menu {
+        &:focus ~ .menu {
             display: block;
         }
     }
