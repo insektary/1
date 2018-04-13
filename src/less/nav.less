@@ -97,10 +97,10 @@
 }
 
 @media screen and (max-width: 1100px) {
-    .nav {
-        //position: sticky;
-        //top: 0;
-    }
+    //.nav {
+    //    position: sticky;
+    //    top: 0rem;
+    //}
 
     //.menu-item {
     //    position: sticky;
@@ -112,7 +112,7 @@
     }
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 780px) {
     .nav {
         height: 3.6rem;
         border: none;
@@ -156,8 +156,8 @@
     .tags-hide, .menu-hide {
         display: block;
         position: absolute;
-        height: 3.4rem;
-        width: 3rem;
+        height: 3.3rem;
+        width: 3.2rem;
         background: url('/src/svg/sprite-buttons.svg') no-repeat @secondArrowColor;
         background-size: 20rem;
         border: none;
@@ -173,7 +173,7 @@
             opacity: 0;
         }
 
-        &:focus ~ .tags-container {
+        &:hover ~ .tags-container {
             display: flex;
         }
 
@@ -189,8 +189,9 @@
     }
 
     .tags-hide {
-        left: 9.6rem;
-        background-position-x: -3rem;
+        left: 7rem;
+        top: 5.6rem;
+        background-position-x: -2.9rem;
         background-position-y: 1rem;
 
         &::after {
@@ -212,7 +213,7 @@
         background-position-y: 1rem;
         background-color: @testColor;
 
-        &:focus ~ .menu {
+        &:hover ~ .menu {
             display: block;
         }
     }
