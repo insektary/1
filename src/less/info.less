@@ -1,0 +1,79 @@
+.info {
+    width: 28.8rem;
+    padding-top: 5.4rem;
+
+    &__content {
+        font-size: 1.6rem;
+        color: @fontColor;
+        font-family: 'Arial-narrow', sans-serif;
+        text-align: justify;
+    }
+}
+
+.info-header {
+    border-bottom: 0.5rem solid @logoColor;
+    display: flex;
+
+    &__marker {
+        background: url('/src/svg/sprite-buttons.svg') no-repeat @logoColor;
+        background-position-y: 0.3rem;
+        background-size: 20rem;
+        width: 3rem;
+        flex-shrink: 0;
+        height: inherit;
+
+        &--about {
+            background-position-x: -9.2rem;
+        }
+        &--some {
+            background-position-x: -12rem;
+        }
+    }
+
+    &__title {
+        font-family: 'Trend-Sans-One', sans-serif;
+        color: @logoColor;
+        font-size: 2rem;
+        padding-left: 1rem;
+    }
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 25.6rem;
+}
+
+.tag {
+    font-family: 'Arial-narrow', sans-serif;
+    color: white;
+    background-color: @logoColor;
+    font-size: 1.3rem;
+    height: 1.9rem;
+    padding-left: 1.8rem;
+    display: flex;
+    margin: 0 1.5rem 0.6rem 0;
+
+    &__title {
+        line-height: 1.9rem;
+    }
+
+    &::after {
+        content: '';
+        border: 9px solid transparent;
+        border-left-color: @logoColor;
+        position: relative;
+        left: 1.8rem;
+    }
+
+    &__marker {
+        background-color: @defaultColor;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        position: relative;
+        top: 0.52rem;
+        left: 1.6rem;
+    }
+}
