@@ -29,6 +29,7 @@ gulp.task('browser-sync', function() {
 gulp.task('watch', ['browser-sync', 'less'], function() {
     gulp.watch('src/less/*.less', ['less']);
     gulp.watch('index.html', browserSync.reload);
+    gulp.watch('src/js/script.js', browserSync.reload);
 });
 
 gulp.task('default', ['watch']);

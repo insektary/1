@@ -8,8 +8,8 @@
     src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
 }
 
-@titleFont: Trend-Sans-One, sans-serif;
-@regularFont: Arial-narrow, sans-serif;
+@titleFont: 'Trend-Sans-One', sans-serif;
+@regularFont: 'Arial-narrow', sans-serif;
 
 @testColor: #6B9AD0;
 @logoColor: #6795B8;
@@ -22,6 +22,8 @@
 @menuHover: #e1eefc;
 @titleBackground: #f4f5f6;
 @secondArrowColor: #7ca7d9;
+@mobileTagColor: #99bbda;
+@defaultColor: white;
 
 @facebook: #3c5a98;
 @google: #c25234;
@@ -53,6 +55,10 @@
         background-position-x: 20rem;
         background-position-y: 1.6rem;
     }
+
+    &--menu {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 780px) {
@@ -72,6 +78,20 @@
             padding-left: 0;
             background-position-x: 10.3rem;
             background-position-y: 0.8rem;
+        }
+
+        &--menu {
+            display: block;
+            opacity: 0;
+            height: 3.6rem;
+            color: #e1eefc;
+            font-size: 1.2rem;
+            line-height: 3.8rem;
+            padding-left: calc((100% - 26.2rem) / 2);
+            padding-right: calc((100% - 26.2rem) / 2);
+            background-size: 1.8rem;
+            background-position-y: -2.3rem;
+            background-position-x: calc((100% - 0.1rem) / 2);
         }
     }
 }
