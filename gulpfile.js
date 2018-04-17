@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const less = require('gulp-less');
 const path = require('path');
 const LessAutoprefix = require('less-plugin-autoprefix');
-const autoprefix = new LessAutoprefix({ browsers: ['last 2 versions'] });
+const autoprefix = new LessAutoprefix({ browsers: ['last 2 versions', 'ie >= 9'] });
 const browserSync = require('browser-sync');
 const concat = require('gulp-concat');
 

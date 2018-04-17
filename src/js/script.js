@@ -1,20 +1,40 @@
 const menuLogo = document.querySelector('.logo--menu');
-const header = document.querySelector('.header');
-const HEADER_VISIBLE = 'flex';
-const HEADER_HIDDEN = 'none';
-const MENU_LOGO_VISIBLE = '1';
-const MENU_LOGO_HIDDEN = '0';
+const nav = document.querySelector('.nav');
+const OFFSET_MIN = 10;
+const TABLET = 1100;
+const MOBILE = 780;
 
-const scrollAnalisys = () => {
-    if (window.innerWidth > 1100) return;
+let offsetMax;
 
-    if (document.documentElement.scrollTop > 0) {
-        menuLogo.style.opacity = MENU_LOGO_VISIBLE;
-        header.style.display = HEADER_HIDDEN;
+const deviceDetect = () => {
+    const newScreenWidth = document.documentElement.clientWidth;
+
+    if (newScreenWidth < TABLET) {
+        offsetMax = 90;
+
+        if (newScreenWidth < MOBILE) {
+            offsetMax = 50;
+        }
+
+        window.addEventListener('scroll', scrollAnalisys);
     } else {
-        menuLogo.style.opacity = MENU_LOGO_HIDDEN;
-        header.style.display = HEADER_VISIBLE;
+        window.removeEventListener('scroll', scrollAnalisys);
+
+        nav.className = 'nav';
+        menuLogo.className = 'logo logo--menu';
     }
 };
 
-window.addEventListener('scroll', scrollAnalisys);
+const scrollAnalisys = () => {
+    if (window.pageYOffset > offsetMax) {
+        nav.className = 'nav nav--fixed';
+        menuLogo.className = 'logo logo--menu logo--visible';
+    } else if (window.pageYOffset < OFFSET_MIN) {
+        nav.className = 'nav';
+        menuLogo.className = 'logo logo--menu';
+    }
+};
+
+window.addEventListener('resize', deviceDetect);
+
+deviceDetect();

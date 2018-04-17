@@ -41,7 +41,6 @@
     cursor: pointer;
     background: url(/src/svg/racoon-positive.svg) no-repeat;
     font-family: @titleFont;
-    font-weight: lighter;
 
     &--header {
         position: relative;
@@ -87,11 +86,25 @@
             color: #e1eefc;
             font-size: 1.2rem;
             line-height: 3.8rem;
-            padding-left: calc((100% - 26.2rem) / 2);
-            padding-right: calc((100% - 26.2rem) / 2);
+            padding-left: calc((100% - 26.5rem) / 2);
+            padding-right: calc((100% - 26.5rem) / 2);
             background-size: 1.8rem;
             background-position-y: -2.3rem;
             background-position-x: calc((100% - 0.1rem) / 2);
+        }
+
+        &--visible {
+            opacity: 1;
+        }
+    }
+}
+
+//for IE
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .logo {
+        &--menu {
+            padding-left: calc((100vw - 28rem) / 2);
+            padding-right: calc((100vw - 28rem) / 2);
         }
     }
 }
