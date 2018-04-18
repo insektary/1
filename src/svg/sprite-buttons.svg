@@ -1,0 +1,29 @@
+<svg width="372" height="93" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="95" width="374" y="-1" x="-1"/>
+ </g>
+
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_4">
+   <svg y="0" x="4" viewBox="0 0 32 32" height="32" width="32" id="svg_8">
+    <path fill="#9cbce1" id="svg_9" d="m0,26.667l32,0l0,-3.556l-32,0l0,3.556zm0,-8.888l32,0l0,-3.556l-32,0l0,3.556zm0,-12.446l0,3.556l32,0l0,-3.556l-32,0z"/>
+   </svg>
+  </g>
+  <g id="svg_10">
+   <svg y="0" x="66.000999" viewBox="0 0 32 32" height="32" width="32" id="svg_11">
+    <path fill="#6b9ad0" id="svg_12" d="m31.133,31.135c0.563,-0.561 0.873,-1.324 0.867,-2.119l-0.084,-9.587c-0.007,-0.776 -0.317,-1.519 -0.867,-2.067l-16.496,-16.496c-1.155,-1.156 -3.028,-1.156 -4.184,0l-9.503,9.503c-1.156,1.155 -1.156,3.028 0,4.183l16.495,16.497c0.548,0.548 1.291,0.86 2.067,0.865l9.588,0.085c0.792,0.007 1.557,-0.305 2.117,-0.865l0,0.001zm-11.457,-4.782c-1.847,-1.845 -1.847,-4.835 -0.003,-6.68c1.845,-1.845 4.836,-1.845 6.681,0c1.844,1.845 1.844,4.835 0,6.68c-1.845,1.844 -4.836,1.844 -6.679,0l0.001,0z"/>
+   </svg>
+  </g>
+  <g transform="matrix(1,0,0,1,0,0) " id="svg_18">
+   <svg fill="#ffffff" y="59.000999" x="3.151512" viewBox="0 0 32 32" height="32" width="32" id="svg_13">
+    <path fill="#ffffff" id="svg_14" d="m19.408,32l0,-19.515l8.053,8.053l4.539,-4.539l-16,-16l-16,16l4.539,4.539l8.053,-8.053l0,19.515l6.816,0z"/>
+   </svg>
+  </g>
+  <text stroke="#000" transform="matrix(1.0711110830307007,0,0,1,-14.54221647977829,0) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="45" id="svg_47" y="33" x="192" stroke-width="0" fill="#ffffff">!</text>
+  <text stroke="#000" transform="matrix(1.0710666179656982,0,0,1,-18.833764176815748,0) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="45" id="svg_48" y="33" x="240" stroke-width="0" fill="#ffffff">?</text>
+  <text stroke="#000" transform="matrix(1.0355554819107056,0,0,1,-11.11108809709549,0) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="45" id="svg_49" y="33" x="300" stroke-width="0" fill="#6b9ad0">!</text>
+  <text stroke="#000" transform="matrix(1.0355333089828491,0,0,1,-13.21894614957273,0) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="45" id="svg_50" y="33" x="347" stroke-width="0" fill="#6b9ad0">?</text>
+ </g>
+</svg>

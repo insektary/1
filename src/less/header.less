@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'Trend-Sans-One';
+    src: url(/src/fonts/trend-sans-one-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Arial-narrow';
+    src: url(/src/fonts/arial-narrow_[allfont.ru].ttf);
+}
+
+@titleFont: 'Trend-Sans-One', sans-serif;
+@regularFont: 'Arial-narrow', sans-serif;
+
+@testColor: #6B9AD0;
+@logoColor: #6795B8;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+@fontColor: #69747C;
+@borderLineColor: #E2E5E8;
+@mediaBlock: #D1DAE3;
+@mediaHover: #ff6400;
+@menuHover: #e1eefc;
+@titleBackground: #f4f5f6;
+@secondArrowColor: #7ca7d9;
+@mobileTagColor: #99bbda;
+@defaultColor: white;
+
+@facebook: #3c5a98;
+@google: #c25234;
+@twitter: #00aced;
+@vk: #48729e;
+@yandex: #d83933;
+
+.header {
+    height: 9.1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    cursor: pointer;
+    background: url(/src/svg/racoon-positive.svg) no-repeat;
+    font-family: @titleFont;
+
+    &--header {
+        position: relative;
+        color: @logoColor;
+        font-size: 4rem;
+        padding-left: 3.0rem;
+        width: 40rem;
+        height: 9rem;
+        line-height: 8.3rem;
+        background-size: 5.6rem;
+        background-position-x: 20rem;
+        background-position-y: 1.6rem;
+    }
+
+    &--menu {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .header {
+        height: 5.5rem;
+    }
+
+    .logo {
+        background-size: 4.5rem;
+
+        &--header {
+            width: 25rem;
+            height: 5.5rem;
+            background-size: 4rem;
+            font-size: 2.5rem;
+            line-height: 5.5rem;
+            padding-left: 0;
+            background-position-x: 10.3rem;
+            background-position-y: 0.8rem;
+        }
+
+        &--menu {
+            display: block;
+            opacity: 0;
+            height: 3.6rem;
+            color: #e1eefc;
+            font-size: 1.2rem;
+            line-height: 3.8rem;
+            padding-left: calc((100% - 26.5rem) / 2);
+            padding-right: calc((100% - 26.5rem) / 2);
+            background-size: 1.8rem;
+            background-position-y: -2.3rem;
+            background-position-x: calc((100% - 0.1rem) / 2);
+        }
+
+        &--visible {
+            opacity: 1;
+        }
+    }
+}
+
+//for IE
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .logo {
+        &--menu {
+            padding-left: calc((100vw - 28rem) / 2);
+            padding-right: calc((100vw - 28rem) / 2);
+        }
+    }
+}
