@@ -1,0 +1,62 @@
+[
+  {
+    "post_id": "0",
+    "media": {
+      "facebook": "3",
+      "google": "4",
+      "twitter": "12",
+      "vk": "2",
+      "yandex": "16"
+    }
+  },
+  {
+    "post_id": "1",
+    "media": {
+      "facebook": "3",
+      "google": "1",
+      "twitter": "2",
+      "vk": "2",
+      "yandex": "0"
+    }
+  },
+  {
+    "post_id": "2",
+    "media": {
+      "facebook": "3",
+      "google": "41",
+      "twitter": "1",
+      "vk": "2",
+      "yandex": "6"
+    }
+  },
+  {
+    "post_id": "3",
+    "media": {
+      "facebook": "6",
+      "google": "3",
+      "twitter": "18",
+      "vk": "2",
+      "yandex": "8"
+    }
+  },
+  {
+    "post_id": "4",
+    "media": {
+      "facebook": "0",
+      "google": "6",
+      "twitter": "15",
+      "vk": "2",
+      "yandex": "14"
+    }
+  },
+  {
+    "post_id": "5",
+    "media": {
+      "facebook": "7",
+      "google": "44",
+      "twitter": "19",
+      "vk": "4",
+      "yandex": "6"
+    }
+  }
+]

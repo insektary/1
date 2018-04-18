@@ -1,23 +1,24 @@
 const gulp = require('gulp');
+const {src, dest, watch} = gulp;
 const less = require('gulp-less');
-const path = require('path');
 const LessAutoprefix = require('less-plugin-autoprefix');
 const autoprefix = new LessAutoprefix({ browsers: ['last 2 versions', 'ie >= 9'] });
 const browserSync = require('browser-sync');
+const {reload} = browserSync;
 const concat = require('gulp-concat');
 
-gulp.task('less', function () {
-    return gulp.src('./src/less/*.less')
+gulp.task('less', () => {
+    return src('./src/less/*.less')
         .pipe(less({
             plugins: [autoprefix]
         }))
         .pipe(concat('styles.css'))
-        .pipe(gulp.dest('./src/css'))
-        .pipe(browserSync.reload({stream: true}))
+        .pipe(dest('./src/css'))
+        .pipe(reload({stream: true}))
 });
 
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', () => {
     browserSync({
         server: {
             baseDir: './'
@@ -26,10 +27,10 @@ gulp.task('browser-sync', function() {
     });
 });
 
-gulp.task('watch', ['browser-sync', 'less'], function() {
-    gulp.watch('src/less/*.less', ['less']);
-    gulp.watch('index.html', browserSync.reload);
-    gulp.watch('src/js/script.js', browserSync.reload);
+gulp.task('watch', ['browser-sync', 'less'], () => {
+    watch('src/less/*.less', ['less']);
+    watch('index.html', reload);
+    watch('src/js/script.js', reload);
 });
 
 gulp.task('default', ['watch']);
