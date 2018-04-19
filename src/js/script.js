@@ -64,18 +64,18 @@ const scrollAnalisys = () => {
     }
 };
 
-const clickOnTitle = () => {
-    event.target.setAttribute('contenteditable', 'true');
-    event.target.style.cursor = 'text';
+const clickOnTitle = ({ target }) => {
+    target.setAttribute('contenteditable', true);
+    target.style.cursor = 'text';
 };
 
-const clickOutOfTitle = () => {
-    event.target.setAttribute('contenteditable', 'false');
-    event.target.style.cursor = 'pointer';
+const clickOutOfTitle = ({ target }) => {
+    target.setAttribute('contenteditable', false);
+    target.style.cursor = 'pointer';
 };
 
-const keyPress = () => {
-    if (event.keyCode === ENTER_CODE) {
+const keyPress = ({ keyCode }) => {
+    if (keyCode === ENTER_CODE) {
         document.querySelectorAll('.post__title').forEach((title) => {
             title.readOnly = true;
             title.blur();
@@ -83,9 +83,9 @@ const keyPress = () => {
     }
 };
 
-const mediaIncrement = () => {
-    document.querySelectorAll(`.${ event.currentTarget.className.split(' ')[1] }`).forEach((mediaButton) => {
-        if (mediaButton.getAttribute('post_id') === event.currentTarget.getAttribute('post_id')) {
+const mediaIncrement = ({ currentTarget }) => {
+    document.querySelectorAll(`.${ currentTarget.className.split(' ')[1] }`).forEach((mediaButton) => {
+        if (mediaButton.getAttribute('post_id') === currentTarget.getAttribute('post_id')) {
             mediaButton.childNodes[1].innerHTML++;
         }
     });
@@ -115,10 +115,10 @@ fetch('/media-data.json')
     .then((mediaData) => {
         document.querySelectorAll('.media-button').forEach((mediaButton) => {
             const buttonClass = mediaButton.className.split('--')[1];
-            const post = mediaData.find((post) => (post.post_id === mediaButton.getAttribute('post_id')));
+            const post = mediaData.find((post) => (post.post_id === parseInt(mediaButton.getAttribute('post_id'))));
             const result = post.media[buttonClass];
 
-            if (result) {
+            if (result || result === 0) {
                 mediaButton.childNodes[1].innerHTML = result;
             }
         });
