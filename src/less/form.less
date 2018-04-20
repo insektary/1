@@ -1,0 +1,158 @@
+.content {
+    width: 100rem;
+    margin: auto;
+    background-color: @testColor;
+    padding: 1rem;
+}
+
+.title-text {
+    font-family: 'Arial';
+    font-size: 1.8rem;
+    text-align: left;
+    color: @defaultColor;
+}
+
+.address, .weight {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0 1rem 0;
+}
+
+.address-title {
+    font-family: Arial;
+    font-size: 1.8rem;
+    color: @defaultColor;
+    padding-right: 2rem;
+
+    &__title {
+        position: relative;
+        bottom: -1.8rem;
+    }
+}
+
+.address-country {
+    font-size: 2.6rem;
+    color: orange;
+    border: none;
+    outline: none;
+    background-color: @testColor;
+}
+
+.address-city {
+
+    font-size: 2.6rem;
+    padding: 1rem;
+    color: orange;
+    background-color: #494949;
+    border: none;
+    outline: none;
+    width: 63rem;
+}
+
+.weight-title {
+    font-family: Arial;
+    font-size: 1.8rem;
+    color: @defaultColor;
+    padding-right: 2rem;
+    width: 14rem;
+
+    &__title {
+        position: relative;
+        bottom: -1.4rem;
+    }
+}
+
+.weight-value {
+    font-family: Arial;
+    font-size: 3.4rem;
+    color: orange;
+
+    &__value {
+
+    }
+}
+
+.weight-measure {
+    font-size: 2.6rem;
+    color: orange;
+    border: none;
+    outline: none;
+    background-color: @testColor;
+    margin-right: 8.6rem;
+}
+
+.weight-range {
+    font-size: 2.6rem;
+    padding: 1rem;
+    color: orange;
+    background-color: #494949;
+    border: none;
+    outline: none;
+    width: 60rem;
+    flex-shrink: 0;
+}
+
+.title {
+    padding: 1rem 0 1rem 0;
+}
+
+.size {
+
+    &__title {
+        color: @defaultColor;
+        font-size: 1.8rem;
+        font-family: Arial;
+        text-align: right;
+        padding-left: 74rem;
+        display: inline;
+    }
+
+    &__checkbox {
+        width: 2rem;
+        height: 2rem;
+        background-color: @testColor;
+        color: orange;
+    }
+}
+
+.size-box {
+    display: none;
+    padding-bottom: 2rem;
+}
+
+.size-range {
+    width: 33rem;
+
+    &__width, &__length, &__height {
+        width: 30rem;
+    }
+}
+
+.size-measure {
+    color: @defaultColor;
+    font-family: Arial;
+    font-size: 1.6rem;
+}
+
+.size-item {
+    color: orange;
+    font-family: Arial;
+    font-size: 2.6rem;
+}
+
+.size-unit {
+    color: orange;
+    font-family: Arial;
+    font-size: 1.4rem;
+    position: relative;
+    top: -1rem;
+}
+
+.count-button {
+    color: orange;
+    font-family: Arial;
+    font-size: 2rem;
+    background-color: grey;
+    border: none;
+    border-radius: 5px;
+}
