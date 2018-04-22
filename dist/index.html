@@ -18,7 +18,37 @@
                     <option>Казахстан</option>
                     <option>Беларусь</option>
                 </select>
-                <input class="address-city" placeholder="Введите место доставки" name="city" required pattern="^[a-zA-Z]+$">
+                <div class="input-wrapper input-wrapper--city">
+                    <input class="address-input address-input--city" id="city" placeholder="Город" name="city">
+                </div>
+                <div class="input-wrapper input-wrapper--zip">
+                    <input class="address-input address-input--zip" id="zip" placeholder="Почтовый индекс" name="zip" maxlength="6">
+                </div>
+                <div class="input-wrapper input-wrapper--street">
+                    <input class="address-input address-input--street" id="street" placeholder="Улица" name="street">
+                </div>
+                <div class="input-wrapper input-wrapper--build">
+                    <input class="address-input address-input--build" id="build" placeholder="Дом" name="build">
+                </div>
+                <div class="input-wrapper input-wrapper--flat">
+                    <input class="address-input address-input--flat" id="flat" placeholder="Квартитра" name="flat">
+                </div>
+                <span class="phone-prefix">+7</span>
+                <div class="input-wrapper input-wrapper--phone">
+                    <input class="address-input address-input--phone" id="phone" placeholder="Телефон" name="phone" maxlength="10">
+                </div>
+                <div class="input-wrapper input-wrapper--name">
+                    <input class="address-input address-input--name" id="name" placeholder="Имя" name="name">
+                </div>
+                <div class="input-wrapper input-wrapper--subname">
+                    <input class="address-input address-input--subname" id="subname" placeholder="Фамилия" name="subname">
+                </div>
+                <div class="input-wrapper input-wrapper--fathername">
+                    <input class="address-input address-input--fathername" id="fathername" placeholder="Отчество" name="fathername">
+                </div>
+                <div class="input-wrapper input-wrapper--email">
+                    <input class="address-input address-input--email" id="email" placeholder="E-mail" name="email">
+                </div>
             </aside>
             <aside class="weight">
                 <div class="weight-title">
@@ -49,7 +79,7 @@
                         <span class="size-item size-item--length">1</span>
                         <span class="size-unit size-unit--length">см</span>
                     </div>
-                    <input class="size-range__length" type="range" min="1" max="300" value="1">
+                    <input class="size-range__length" type="range" min="1" max="300" value="1" name="length">
                 </div>
                 <div class="size-range size-width">
                     <div class="size-title size-width__title">
@@ -57,7 +87,7 @@
                         <span class="size-item size-item--width">1</span>
                         <span class="size-unit size-unit--width">см</span>
                     </div>
-                    <input class="size-range__width" type="range" min="1" max="300" value="1">
+                    <input class="size-range__width" type="range" min="1" max="300" value="1" name="width">
                 </div>
                 <div class="size-range size-height">
                     <div class="size-title size-height__title">
@@ -65,10 +95,10 @@
                         <span class="size-item size-item--height">1</span>
                         <span class="size-unit size-unit--height">см</span>
                     </div>
-                    <input class="size-range__height" type="range" min="1" max="300" value="1">
+                    <input class="size-range__height" type="range" min="1" max="300" value="1" name="height">
                 </div>
             </aside>
-            <button class="count-button" type="submit">Рассчитать доставку</button>
+            <button class="count-button" disabled="disable">Рассчитать доставку</button>
         </form>
         <section class="results">
             <aside class="company Shopfans_Lite">

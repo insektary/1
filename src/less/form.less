@@ -14,8 +14,13 @@
 
 .address, .weight {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding: 1rem 0 1rem 0;
+}
+
+.address {
+    height: 24rem;
 }
 
 .address-title {
@@ -36,17 +41,95 @@
     border: none;
     outline: none;
     background-color: @testColor;
+    height: 5.3rem;
 }
 
-.address-city {
-
-    font-size: 2.6rem;
-    padding: 1rem;
+.address-input {
     color: orange;
-    background-color: #494949;
-    border: none;
+    border: 1px solid transparent;
     outline: none;
-    width: 63rem;
+    height: 4rem;
+    background: url('method-draw-image.svg') no-repeat #494949;
+    background-size: 2.5rem;
+    background-position-x: 198%;
+
+    &--city {
+        width: 63rem;
+        font-size: 2.6rem;
+        padding: 1rem;
+        background-position-y: 1.6rem;
+    }
+    &--zip, &--street, &--phone, &--name, &--subname, &--fathername, &--email {
+        width: 20rem;
+        font-size: 2rem;
+        padding: 0.4rem;
+        background-position-y: 0.7rem;
+    }
+
+    &--build, &--flat {
+        width: 10rem;
+        font-size: 2rem;
+        padding: 0.4rem;
+        background-position-y: 0.7rem;
+    }
+}
+.input-wrapper {
+    position: relative;
+
+    &--help {
+        &:after {
+            position: absolute;
+            background-color: @defaultColor;
+            font-size: 1.6rem;
+            font-family: Arial;
+            border: 2px solid orange;
+            border-radius: 5px;
+            top: 6rem;
+            padding: 0.2rem;
+            z-index: 1;
+            opacity: 1;
+        }
+
+        &:before {
+            position: absolute;
+            content: '';
+            border: 10px solid transparent;
+            border-bottom: 10px solid orange;
+            top: 4rem;
+            left: 0.6rem;
+            opacity: 1;
+        }
+    }
+    &--help-phone:after {
+        content: '10 цифр';
+    }
+    &--help-zip:after {
+        content: '6 цифр';
+    }
+    &--help-email:after {
+        content: 'E-mail в установленном формате';
+    }
+    &--help-name:after, &--help-subname:after, &--help-fathername:after, &--help-city:after {
+        content: 'Только буквы русского алфавита';
+    }
+    &--help-street:after, &--help-build:after, &--help-flat:after {
+        content: 'Только буквы русского алфавита и цифры';
+    }
+    &--help-city:after {
+        top: 7.2rem;
+    }
+    &--help-city:before {
+        top: 5.2rem;
+    }
+}
+
+.phone-prefix {
+    font-family: Arial;
+    font-size: 3rem;
+    color: #4c4c4c;
+    margin-right: -1.4rem;
+    position: relative;
+    top: 0.7rem;
 }
 
 .weight-title {
@@ -149,7 +232,7 @@
 }
 
 .count-button {
-    color: orange;
+    color: #4c4c4c;
     font-family: Arial;
     font-size: 2rem;
     background-color: grey;
