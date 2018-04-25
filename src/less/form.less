@@ -21,6 +21,36 @@
 
 .address {
     height: 24rem;
+
+    &__input {
+        color: orange;
+        border: 1px solid transparent;
+        outline: none;
+        height: 4rem;
+        background: url('method-draw-image.svg') no-repeat #494949;
+        background-size: 2.5rem;
+        background-position-x: 198%;
+
+        &--city {
+            width: 63rem;
+            font-size: 2.6rem;
+            padding: 1rem;
+            background-position-y: 1.6rem;
+        }
+        &--zip, &--street, &--phone, &--name, &--subname, &--fathername, &--email {
+            width: 20rem;
+            font-size: 2rem;
+            padding: 0.4rem;
+            background-position-y: 0.7rem;
+        }
+
+        &--build, &--flat {
+            width: 10rem;
+            font-size: 2rem;
+            padding: 0.4rem;
+            background-position-y: 0.7rem;
+        }
+    }
 }
 
 .address-title {
@@ -44,82 +74,40 @@
     height: 5.3rem;
 }
 
-.address-input {
-    color: orange;
-    border: 1px solid transparent;
-    outline: none;
-    height: 4rem;
-    background: url('method-draw-image.svg') no-repeat #494949;
-    background-size: 2.5rem;
-    background-position-x: 198%;
-
-    &--city {
-        width: 63rem;
-        font-size: 2.6rem;
-        padding: 1rem;
-        background-position-y: 1.6rem;
-    }
-    &--zip, &--street, &--phone, &--name, &--subname, &--fathername, &--email {
-        width: 20rem;
-        font-size: 2rem;
-        padding: 0.4rem;
-        background-position-y: 0.7rem;
-    }
-
-    &--build, &--flat {
-        width: 10rem;
-        font-size: 2rem;
-        padding: 0.4rem;
-        background-position-y: 0.7rem;
-    }
-}
 .input-wrapper {
     position: relative;
+}
 
-    &--help {
-        &:after {
-            position: absolute;
-            background-color: @defaultColor;
-            font-size: 1.6rem;
-            font-family: Arial;
-            border: 2px solid orange;
-            border-radius: 5px;
-            top: 6rem;
-            padding: 0.2rem;
-            z-index: 1;
-            opacity: 1;
-        }
+.help {
+    &__content {
+        position: absolute;
+        background-color: @defaultColor;
+        font-size: 1.6rem;
+        font-family: Arial;
+        border: 2px solid orange;
+        border-radius: 5px;
+        top: 6rem;
+        padding: 0.2rem;
+        z-index: 1;
+        display: none;
 
-        &:before {
-            position: absolute;
-            content: '';
-            border: 10px solid transparent;
-            border-bottom: 10px solid orange;
-            top: 4rem;
-            left: 0.6rem;
-            opacity: 1;
+        &--big {
+            top: 7.2rem;
         }
     }
-    &--help-phone:after {
-        content: '10 цифр';
-    }
-    &--help-zip:after {
-        content: '6 цифр';
-    }
-    &--help-email:after {
-        content: 'E-mail в установленном формате';
-    }
-    &--help-name:after, &--help-subname:after, &--help-fathername:after, &--help-city:after {
-        content: 'Только буквы русского алфавита';
-    }
-    &--help-street:after, &--help-build:after, &--help-flat:after {
-        content: 'Только буквы русского алфавита и цифры';
-    }
-    &--help-city:after {
-        top: 7.2rem;
-    }
-    &--help-city:before {
-        top: 5.2rem;
+
+    &__arrow {
+        position: absolute;
+        content: '';
+        border: 10px solid transparent;
+        border-bottom: 10px solid orange;
+        top: 4rem;
+        left: 0.6rem;
+        display: none;
+
+        &--big {
+            top: 5.2rem;
+        }
     }
 }
 
@@ -161,18 +149,20 @@
     border: none;
     outline: none;
     background-color: @testColor;
-    margin-right: 8.6rem;
+    margin-right: 7rem;
 }
 
 .weight-range {
     font-size: 2.6rem;
-    padding: 1rem;
     color: orange;
     background-color: #494949;
     border: none;
     outline: none;
-    width: 60rem;
+    width: 56rem;
     flex-shrink: 0;
+    opacity: 1;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .title {
@@ -195,19 +185,49 @@
         height: 2rem;
         background-color: @testColor;
         color: orange;
+        position: relative;
+        top: 0.4rem;
+        left: 0.6rem;
+        opacity: 0;
+        z-index: 1;
+
+        &:checked ~ .size__wrapper::before {
+            content: '\2713';
+        }
     }
+
+    &__wrapper {
+        width: 1.6rem;
+        height: 2rem;
+        border: 1px solid orange;
+        color: orange;
+        font-size: 1.6rem;
+        padding-left: 0.5rem;
+        position: relative;
+        left: 96.3rem;
+        top: -2.2rem;
+    }
+}
+
+.size-title {
+    margin-bottom: 1rem;
 }
 
 .size-box {
     display: none;
     padding-bottom: 2rem;
+    flex-wrap: wrap;
+    padding-left: 1rem;
 }
 
 .size-range {
     width: 33rem;
+    z-index: 1;
 
     &__width, &__length, &__height {
         width: 30rem;
+        opacity: 1;
+        cursor: pointer;
     }
 }
 

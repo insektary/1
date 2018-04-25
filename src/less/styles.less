@@ -1,9 +1,35 @@
+@charset "utf-8";
+
 @defaultColor: white;
 @testColor: #222222;
 
 @import "./form.less";
 @import "./output.less";
+@import "./input-range.less";
 
 html {
     font-size: 10px;
 }
+
+input::-ms-clear {
+    display: none;
+}
+
+.address-country::-ms-expand, .weight-measure::-ms-expand {
+    background-color: @testColor;
+    border: none;
+    color: orange;
+}
+
+select {
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .weight-measure {
+        margin-bottom: 4rem;
+    }
+}
+
+
