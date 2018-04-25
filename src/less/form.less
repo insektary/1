@@ -6,7 +6,7 @@
 }
 
 .title-text {
-    font-family: 'Arial';
+    font-family: @defaultFont;
     font-size: 1.8rem;
     text-align: left;
     color: @defaultColor;
@@ -21,13 +21,38 @@
 
 .address {
     height: 24rem;
+}
+
+.address-title {
+    font-family: @defaultFont;
+    font-size: 1.8rem;
+    color: @defaultColor;
+    padding-right: 2rem;
+
+    &__title {
+        position: relative;
+        bottom: -1.8rem;
+    }
+}
+
+.address-country {
+    font-size: 2.6rem;
+    color: @fontColor;
+    border: none;
+    outline: none;
+    background-color: @testColor;
+    height: 5.3rem;
+}
+
+.input-wrapper {
+    position: relative;
 
     &__input {
-        color: orange;
+        color: @fontColor;
         border: 1px solid transparent;
         outline: none;
         height: 4rem;
-        background: url('method-draw-image.svg') no-repeat #494949;
+        background: url('method-draw-image.svg') no-repeat @backgroundColor;
         background-size: 2.5rem;
         background-position-x: 198%;
 
@@ -51,40 +76,13 @@
             background-position-y: 0.7rem;
         }
     }
-}
 
-.address-title {
-    font-family: Arial;
-    font-size: 1.8rem;
-    color: @defaultColor;
-    padding-right: 2rem;
-
-    &__title {
-        position: relative;
-        bottom: -1.8rem;
-    }
-}
-
-.address-country {
-    font-size: 2.6rem;
-    color: orange;
-    border: none;
-    outline: none;
-    background-color: @testColor;
-    height: 5.3rem;
-}
-
-.input-wrapper {
-    position: relative;
-}
-
-.help {
-    &__content {
+    &__help {
         position: absolute;
         background-color: @defaultColor;
         font-size: 1.6rem;
-        font-family: Arial;
-        border: 2px solid orange;
+        font-family: @defaultFont;
+        border: 2px solid @fontColor;
         border-radius: 5px;
         top: 6rem;
         padding: 0.2rem;
@@ -100,7 +98,7 @@
         position: absolute;
         content: '';
         border: 10px solid transparent;
-        border-bottom: 10px solid orange;
+        border-bottom-color: @fontColor;
         top: 4rem;
         left: 0.6rem;
         display: none;
@@ -112,16 +110,16 @@
 }
 
 .phone-prefix {
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 3rem;
-    color: #4c4c4c;
+    color: @buttonNonActive;
     margin-right: -1.4rem;
     position: relative;
     top: 0.7rem;
 }
 
 .weight-title {
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 1.8rem;
     color: @defaultColor;
     padding-right: 2rem;
@@ -134,9 +132,9 @@
 }
 
 .weight-value {
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 3.4rem;
-    color: orange;
+    color: @fontColor;
 
     &__value {
 
@@ -145,7 +143,7 @@
 
 .weight-measure {
     font-size: 2.6rem;
-    color: orange;
+    color: @fontColor;
     border: none;
     outline: none;
     background-color: @testColor;
@@ -154,8 +152,8 @@
 
 .weight-range {
     font-size: 2.6rem;
-    color: orange;
-    background-color: #494949;
+    color: @fontColor;
+    background-color: @backgroundColor;
     border: none;
     outline: none;
     width: 56rem;
@@ -174,7 +172,7 @@
     &__title {
         color: @defaultColor;
         font-size: 1.8rem;
-        font-family: Arial;
+        font-family: @defaultFont;
         text-align: right;
         padding-left: 74rem;
         display: inline;
@@ -184,7 +182,7 @@
         width: 2rem;
         height: 2rem;
         background-color: @testColor;
-        color: orange;
+        color: @fontColor;
         position: relative;
         top: 0.4rem;
         left: 0.6rem;
@@ -199,8 +197,8 @@
     &__wrapper {
         width: 1.6rem;
         height: 2rem;
-        border: 1px solid orange;
-        color: orange;
+        border: 1px solid @fontColor;
+        color: @fontColor;
         font-size: 1.6rem;
         padding-left: 0.5rem;
         position: relative;
@@ -233,29 +231,29 @@
 
 .size-measure {
     color: @defaultColor;
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 1.6rem;
 }
 
 .size-item {
-    color: orange;
-    font-family: Arial;
+    color: @fontColor;
+    font-family: @defaultFont;
     font-size: 2.6rem;
 }
 
 .size-unit {
-    color: orange;
-    font-family: Arial;
+    color: @fontColor;
+    font-family: @defaultFont;
     font-size: 1.4rem;
     position: relative;
     top: -1rem;
 }
 
 .count-button {
-    color: #4c4c4c;
-    font-family: Arial;
+    color: @buttonNonActive;
+    font-family: @defaultFont;
     font-size: 2rem;
-    background-color: grey;
+    background-color: @nonActiveBackground;
     border: none;
     border-radius: 5px;
 }

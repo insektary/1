@@ -13,8 +13,8 @@
       "ukraine": "8-12",
       "kazakhstan": "10-14"
     },
-    "ratio_weight": 5,
-    "ratio_size": 5,
+    "ratio_weight": 2.2,
+    "ratio_size": 2.2,
     "max_size": 300
   },
   {
@@ -31,8 +31,8 @@
       "ukraine": "8-18",
       "kazakhstan": "10-14"
     },
-    "ratio_weight": 4.6,
-    "ratio_size": 4.8,
+    "ratio_weight": 2.6,
+    "ratio_size": 2.8,
     "max_size": 250
   },
   {
@@ -49,8 +49,8 @@
       "ukraine": "6-14",
       "kazakhstan": "10-16"
     },
-    "ratio_weight": 4.8,
-    "ratio_size": 4.2,
+    "ratio_weight": 2.8,
+    "ratio_size": 2.2,
     "max_size": 250
   },
   {
@@ -67,8 +67,8 @@
       "ukraine": "8-14",
       "kazakhstan": "12-18"
     },
-    "ratio_weight": 4.4,
-    "ratio_size": 4.8,
+    "ratio_weight": 2.4,
+    "ratio_size": 2.8,
     "max_size": 200
   },
   {
@@ -85,8 +85,8 @@
       "ukraine": "8-12",
       "kazakhstan": "10-14"
     },
-    "ratio_weight": 4.4,
-    "ratio_size": 4,
+    "ratio_weight": 2.4,
+    "ratio_size": 2,
     "max_size": 150
   },
   {
@@ -103,8 +103,8 @@
       "ukraine": "20-26",
       "kazakhstan": "24-32"
     },
-    "ratio_weight": 3.6,
-    "ratio_size": 3.8,
+    "ratio_weight": 1.6,
+    "ratio_size": 1.8,
     "max_size": 100
   }
 ]

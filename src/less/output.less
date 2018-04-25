@@ -6,20 +6,20 @@
     height: 20rem;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid grey;
+    border-top: 1px solid @nonActiveBackground;
     padding: 2rem 0 2rem 0;
 }
 
 .company-name {
     width: 15rem;
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 1.6rem;
     color: @defaultColor;
 }
 
 .company-price {
-    color: orange;
-    font-family: Arial;
+    color: @fontColor;
+    font-family: @defaultFont;
     width: 10rem;
 
     &__currency {
@@ -34,8 +34,8 @@
 }
 
 .company-term {
-    color: #48C4DD;
-    font-family: Arial;
+    color: @thermsColor;
+    font-family: @defaultFont;
     width: 20rem;
 
     &__days {
@@ -51,7 +51,7 @@
 
 .company-description {
     width: 30rem;
-    font-family: Arial;
+    font-family: @defaultFont;
     font-size: 1.6rem;
-    color: grey;
+    color: @nonActiveBackground;
 }

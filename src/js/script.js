@@ -3,6 +3,16 @@ require('./libs/jquery.js');
 require('./libs/jquery.maskedinput-1.2.2.js');
 require('./libs/jquery.autocomplete.js');
 
+if (!Array.prototype.find) {
+    Array.prototype.find = function(callback, context) {
+        for (let i = 0; i < this.length; i++) {
+            if (callback.call(context, this[i], i, this)) {
+                return this[i];
+            }
+        }
+    }
+}
+
 const weight = document.querySelector('.weight-value__value');
 const sizeItems = document.querySelectorAll('.size-item');
 const sizeBox = document.querySelector('.size-box');
@@ -30,7 +40,7 @@ const countWeight = () => {
 
 const countSize = ({ target }) => {
     const measureClass = target.className.split('__')[1];
-    console.log('1');
+
     Array.prototype.forEach.call(sizeItems, (item) => {
         if (item.className.split('--')[1] === measureClass) {
             item.innerHTML = target.value;
@@ -121,12 +131,12 @@ const checkInput = ({ target }) => {
 };
 
 const removeHelp = ({ target }) => {
-    target.parentNode.querySelector('.help__content').style.display = 'none';
-    target.parentNode.querySelector('.help__arrow').style.display = 'none';
+    target.parentNode.querySelector('.input-wrapper__help').style.display = 'none';
+    target.parentNode.querySelector('.input-wrapper__arrow').style.display = 'none';
 };
 
 const checkAll = () => {
-    if (Array.prototype.every.call(document.querySelectorAll('.address__input'),
+    if (Array.prototype.every.call(document.querySelectorAll('.input-wrapper__input'),
             (input) => input.getAttribute('correctly') === 'true')) {
         countButton.style.color = 'orange';
         countButton.style.cursor = 'pointer';
@@ -140,15 +150,15 @@ const checkAll = () => {
 };
 
 const showHelp = ({ parentNode }) => {
-    const helpContent = parentNode.querySelector('.help__content');
-    const helpArrow = parentNode.querySelector('.help__arrow');
+    const helpContent = parentNode.querySelector('.input-wrapper__help');
+    const helpArrow = parentNode.querySelector('.input-wrapper__arrow');
 
     helpContent.style.display = 'block';
     helpArrow.style.display = 'block';
 };
 
 const checkPhone = () => {
-    const inputPhone = document.querySelector('.address__input--phone');
+    const inputPhone = document.querySelector('.input-wrapper__input--phone');
 
     if (inputPhone.value.indexOf('_') === -1) {
         inputPhone.style.border = '1px solid transparent';
@@ -202,12 +212,12 @@ document.querySelector('.size__checkbox').addEventListener('click', showSizeBox)
 document.querySelector('.size__checkbox').addEventListener('click', countAll);
 document.querySelector('.count-button').addEventListener('click', onSubmit);
 document.querySelector('.address-country').addEventListener('change', countAll);
-document.querySelector('.address__input--phone').addEventListener('keyup', checkPhone);
+document.querySelector('.input-wrapper__input--phone').addEventListener('keyup', checkPhone);
 Array.prototype.forEach.call(document.querySelectorAll('.size-range'), (range) => {
     range.addEventListener('input', countSize);
     range.addEventListener('change', countSize);
 });
-Array.prototype.forEach.call(document.querySelectorAll('.address__input'), (input) => {
+Array.prototype.forEach.call(document.querySelectorAll('.input-wrapper__input'), (input) => {
     input.setAttribute('correctly', 'false');
     input.addEventListener('input', checkInput);
     input.addEventListener('blur', removeHelp);
@@ -221,13 +231,13 @@ if (xhr.status !== 200) {
     PRICES = JSON.parse(xhr.responseText);
 }
 
-jQuery(function($) {
+$(($) => {
     $.mask.definitions['~']='[+-]';
 
     $('#phone').mask('(999) 999-99-99');
 });
 
-$(document).ready(function(){
+$(document).ready(() => {
 
     $("#city").autocompleteArray([
         'Абакан',
@@ -246,6 +256,5 @@ $(document).ready(function(){
         matchSubset: 1,
         autoFill: true,
         maxItemsToShow: 10
-    }
-);
+    });
 });

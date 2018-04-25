@@ -2,6 +2,13 @@
 
 @defaultColor: white;
 @testColor: #222222;
+@fontColor: orange;
+@buttonNonActive: #4c4c4c;
+@backgroundColor: #494949;
+@thermsColor: #48C4DD;
+@nonActiveBackground: grey;
+
+@defaultFont: 'Arial';
 
 @import "./form.less";
 @import "./output.less";
@@ -11,14 +18,14 @@ html {
     font-size: 10px;
 }
 
-input::-ms-clear {
+.input-wrapper__input::-ms-clear {
     display: none;
 }
 
 .address-country::-ms-expand, .weight-measure::-ms-expand {
     background-color: @testColor;
     border: none;
-    color: orange;
+    color: @fontColor;
 }
 
 select {

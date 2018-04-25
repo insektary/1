@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         },
         browserify: {
             main: {
-                src: 'src/js/script.js',
+                src: 'src/js/script1.js',
                 dest: 'dist/script.js'
             }
         },
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'dist/script.js': 'src/js/script.js'
+                    'src/js/script1.js': 'src/js/script.js'
                 }
             }
         },
@@ -30,16 +30,6 @@ module.exports = function(grunt) {
             build: {
                 files: {
                     'dist/styles.css': 'src/less/styles.less'
-                }
-            }
-        },
-        cssmin: {
-            options: {
-                banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
-            },
-            build: {
-                files: {
-                    'dist/style.min.css': 'dist/styles.css'
                 }
             }
         },
@@ -53,7 +43,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['src/js/script.js'],
-                tasks: ['babel', 'babel-polyfill']
+                tasks: ['browserify']
             }
         },
         browserSync: {
@@ -74,11 +64,10 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-browser-sync');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-html-build');
-    grunt.registerTask('default', ['browserify', 'less', 'htmlbuild', 'browserSync', 'watch']);
+
+    grunt.registerTask('default', ['babel', 'browserify', 'less', 'htmlbuild', 'browserSync', 'watch']);
 };
