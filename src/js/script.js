@@ -14,14 +14,26 @@ if (!Array.prototype.find) {
     }
 }
 
-const weight = document.querySelector('.weight-value__value');
+const priceItems = document.querySelectorAll('.company-price__item');
+const termsItem = document.querySelectorAll('.company-term__term');
+const weight = document.querySelector('.weight-range');
+const length = document.querySelector('.size-range__length');
+const width = document.querySelector('.size-range__width');
+const height = document.querySelector('.size-range__height');
+const isSises = document.querySelector('.size__checkbox');
+const country = document.querySelector('.address-country');
+const weightDisplay = document.querySelector('.weight-value__value');
 const sizeItems = document.querySelectorAll('.size-item');
 const sizeBox = document.querySelector('.size-box');
 const countButton = document.querySelector('.count-button');
+const form = document.querySelector('.control').elements;
+const measure = document.querySelector('.weight-measure');
+const inputPhone = document.querySelector('.input-wrapper__input--phone');
 const regExps = {
     zip: /[0-9]{6}/,
     ru: /^[а-яА-Я]+$/,
     email: /^.+\@.{2,}\..{2,}$/i,
+    phone: /^[- ()0-9]+$/,
     default: /^[а-яА-Я0-9]+$/
 };
 const RATIO_KG = 1;
@@ -33,11 +45,9 @@ let PRICES;
 let TIMER;
 
 const countWeight = () => {
-    const weightValue = document.querySelector('.weight-range').value;
-    const measure = document.querySelector('.weight-measure').value;
-    const ratio = (measure === 'kg') ? RATIO_KG : RATIO_LBS;
+    const ratio = (measure.value === 'kg') ? RATIO_KG : RATIO_LBS;
 
-    weight.innerHTML = Math.round(weightValue * ratio * 100) / 100;
+    weightDisplay.innerHTML = Math.round(weight.value * ratio * 100) / 100;
 
     if (TIMER) {
         clearTimeout(TIMER);
@@ -59,7 +69,7 @@ const countSize = ({ target }) => {
         clearTimeout(TIMER);
     }
 
-    TIMER = setTimeout(countAll, RANGE_DELAYS);
+    TIMER = setTimeout(countAll, RANGE_DELAY);
 };
 
 const showSizeBox = ({ target }) => {
@@ -71,7 +81,6 @@ const showSizeBox = ({ target }) => {
 };
 
 const onSubmit = () => {
-    const form = document.querySelector('.control').elements;
     const data = {};
 
     for (let input of form) {
@@ -101,6 +110,9 @@ const checkRegExp = (target) => {
             break;
         case 'email':
             REGEXP = regExps.email;
+            break;
+        case 'phone':
+            REGEXP = regExps.phone;
             break;
         default:
             REGEXP = regExps.default;
@@ -158,17 +170,12 @@ const checkAll = () => {
 };
 
 const showHelp = ({ parentNode }) => {
-    const helpContent = parentNode.querySelector('.input-wrapper__help');
-    const helpArrow = parentNode.querySelector('.input-wrapper__arrow');
-
-    helpContent.style.display = 'block';
-    helpArrow.style.display = 'block';
+    parentNode.querySelector('.input-wrapper__help').style.display = 'block';
+    parentNode.querySelector('.input-wrapper__arrow').style.display = 'block';
 };
 
 const checkPhone = () => {
-    const inputPhone = document.querySelector('.input-wrapper__input--phone');
-
-    if (inputPhone.value.indexOf('_') === -1) {
+    if (regExps.phone.test(inputPhone.value)) {
         inputPhone.style.border = '1px solid transparent';
         inputPhone.setAttribute('correctly', 'true');
         inputPhone.style.backgroundPositionX = '98%';
@@ -180,28 +187,20 @@ const checkPhone = () => {
 };
 
 const countAll = () => {
-    const priceItems = document.querySelectorAll('.company-price__item');
-    const termsItem = document.querySelectorAll('.company-term__term');
-    const weightValue = document.querySelector('.weight-range').value;
-    const lengthValue = document.querySelector('.size-range__length').value;
-    const widthValue = document.querySelector('.size-range__width').value;
-    const heightValue = document.querySelector('.size-range__height').value;
-    const isSises = document.querySelector('.size__checkbox').checked;
-    const country = document.querySelector('.address-country').value;
 
     [].forEach.call(priceItems, (item) => {
         const companyName = item.className.split('--')[1];
         const price = PRICES.find((companyPrice) => companyPrice.name === companyName);
 
-        if(isSises) {
-            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[country]
-                * (weightValue * price.ratio_weight)
-                * (lengthValue * price.ratio_size)
-                * (widthValue * price.ratio_size)
-                * (heightValue * price.ratio_size));
+        if(isSises.checked) {
+            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[country.value]
+                * (weight.value * price.ratio_weight)
+                * (length.value * price.ratio_size)
+                * (width.value * price.ratio_size)
+                * (height.value * price.ratio_size));
         } else {
-            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[country]
-                * (weightValue * price.ratio_weight));
+            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[country.value]
+                * (weight.value * price.ratio_weight));
         }
     });
 
@@ -209,7 +208,7 @@ const countAll = () => {
         const companyName = item.className.split('--')[1];
         const price = PRICES.find((companyPrice) => companyPrice.name === companyName);
 
-        item.innerHTML = price.therms[country];
+        item.innerHTML = price.therms[country.value];
     })
 };
 
