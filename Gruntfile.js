@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         },
         browserify: {
             main: {
-                src: 'src/js/script1.js',
+                src: 'src/js/main.js',
                 dest: 'dist/script.js'
             }
         },
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'src/js/script1.js': 'src/js/script.js'
+                    'src/js/script1.js': 'src/js/main.js'
                 }
             }
         },
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 tasks: ['less', 'cssmin']
             },
             scripts: {
-                files: ['src/js/script.js'],
+                files: ['src/js/main.js'],
                 tasks: ['browserify']
             }
         },
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                 bsFiles: {
                     src: [
                         'dist/style.min.css',
-                        'dist/script.js',
+                        'dist/main.js',
                         'dist/index.html'
                     ]
                 },
@@ -69,5 +69,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-html-build');
 
-    grunt.registerTask('default', ['babel', 'browserify', 'less', 'htmlbuild', 'browserSync', 'watch']);
+    grunt.registerTask('default', ['browserify', 'less', 'htmlbuild', 'browserSync', 'watch']);
 };

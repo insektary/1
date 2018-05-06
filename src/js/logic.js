@@ -1,24 +1,17 @@
-'use strict';
-
-require('./libs/jquery.js');
-require('./libs/jquery.maskedinput-1.2.2.js');
-require('./libs/jquery.autocomplete.js');
-require("babel-polyfill");
-
 const $priceItems = $('.company-price__item');
 const $termsItem = $('.company-term__term');
-const $weight = $('.weight-range');
 const $length = $('.size-range__length');
 const $width = $('.size-range__width');
 const $height = $('.size-range__height');
-const $isSizes = $('.size__checkbox');
-const $country = $('.address-country');
 const $weightDisplay = $('.weight-value__value');
 const $sizeItems = $('.size-item');
 const $sizeBox = $('.size-box');
-const $countButton = $('.count-button');
 const $measure = $('.weight-measure');
-const form = $('.control').get(0);
+const $weight = $('.weight-range');
+const $country = $('.address-country');
+const $countButton = $('.count-button');
+const $isSizes = $('.size__checkbox');
+const form = $('.control');
 const regExps = {
     zip: /[0-9]{6}/,
     email: /^.+\@.{2,}\..{2,}$/i,
@@ -31,16 +24,16 @@ const regExps = {
     build: /^[а-яА-Я0-9]+$/,
     flat: /^[а-яА-Я0-9]+$/
 };
+
 const RATIO_KG = 1;
 const IS_KG = 'kg';
 const RATIO_LBS = 2.2;
 const RANGE_DELAY = 500; //ms
 const CONVENTIONAL_UNIT = 5;
 const ROUND_RATIO = 100;
-const CHECKBOX = 'checkbox';
 
-let prices;
 let timer;
+let prices;
 
 const countWeight = () => {
     const ratio = ($measure.val() === IS_KG) ? RATIO_KG : RATIO_LBS;
@@ -61,9 +54,9 @@ const checkTimer = () => {
 const countSize = ({ target }) => {
     const measureClass = target.className.split('__')[1];
 
-    [].forEach.call($sizeItems, (item) => {
+    $sizeItems.each((index, item) => {
         if (item.className.split('--')[1] === measureClass) {
-            item.innerHTML = target.value;
+            displayResult(item, target.value);
         }
     });
 
@@ -79,15 +72,9 @@ const showSizeBox = ({ target: { checked } }) => {
 };
 
 const onSubmit = () => {
-    const data = {};
+    const data = form.serializeArray();
 
-    [].forEach.call(form.elements, ({ name, type, checked, value }) => {
-        if (type === CHECKBOX) {
-            data[name] = checked;
-        } else {
-            data[name] = value;
-        }
-    });
+    data.checked = $isSizes.attr('checked');
 };
 
 const checkInput = (event) => {
@@ -110,10 +97,6 @@ const checkInput = (event) => {
     checkAll();
 };
 
-const removeHelp = ({ target }) => {
-    $(target).siblings().css('display', 'none');
-};
-
 const checkAll = () => {
     if ([].some.call($('.input-wrapper__input'),
             (input) => input.getAttribute('correctly') === 'false')) {
@@ -122,7 +105,6 @@ const checkAll = () => {
     } else {
         $countButton.addClass('count-button--enable').removeAttr('disabled');
     }
-
 };
 
 const countAll = () => {
@@ -131,33 +113,24 @@ const countAll = () => {
         const price = prices.find(({ name }) => name === companyName);
 
         if($isSizes.attr('checked')) {
-            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
+            displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
                 * ($weight.val() * price.ratio_weight)
                 * ($length.val() * price.ratio_size)
                 * ($width.val() * price.ratio_size)
-                * ($height.val() * price.ratio_size));
+                * ($height.val() * price.ratio_size)));
         } else {
-            item.innerHTML = Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
-                * ($weight.val() * price.ratio_weight));
+            displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
+                * ($weight.val() * price.ratio_weight)));
         }
     });
 
-    [].forEach.call($termsItem, (item) => {
+    $termsItem.each((index, item) => {
         const companyName = item.className.split('--')[1];
         const price = prices.find((companyPrice) => companyPrice.name === companyName);
 
-        item.innerHTML = price.therms[$country.val()];
+        displayResult(item, price.therms[$country.val()]);
     })
 };
-
-$weight.change(countWeight);
-$measure.change(countWeight);
-$isSizes.click(showSizeBox);
-$isSizes.click(countAll);
-$countButton.click(onSubmit);
-$country.change(countAll);
-$('.size-range').change(countSize);
-$('.input-wrapper__input').keyup(checkInput).blur(removeHelp).attr('correctly', 'false');
 
 $.ajax({
     url: 'prices.json',
@@ -167,26 +140,11 @@ $.ajax({
     }
 });
 
-$.ajax({
-    url: 'supported_cities.json',
-    dataType: 'json',
-    success: (supportedCities) => {
-        $(document).ready(() => {
-
-            $('#city').autocompleteArray(supportedCities,
-                {
-                    delay: 10,
-                    minChars: 1,
-                    matchSubset: 1,
-                    autoFill: true,
-                    maxItemsToShow: 10
-                });
-        });
-    }
-});
-
-$(($) => {
-    $.mask.definitions['~']='[+-]';
-
-    $('#phone').mask('(999) 999-99-99');
-});
+window.countWeight = countWeight;
+window.checkTimer = checkTimer;
+window.countSize = countSize;
+window.showSizeBox = showSizeBox;
+window.onSubmit = onSubmit;
+window.checkInput = checkInput;
+window.checkAll = checkAll;
+window.countAll = countAll;
