@@ -18,9 +18,9 @@ const regExps = {
     phone: /^[- ()0-9]+$/,
     city: /^[а-яА-Я0-9]+$/,
     name: /^[а-яА-Я0-9]+$/,
-    subname: /^[а-яА-Я0-9]+$/,
+    subname: /^[-а-яА-Я0-9]+$/,
     fathername: /^[а-яА-Я0-9]+$/,
-    street: /^[а-яА-Я0-9]+$/,
+    street: /^[- а-яА-Я0-9]+$/,
     build: /^[а-яА-Я0-9]+$/,
     flat: /^[а-яА-Я0-9]+$/
 };
@@ -31,6 +31,8 @@ const RATIO_LBS = 2.2;
 const RANGE_DELAY = 500; //ms
 const CONVENTIONAL_UNIT = 5;
 const ROUND_RATIO = 100;
+
+const display = require('./display.js');
 
 let timer;
 let prices;
@@ -56,7 +58,7 @@ const countSize = ({ target }) => {
 
     $sizeItems.each((index, item) => {
         if (item.className.split('--')[1] === measureClass) {
-            displayResult(item, target.value);
+            display.displayResult(item, target.value);
         }
     });
 
@@ -79,19 +81,19 @@ const onSubmit = () => {
 
 const checkInput = (event) => {
     const $target = $(event.target);
-    const checkIsCorrect = regExps[$target.attr('name')].test($target.val());
     const value = $target.val();
+    const checkIsCorrect = regExps[$target.attr('name')].test(value.trim());
 
     if (value && checkIsCorrect) {
         $target.attr('correctly', 'true').removeClass('input-wrapper__input--warning').addClass('input-wrapper__input--checked');
 
-        removeHelp(event);
+        display.removeHelp(event);
     } else if (value && !checkIsCorrect) {
         $target.attr('correctly', 'false').toggleClass('input-wrapper__input--warning', true).siblings().css('display', 'block');
     } else {
         $target.attr('correctly', 'false').toggleClass('input-wrapper__input--warning', true);
 
-        removeHelp(event);
+        display.removeHelp(event);
     }
 
     checkAll();
@@ -113,13 +115,13 @@ const countAll = () => {
         const price = prices.find(({ name }) => name === companyName);
 
         if($isSizes.attr('checked')) {
-            displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
+            display.displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
                 * ($weight.val() * price.ratio_weight)
                 * ($length.val() * price.ratio_size)
                 * ($width.val() * price.ratio_size)
                 * ($height.val() * price.ratio_size)));
         } else {
-            displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
+            display.displayResult(item, Math.round(CONVENTIONAL_UNIT * price.ratio_country[$country.val()]
                 * ($weight.val() * price.ratio_weight)));
         }
     });
@@ -128,7 +130,7 @@ const countAll = () => {
         const companyName = item.className.split('--')[1];
         const price = prices.find((companyPrice) => companyPrice.name === companyName);
 
-        displayResult(item, price.therms[$country.val()]);
+        display.displayResult(item, price.therms[$country.val()]);
     })
 };
 
@@ -140,11 +142,12 @@ $.ajax({
     }
 });
 
-window.countWeight = countWeight;
-window.checkTimer = checkTimer;
-window.countSize = countSize;
-window.showSizeBox = showSizeBox;
-window.onSubmit = onSubmit;
-window.checkInput = checkInput;
-window.checkAll = checkAll;
-window.countAll = countAll;
+$weight.change(countWeight);
+$measure.change(countWeight);
+$isSizes.click(showSizeBox);
+$isSizes.click(countAll);
+$countButton.click(onSubmit);
+$country.change(countAll);
+$('.input-wrapper__input').keyup(checkInput).blur(display.removeHelp).attr('correctly', 'false');
+
+module.exports = { countWeight, checkTimer, countSize, showSizeBox, onSubmit, checkInput, checkAll, countAll};

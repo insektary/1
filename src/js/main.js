@@ -3,24 +3,10 @@
 require('./libs/jquery.js');
 require('./libs/jquery.maskedinput-1.2.2.js');
 require('./libs/jquery.autocomplete.js');
-require('./display.js');
-require('./logic.js');
 require("babel-polyfill");
+const logic = require('./logic.js');
 
-const $weight = $('.weight-range');
-const $isSizes = $('.size__checkbox');
-const $country = $('.address-country');
-const $countButton = $('.count-button');
-const $measure = $('.weight-measure');
-
-$weight.change(countWeight);
-$measure.change(countWeight);
-$isSizes.click(showSizeBox);
-$isSizes.click(countAll);
-$countButton.click(onSubmit);
-$country.change(countAll);
-$('.size-range').change(countSize);
-$('.input-wrapper__input').keyup(checkInput).blur(removeHelp).attr('correctly', 'false');
+$('.size-range').change(logic.countSize);
 
 $.ajax({
     url: 'supported_cities.json',

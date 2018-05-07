@@ -6,5 +6,4 @@ const displayResult = (target, result) => {
     target.innerHTML = result;
 };
 
-window.displayResult = displayResult;
-window.removeHelp = removeHelp;
+module.exports = { removeHelp, displayResult };
