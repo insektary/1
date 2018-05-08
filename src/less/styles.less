@@ -1,0 +1,42 @@
+@defaultColor: white;
+@testColor: blue;
+
+html {
+    font-size: 10px;
+}
+
+.title {
+    padding: 2rem;
+}
+
+.content {
+    width: 80rem;
+    margin: auto;
+    font-family: Arial;
+    color: grey;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+
+    &__textarea {
+        resize: none;
+        height: 20rem;
+        font-size: 1.6rem;
+    }
+
+    &__button {
+        margin: 2rem auto;
+        width: 10rem;
+    }
+}
+
+.output-form {
+    resize: none;
+    border: none;
+    width: 100%;
+    font-size: 1.6rem;
+}
