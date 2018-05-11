@@ -1,11 +1,11 @@
+const display = require('./display.js');
+
 const $priceItems = $('.company-price__item');
 const $termsItem = $('.company-term__term');
 const $length = $('.size-range__length');
 const $width = $('.size-range__width');
 const $height = $('.size-range__height');
-const $weightDisplay = $('.weight-value__value');
 const $sizeItems = $('.size-item');
-const $sizeBox = $('.size-box');
 const $measure = $('.weight-measure');
 const $weight = $('.weight-range');
 const $country = $('.address-country');
@@ -31,8 +31,7 @@ const RATIO_LBS = 2.2;
 const RANGE_DELAY = 500; //ms
 const CONVENTIONAL_UNIT = 5;
 const ROUND_RATIO = 100;
-
-const display = require('./display.js');
+const BUTTON_ENABLE = 'count-button--enable';
 
 let timer;
 let prices;
@@ -40,8 +39,7 @@ let prices;
 const countWeight = () => {
     const ratio = ($measure.val() === IS_KG) ? RATIO_KG : RATIO_LBS;
 
-    $weightDisplay.text(Math.round($weight.val() * ratio * ROUND_RATIO) / ROUND_RATIO);
-
+    display.displayWeight(Math.round($weight.val() * ratio * ROUND_RATIO) / ROUND_RATIO);
     checkTimer();
 };
 
@@ -65,14 +63,6 @@ const countSize = ({ target }) => {
     checkTimer();
 };
 
-const showSizeBox = ({ target: { checked } }) => {
-    if (checked) {
-        $sizeBox.css('display', 'flex');
-    } else {
-        $sizeBox.css('display', 'none');
-    }
-};
-
 const onSubmit = () => {
     const data = form.serializeArray();
 
@@ -85,27 +75,35 @@ const checkInput = (event) => {
     const checkIsCorrect = regExps[$target.attr('name')].test(value.trim());
 
     if (value && checkIsCorrect) {
-        $target.attr('correctly', 'true').removeClass('input-wrapper__input--warning').addClass('input-wrapper__input--checked');
+        $target.attr('correctly', 'true');
 
+        display.checkFieldAsCorrect($target);
         display.removeHelp(event);
     } else if (value && !checkIsCorrect) {
-        $target.attr('correctly', 'false').toggleClass('input-wrapper__input--warning', true).siblings().css('display', 'block');
-    } else {
-        $target.attr('correctly', 'false').toggleClass('input-wrapper__input--warning', true);
+        $target.attr('correctly', 'false');
 
+        display.checkFieldAsWrong($target);
+    } else {
+        $target.attr('correctly', 'false');
+
+        display.checkFieldAsEmpty($target);
         display.removeHelp(event);
     }
 
     checkAll();
 };
 
-const checkAll = () => {
-    if ([].some.call($('.input-wrapper__input'),
-            (input) => input.getAttribute('correctly') === 'false')) {
+const checkFunction = function() {
+    return (this.getAttribute('correctly') === 'false');
+};
 
-        $countButton.removeClass('count-button--enable').attr('disabled', 'disable');
+const checkAll = () => {
+    if ($('.input-wrapper__input').is(checkFunction)) {
+        $countButton.removeClass(BUTTON_ENABLE);
+        $countButton.attr('disabled', 'disable');
     } else {
-        $countButton.addClass('count-button--enable').removeAttr('disabled');
+        $countButton.addClass(BUTTON_ENABLE);
+        $countButton.removeAttr('disabled');
     }
 };
 
@@ -130,7 +128,7 @@ const countAll = () => {
         const companyName = item.className.split('--')[1];
         const price = prices.find((companyPrice) => companyPrice.name === companyName);
 
-        display.displayResult(item, price.therms[$country.val()]);
+        display.displayResult(item, price.terms[$country.val()]);
     })
 };
 
@@ -144,10 +142,9 @@ $.ajax({
 
 $weight.change(countWeight);
 $measure.change(countWeight);
-$isSizes.click(showSizeBox);
 $isSizes.click(countAll);
 $countButton.click(onSubmit);
 $country.change(countAll);
+$isSizes.click(display.showSizeBox);
+$('.size-range').change(countSize);
 $('.input-wrapper__input').keyup(checkInput).blur(display.removeHelp).attr('correctly', 'false');
-
-module.exports = { countWeight, checkTimer, countSize, showSizeBox, onSubmit, checkInput, checkAll, countAll};
