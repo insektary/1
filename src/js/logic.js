@@ -11,6 +11,9 @@ const GETLANGS_INSTRUCTION = 'getLangs';
 const KEY = '?key=trnsl.1.1.20180220T094426Z.e1f4e967cf0ac2c7.8d56c206871ffd36c05216892008a97b3a312f5a';
 const TEXT_PREFIX = '&text=';
 const LANG_PREFIX = '&lang=';
+const NETWORK_ERROR = 'Failed to fetch';
+const NETWORK_ERROR_MESSAGE = 'Нет соединения';
+const UNKNOWN_MESSAGE = 'Неизвестная ошибка';
 
 let targetLanguage;
 
@@ -23,12 +26,12 @@ const refreshButton = () => {
 };
 
 const buildLanguagesList = ({ langs }) => {
-    for (let language in langs) {
-        let option = document.createElement('option');
-        option.value = language;
-        option.innerHTML = langs[language];
+    Object.entries(langs).forEach((language) => {
+        const option = document.createElement('option');
+
+        [option.value, option.innerHTML] = language;
         languagesList.appendChild(option);
-    }
+    });
 
     changeLanguage();
 };
@@ -38,7 +41,7 @@ const changeLanguage = () => {
 };
 
 async function getLanguages() {
-    let response = await fetch(`${ URL }${ GETLANGS_INSTRUCTION }${ KEY }&ui=ru`)
+    const response = await fetch(`${ URL }${ GETLANGS_INSTRUCTION }${ KEY }&ui=ru`)
         .catch(showErrorMessage);
     let parsedResponse = await response.json();
 
@@ -51,21 +54,24 @@ async function translate() {
             ${ TEXT_PREFIX }${ encodeURI(textarea.value) }`);
         let parsedResponse = await response.json();
 
-        if (parsedResponse.lang === '') {
+        if (!parsedResponse.lang) {
             return showWarningMessage();
         }
 
         response = await fetch(`${ URL }${ TRANSLATE_INSTRUCTION }${ KEY }
             ${ TEXT_PREFIX }${ encodeURI(textarea.value) }${ LANG_PREFIX }${ parsedResponse.lang }${ targetLanguage }`);
-            parsedResponse = await response.json();
+        parsedResponse = await response.json();
 
         textarea.value = '';
 
-        showResult(parsedResponse.text);
         showModalWindow(parsedResponse.text);
         refreshButton();
     } catch(error) {
-        showErrorMessage();
+        if (error.message === NETWORK_ERROR) {
+            showErrorMessage(NETWORK_ERROR_MESSAGE);
+        } else {
+            showErrorMessage(UNKNOWN_MESSAGE);
+        }
     }
 }
 

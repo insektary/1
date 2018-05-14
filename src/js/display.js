@@ -1,7 +1,6 @@
 const background = document.querySelector('.grey-background--hidden');
 const output = document.querySelector('.output-form');
 const body = document.querySelector('body');
-const NETWORK_ERROR = 'Сервис недоступен';
 const SERVICE_ERROR = 'Невозможно выполнить перевод';
 const MODAL_WINDOW = 'modal-window';
 const CLOSE_BUTTON = 'modal-window__close';
@@ -17,16 +16,12 @@ const closeModeWindow = () => {
     clearOutput();
 };
 
-export const showErrorMessage = () => {
-    showModalWindow(NETWORK_ERROR);
+export const showErrorMessage = (errorText) => {
+    showModalWindow(errorText);
 };
 
 export const showWarningMessage = () => {
     showModalWindow(SERVICE_ERROR);
-};
-
-export const showResult = (text) => {
-    output.value = text;
 };
 
 export const clearOutput = () => {
@@ -34,20 +29,36 @@ export const clearOutput = () => {
 };
 
 export const showModalWindow = (text) => {
-    let modalWindow = document.createElement('div');
-    modalWindow.className = MODAL_WINDOW;
+    const modalWindow = createErrorMessage({
+        tag: 'div',
+        className: MODAL_WINDOW
+    });
     body.appendChild(modalWindow);
 
-    let closeButton = document.createElement('button');
-    closeButton.className = CLOSE_BUTTON;
-    closeButton.innerHTML = CROSS_CODE;
-    closeButton.addEventListener('click', closeModeWindow);
-    modalWindow.appendChild(closeButton);
-
-    let textField = document.createElement('div');
-    textField.className = TEXTFIELD;
-    textField.innerHTML = text;
-    modalWindow.appendChild(textField);
+    modalWindow.appendChild(createErrorMessage({
+        tag: 'button',
+        className: CLOSE_BUTTON,
+        content: CROSS_CODE,
+        handler: closeModeWindow
+    }));
+    modalWindow.appendChild(createErrorMessage({
+        tag:'div',
+        className: TEXTFIELD,
+        content: text
+    }));
 
     background.className = BACKGROUND_VISIBLE;
+};
+
+const createErrorMessage = ({tag, className, content, handler}) => {
+    const element = document.createElement(tag);
+
+    if (content) {
+        element.innerHTML = content;
+    }
+
+    element.className = className;
+    element.addEventListener('click', handler);
+
+    return element;
 };
