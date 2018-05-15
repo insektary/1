@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Shopfans_Lite",
+    "ratio_country": {
+      "russia": 1,
+      "belarus": 1.2,
+      "ukraine": 1.3,
+      "kazakhstan": 1.5
+    },
+    "terms": {
+      "russia": "8-12",
+      "belarus": "8-12",
+      "ukraine": "8-12",
+      "kazakhstan": "10-14"
+    },
+    "ratio_weight": 2.2,
+    "ratio_size": 2.2,
+    "max_size": 300
+  },
+  {
+    "name": "Shopfans_Express",
+    "ratio_country": {
+      "russia": 1.6,
+      "belarus": 1.2,
+      "ukraine": 1.1,
+      "kazakhstan": 1.4
+    },
+    "terms": {
+      "russia": "6-12",
+      "belarus": "6-12",
+      "ukraine": "8-18",
+      "kazakhstan": "10-14"
+    },
+    "ratio_weight": 2.6,
+    "ratio_size": 2.8,
+    "max_size": 250
+  },
+  {
+    "name": "Priority_BWW",
+    "ratio_country": {
+      "russia": 1.3,
+      "belarus": 1.2,
+      "ukraine": 1.4,
+      "kazakhstan": 1.2
+    },
+    "terms": {
+      "russia": "6-10",
+      "belarus": "6-14",
+      "ukraine": "6-14",
+      "kazakhstan": "10-16"
+    },
+    "ratio_weight": 2.8,
+    "ratio_size": 2.2,
+    "max_size": 250
+  },
+  {
+    "name": "Priority_USPS",
+    "ratio_country": {
+      "russia": 1.3,
+      "belarus": 1.8,
+      "ukraine": 1.5,
+      "kazakhstan": 1.3
+    },
+    "terms": {
+      "russia": "8-12",
+      "belarus": "8-14",
+      "ukraine": "8-14",
+      "kazakhstan": "12-18"
+    },
+    "ratio_weight": 2.4,
+    "ratio_size": 2.8,
+    "max_size": 200
+  },
+  {
+    "name": "Express_USPS",
+    "ratio_country": {
+      "russia": 1.1,
+      "belarus": 1.2,
+      "ukraine": 1.7,
+      "kazakhstan": 1.4
+    },
+    "terms": {
+      "russia": "8-12",
+      "belarus": "8-12",
+      "ukraine": "8-12",
+      "kazakhstan": "10-14"
+    },
+    "ratio_weight": 2.4,
+    "ratio_size": 2,
+    "max_size": 150
+  },
+  {
+    "name": "Airmail",
+    "ratio_country": {
+      "russia": 1.4,
+      "belarus": 1.6,
+      "ukraine": 1.3,
+      "kazakhstan": 1.1
+    },
+    "terms": {
+      "russia": "18-24",
+      "belarus": "18-24",
+      "ukraine": "20-26",
+      "kazakhstan": "24-32"
+    },
+    "ratio_weight": 1.6,
+    "ratio_size": 1.8,
+    "max_size": 100
+  }
+]

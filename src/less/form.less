@@ -1,0 +1,274 @@
+.content {
+    width: 100rem;
+    margin: auto;
+    background-color: @testColor;
+    padding: 1rem;
+}
+
+.title-text {
+    font-family: @defaultFont;
+    font-size: 1.8rem;
+    text-align: left;
+    color: @defaultColor;
+}
+
+.address, .weight {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem 0 1rem 0;
+}
+
+.address {
+    height: 24rem;
+}
+
+.address-title {
+    font-family: @defaultFont;
+    font-size: 1.8rem;
+    color: @defaultColor;
+    padding-right: 2rem;
+
+    &__title {
+        position: relative;
+        bottom: -1.8rem;
+    }
+}
+
+.address-country {
+    font-size: 2.6rem;
+    color: @fontColor;
+    border: none;
+    outline: none;
+    background-color: @testColor;
+    height: 5.3rem;
+}
+
+.input-wrapper {
+    position: relative;
+
+    &__input {
+        color: @fontColor;
+        border: 1px solid transparent;
+        outline: none;
+        height: 4rem;
+        background: url('method-draw-image.svg') no-repeat @backgroundColor;
+        background-size: 2.5rem;
+        background-position-x: 198%;
+
+        &--city {
+            width: 63rem;
+            font-size: 2.6rem;
+            padding: 1rem;
+            background-position-y: 1.6rem;
+        }
+        &--zip, &--street, &--phone, &--name, &--subname, &--fathername, &--email {
+            width: 20rem;
+            font-size: 2rem;
+            padding: 0.4rem;
+            background-position-y: 0.7rem;
+        }
+
+        &--build, &--flat {
+            width: 10rem;
+            font-size: 2rem;
+            padding: 0.4rem;
+            background-position-y: 0.7rem;
+        }
+
+        &--checked {
+            border: 1px solid transparent;
+            background-position-x: 98%;
+        }
+
+        &--warning {
+            border: 1px solid red;
+            background-position-x: 198%;
+        }
+    }
+
+    &__help {
+        position: absolute;
+        background-color: @defaultColor;
+        font-size: 1.6rem;
+        font-family: @defaultFont;
+        border: 2px solid @fontColor;
+        border-radius: 5px;
+        top: 6rem;
+        padding: 0.2rem;
+        z-index: 1;
+        display: none;
+
+        &--big {
+            top: 7.2rem;
+        }
+    }
+
+    &__arrow {
+        position: absolute;
+        content: '';
+        border: 10px solid transparent;
+        border-bottom-color: @fontColor;
+        top: 4rem;
+        left: 0.6rem;
+        display: none;
+
+        &--big {
+            top: 5.2rem;
+        }
+    }
+}
+
+.phone-prefix {
+    font-family: @defaultFont;
+    font-size: 3rem;
+    color: @buttonNonActive;
+    margin-right: -1.4rem;
+    position: relative;
+    top: 0.7rem;
+}
+
+.weight-title {
+    font-family: @defaultFont;
+    font-size: 1.8rem;
+    color: @defaultColor;
+    padding-right: 2rem;
+    width: 14rem;
+
+    &__title {
+        position: relative;
+        bottom: -1.4rem;
+    }
+}
+
+.weight-value {
+    font-family: @defaultFont;
+    font-size: 3.4rem;
+    color: @fontColor;
+
+    &__value {
+
+    }
+}
+
+.weight-measure {
+    font-size: 2.6rem;
+    color: @fontColor;
+    border: none;
+    outline: none;
+    background-color: @testColor;
+    margin-right: 7rem;
+}
+
+.weight-range {
+    font-size: 2.6rem;
+    color: @fontColor;
+    background-color: @backgroundColor;
+    border: none;
+    outline: none;
+    width: 56rem;
+    flex-shrink: 0;
+    opacity: 1;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.title {
+    padding: 1rem 0 1rem 0;
+}
+
+.size {
+
+    &__title {
+        color: @defaultColor;
+        font-size: 1.8rem;
+        font-family: @defaultFont;
+        text-align: right;
+        padding-left: 74rem;
+        display: inline;
+    }
+
+    &__checkbox {
+        width: 2rem;
+        height: 2rem;
+        background-color: @testColor;
+        color: @fontColor;
+        position: relative;
+        top: 0.4rem;
+        left: 0.6rem;
+        opacity: 0;
+        z-index: 1;
+
+        &:checked ~ .size__wrapper::before {
+            content: '\2713';
+        }
+    }
+
+    &__wrapper {
+        width: 1.6rem;
+        height: 2rem;
+        border: 1px solid @fontColor;
+        color: @fontColor;
+        font-size: 1.6rem;
+        padding-left: 0.5rem;
+        position: relative;
+        left: 96.3rem;
+        top: -2.2rem;
+    }
+}
+
+.size-title {
+    margin-bottom: 1rem;
+}
+
+.size-box {
+    display: none;
+    padding-bottom: 2rem;
+    flex-wrap: wrap;
+    padding-left: 1rem;
+}
+
+.size-range {
+    width: 33rem;
+    z-index: 1;
+
+    &__width, &__length, &__height {
+        width: 30rem;
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+
+.size-measure {
+    color: @defaultColor;
+    font-family: @defaultFont;
+    font-size: 1.6rem;
+}
+
+.size-item {
+    color: @fontColor;
+    font-family: @defaultFont;
+    font-size: 2.6rem;
+}
+
+.size-unit {
+    color: @fontColor;
+    font-family: @defaultFont;
+    font-size: 1.4rem;
+    position: relative;
+    top: -1rem;
+}
+
+.count-button {
+    color: @buttonNonActive;
+    font-family: @defaultFont;
+    font-size: 2rem;
+    background-color: @nonActiveBackground;
+    border: none;
+    border-radius: 5px;
+
+    &--enable {
+        color: @fontColor;
+        cursor: pointer;
+    }
+}

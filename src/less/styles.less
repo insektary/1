@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+@defaultColor: white;
+@testColor: #222222;
+@fontColor: orange;
+@buttonNonActive: #4c4c4c;
+@backgroundColor: #494949;
+@thermsColor: #48C4DD;
+@nonActiveBackground: grey;
+
+@defaultFont: 'Arial';
+
+@import "./form.less";
+@import "./output.less";
+@import "./input-range.less";
+@import "./style-library.less";
+
+html {
+    font-size: 10px;
+}
+
+.input-wrapper__input::-ms-clear {
+    display: none;
+}
+
+.address-country::-ms-expand, .weight-measure::-ms-expand {
+    background-color: @testColor;
+    border: none;
+    color: @fontColor;
+}
+
+select {
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .weight-measure {
+        margin-bottom: 4rem;
+    }
+}
+
+
