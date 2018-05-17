@@ -1,0 +1,46 @@
+@defaultColor: white;
+@borderColor: #dbdbdb;
+@greyColor: grey;
+
+.header {
+    width: 100%;
+    background-color: @defaultColor;
+    display: flex;
+    border-bottom: 1px solid @borderColor;
+
+    &__todo-input {
+        flex-grow: 1;
+        font-size: 2rem;
+        color: @greyColor;
+        padding: 0 1rem 0 1rem;
+        outline: none;
+        border: none;
+    }
+
+    &__check-button {
+        flex-basis: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        background-color: inherit;
+        border: 1px solid @borderColor;
+        border-radius: 50%;
+        margin: 1rem;
+        outline: none;
+        color: @borderColor;
+
+        &--done {
+            flex-basis: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            background-color: inherit;
+            border: 1px solid @borderColor;
+            border-radius: 50%;
+            margin: 1rem;
+            outline: none;
+        }
+
+        &--hidden {
+            visibility: hidden;
+        }
+    }
+}

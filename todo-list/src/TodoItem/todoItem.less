@@ -1,0 +1,80 @@
+@defaultColor: white;
+@doneColor: green;
+@deleteColor: red;
+@borderColor: #dbdbdb;
+@greyColor: grey;
+
+.item {
+    width: 100%;
+    background-color: @defaultColor;
+    display: flex;
+    border-bottom: 1px solid @borderColor;
+
+    &:hover .item__delete-button{
+        visibility: visible;
+    }
+
+    &--hidden {
+        display: none;
+    }
+
+    &__todo-title {
+        cursor: default;
+        flex-grow: 1;
+        font-size: 2rem;
+        color: @greyColor;
+        padding: 0 1rem 0 1rem;
+        outline: none;
+        border: none;
+
+        &--done {
+            flex-grow: 1;
+            font-size: 2rem;
+            color: @borderColor;
+            padding: 0 1rem 0 1rem;
+            outline: none;
+            border: none;
+            text-decoration: line-through;
+        }
+    }
+
+    &__check-button {
+        flex-basis: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        background-color: inherit;
+        border: 1px solid @borderColor;
+        border-radius: 50%;
+        margin: 1rem;
+        outline: none;
+        color: @doneColor;
+        padding-top: 2.6rem;
+        overflow: hidden;
+
+        &--done {
+            flex-basis: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            background-color: inherit;
+            border: 1px solid @borderColor;
+            border-radius: 50%;
+            margin: 1rem;
+            outline: none;
+            content: none;
+            color: @doneColor;
+        }
+    }
+
+    &__delete-button {
+        flex-basis: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        background-color: inherit;
+        border-radius: 50%;
+        margin: 1rem;
+        outline: none;
+        color: @deleteColor;
+        border: none;
+        visibility: hidden;
+    }
+}
