@@ -1,0 +1,91 @@
+@defaultColor: white;
+
+html {
+    font-size: 10px;
+}
+
+.grey-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #4b4b4b;
+    opacity: 0.6;
+
+    &--visible {
+        display: block;
+    }
+    &--hidden {
+        display: none;
+    }
+}
+
+.title {
+    padding: 2rem;
+}
+
+.content {
+    width: 80rem;
+    margin: auto;
+    font-family: Arial;
+    color: grey;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.input-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__textarea {
+        resize: none;
+        height: 20rem;
+        font-size: 1.6rem;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    &__button {
+        width: 10rem;
+    }
+
+    &__language {
+        width: 15rem;
+        height: 3rem;
+    }
+}
+
+.output-form {
+    resize: none;
+    height: 20rem;
+    width: 79.4rem;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+}
+
+.modal-window {
+    position: absolute;
+    width: 46rem;
+    border: 2px solid orange;
+    border-radius: 5px;
+    background-color: @defaultColor;
+    left: calc(50vw - 23rem);
+    top: 26rem;
+    padding: 1rem;
+
+    &__close {
+        cursor: pointer;
+        border: none;
+        background-color: @defaultColor;
+        position: relative;
+        left: 94%;
+    }
+
+    &__textfield {
+        font-size: 2rem;
+        font-family: Arial;
+        margin: 0.8rem;
+    }
+}
