@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './app.less';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TodoItem from './TodoItem/TodoItem';
+import CONST from './Constants';
 
-const ENTER = 'Enter';
-const STORAGE_KEY = 'todoArray';
-const FILTER_DEFAULT = 'all';
-const LIST_CLASSNAME = 'list';
-
-class App extends React.Component {
+class App extends Component {
     constructor() {
         super();
-
-        const storageData = localStorage.getItem(STORAGE_KEY);
-        const parsedData = storageData ? JSON.parse(storageData) : [];
-
         this.state = {
-            todoArray: parsedData,
+            todoArray: [],
             newTodo: '',
-            someIsCompleted: parsedData.some((todo) => todo.completed),
-            everyIsCompleted: (parsedData.length === 0) ?  false : parsedData.every((todo) => todo.completed),
-            filterOption: FILTER_DEFAULT
+            someIsCompleted: false,
+            everyIsCompleted: false,
+            filterOption: CONST.FILTER_DEFAULT
         };
     }
     addTodo(event) {
-        if (event.key === ENTER && this.state.newTodo.trim()) {
+        if (event.key === CONST.ENTER && this.state.newTodo.trim()) {
             this.setState((prevState) => {
                 return {
                     newTodo: '',
@@ -35,7 +27,7 @@ class App extends React.Component {
                         completed: false
                     }].concat(prevState.todoArray)
                 }
-            }, this.refreshStorage)
+            })
         }
     }
     getNewTodo({ target }) {
@@ -46,7 +38,7 @@ class App extends React.Component {
             return {
                 todoArray: prevState.todoArray.filter((todo) => todo.id !==target.parentNode.id),
             }
-        }, this.refreshStorage);
+        });
     }
     refreshListOfCompleted() {
         this.setState((prevState) => {
@@ -69,7 +61,7 @@ class App extends React.Component {
                 everyIsCompleted: prevState.todoArray.every((todo) => todo.completed),
                 someIsCompleted: prevState.todoArray.some((todo) => todo.completed)
             }
-        }, this.refreshStorage);
+        });
     }
     changeDisplayOptions({ target }) {
         this.setState({ filterOption: target.id });
@@ -87,7 +79,7 @@ class App extends React.Component {
                 everyIsCompleted: !prevState.everyIsCompleted,
                 someIsCompleted: prevState.todoArray.some((todo) => todo.completed)
             }
-        }, this.refreshStorage);
+        });
     }
     clearCompleted() {
         this.setState((prevState) => {
@@ -96,7 +88,7 @@ class App extends React.Component {
                 someIsCompleted: false,
                 everyIsCompleted: false
             }
-        }, this.refreshStorage);
+        });
     }
     rewriteTodo(id, newTitle) {
         this.setState((prevState) => {
@@ -109,13 +101,10 @@ class App extends React.Component {
                     return todo;
                 })
             }
-        }, this.refreshStorage);
-    }
-    refreshStorage() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.todoArray));
+        });
     }
     render() {
-        return <div className={ LIST_CLASSNAME }  onKeyPress={ this.addTodo.bind(this) }>
+        return <div className={ CONST.LIST_CLASSNAME }  onKeyPress={ this.addTodo.bind(this) }>
             <Header
                 checkAll = { this.checkAll.bind(this) }
                 getNewTodo = { this.getNewTodo.bind(this) }
