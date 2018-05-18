@@ -2,7 +2,7 @@ import React from 'react';
 import './header.less';
 import CONST from '../Constants';
 
-const Header = ({ checkAll, getNewTodo, everyIsCompleted, defaultValue, numberOfTodos }) => (
+const Header = ({ checkAll, everyIsCompleted, defaultValue, numberOfTodos }) => (
     <div className={ CONST.HEADER_CLASSNAME }>
         <button
             className={
@@ -13,8 +13,6 @@ const Header = ({ checkAll, getNewTodo, everyIsCompleted, defaultValue, numberOf
         </button>
         <input
             className={ CONST.INPUT_CLASSNAME }
-            value={ defaultValue }
-            onChange={ getNewTodo }
             placeholder={ CONST.PLACEHOLDER }
         />
     </div>

@@ -1,5 +1,6 @@
 const CONST = {
     ENTER: 'Enter',
+    KEYPRESS: 'keypress',
     FILTER_DEFAULT: 'all',
     LIST_CLASSNAME: 'list',
     PLACEHOLDER: 'ToDo',
@@ -27,6 +28,7 @@ const CONST = {
     BUTTON_CLASSNAME: 'footer-button',
     BUTTON_ACTIVE: 'footer-button--active',
     BUTTON_HIDDEN: 'footer-button--hidden',
+    COMPLETED_DEFAULT: false,
 };
 
 export default CONST;

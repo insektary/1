@@ -10,123 +10,137 @@ class App extends Component {
         super();
         this.state = {
             todoArray: [],
-            newTodo: '',
             someIsCompleted: false,
             everyIsCompleted: false,
-            filterOption: CONST.FILTER_DEFAULT
+            chosenFilter: CONST.FILTER_DEFAULT
         };
     }
-    addTodo(event) {
-        if (event.key === CONST.ENTER && this.state.newTodo.trim()) {
-            this.setState((prevState) => {
-                return {
-                    newTodo: '',
-                    todoArray: [{
-                        title: prevState.newTodo,
-                        id: new Date().getTime().toString().substr(5),
-                        completed: false
-                    }].concat(prevState.todoArray)
-                }
-            })
+
+    addTodo({ key, target }) {
+        if (key === CONST.ENTER && target.value.trim()) {
+            this.setState((prevState) => ({
+                todoArray: [{
+                    title: target.value,
+                    id: this.generateID(),
+                    completed: CONST.COMPLETED_DEFAULT,
+                    lock: true
+                }].concat(prevState.todoArray)
+            }));
         }
     }
-    getNewTodo({ target }) {
-        this.setState({ newTodo: target.value });
-    }
-    deleteTodo({ target }) {
-        this.setState((prevState) => {
-            return {
-                todoArray: prevState.todoArray.filter((todo) => todo.id !==target.parentNode.id),
-            }
-        });
-    }
-    refreshListOfCompleted() {
-        this.setState((prevState) => {
-            return {
-                someIsCompleted: prevState.todoArray.some((todo) => todo.completed),
-                everyIsCompleted: (prevState.todoArray.length === 0) ?  false : prevState.todoArray.every((todo) => todo.completed),
-            }
-        })
-    }
-    changeStatus({ target }) {
-        this.setState((prevState) => {
-            return {
-                todoArray: prevState.todoArray.map((todo) => {
-                    if (todo.id === target.parentNode.id) {
-                        todo.completed = !todo.completed;
-                    }
 
-                    return todo;
-                }),
-                everyIsCompleted: prevState.todoArray.every((todo) => todo.completed),
-                someIsCompleted: prevState.todoArray.some((todo) => todo.completed)
-            }
-        });
+    generateID() {
+        return new Date().getTime().toString().substr(5);
     }
+
+    deleteTodo({ target: { parentNode: { id } } }) {
+        this.setState(({ todoArray }) => ({
+            todoArray: todoArray.filter((todo) => todo.id !== id),
+            someIsCompleted: todoArray.some((todo) => todo.completed),
+            everyIsCompleted: (!todoArray.length) ?  false : todoArray.every((todo) => todo.completed)
+        }));
+    }
+
+    refreshListOfCompleted() {
+        this.setState(({ todoArray }) => ({
+            someIsCompleted: todoArray.some((todo) => todo.completed),
+            everyIsCompleted: (!todoArray.length) ?  false : todoArray.every((todo) => todo.completed),
+        }));
+    }
+
+    changeStatus({ target }) {
+        this.setState(({ todoArray }) => ({
+            todoArray: todoArray.map((todo) => {
+                if (todo.id === target.parentNode.id) {
+                    todo.completed = !todo.completed;
+                }
+
+                return todo;
+            }),
+            everyIsCompleted: todoArray.every((todo) => todo.completed),
+            someIsCompleted: todoArray.some((todo) => todo.completed)
+        }));
+    }
+
     changeDisplayOptions({ target }) {
-        this.setState({ filterOption: target.id });
+        this.setState({ chosenFilter: target.id });
     }
+
     checkAll() {
         if (!this.state.todoArray.length) return;
 
-        this.setState((prevState) => {
-            return {
-                todoArray: prevState.todoArray.map((todo) => {
-                    todo.completed = !prevState.everyIsCompleted;
+        this.setState(({ todoArray, everyIsCompleted }) => ({
+            todoArray: todoArray.map((todo) => {
+                todo.completed = !everyIsCompleted;
 
-                    return todo;
-                }),
-                everyIsCompleted: !prevState.everyIsCompleted,
-                someIsCompleted: prevState.todoArray.some((todo) => todo.completed)
-            }
-        });
+                return todo;
+            }),
+            everyIsCompleted: !everyIsCompleted,
+            someIsCompleted: todoArray.some((todo) => todo.completed)
+        }));
     }
+
     clearCompleted() {
-        this.setState((prevState) => {
-            return {
-                todoArray: prevState.todoArray.filter((todo) => !todo.completed),
-                someIsCompleted: false,
-                everyIsCompleted: false
-            }
-        });
+        this.setState(({ todoArray }) => ({
+            todoArray: todoArray.filter((todo) => !todo.completed),
+            someIsCompleted: false,
+            everyIsCompleted: false
+        }));
     }
-    rewriteTodo(id, newTitle) {
-        this.setState((prevState) => {
-            return {
-                todoArray: prevState.todoArray.map((todo) => {
-                    if (todo.id === id) {
-                        todo.title = newTitle;
-                    }
 
-                    return todo;
-                })
-            }
-        });
+    unlockTodo({ target }) {
+        this.setState(({ todoArray }) => ({
+            todoArray: todoArray.map((todo) => {
+                if (todo.id === target.parentNode.id) {
+                    todo.lock = false;
+                }
+
+                return todo;
+            })
+        }));
     }
+
+    lockAndRewriteTodo(event) {
+        if (event.type === CONST.KEYPRESS && event.key !== CONST.ENTER) return;
+
+        const id = event.target.parentNode.id;
+        const value = event.target.value;
+
+        this.setState(({ todoArray }) => ({
+            todoArray: todoArray.map((todo) => {
+                if (todo.id === id) {
+                    todo.title = value;
+                    todo.lock = true;
+                }
+
+                return todo;
+            })
+        }));
+    }
+
     render() {
         return <div className={ CONST.LIST_CLASSNAME }  onKeyPress={ this.addTodo.bind(this) }>
             <Header
-                checkAll = { this.checkAll.bind(this) }
-                getNewTodo = { this.getNewTodo.bind(this) }
-                everyIsCompleted = { this.state.everyIsCompleted }
-                defaultValue = { this.state.newTodo }
-                numberOfTodos = { this.state.todoArray.length }
+                checkAll={ this.checkAll.bind(this) }
+                everyIsCompleted={ this.state.everyIsCompleted }
+                numberOfTodos={ this.state.todoArray.length }
             />
-            { this.state.todoArray.map(({ id, completed, title }) =>
+            { this.state.todoArray.map(({ id, completed, title, lock }) =>
                 <TodoItem
                     refreshListOfCompleted={ this.refreshListOfCompleted.bind(this) }
                     changeStatus={ this.changeStatus.bind(this) }
                     deleteTodo={ this.deleteTodo.bind(this) }
-                    rewriteTodo={ this.rewriteTodo.bind(this) }
-                    filterOption={ this.state.filterOption }
-                    key={ id } id={ id } completed={ completed } title={ title }
+                    unlockTodo={ this.unlockTodo.bind(this) }
+                    lockAndRewriteTodo={ this.lockAndRewriteTodo.bind(this) }
+                    chosenFilter={ this.state.chosenFilter }
+                    key={ id } lock={ lock } id={ id } completed={ completed } title={ title }
                 />
             )}
             <Footer
                 clearCompleted={ this.clearCompleted.bind(this) }
                 handler={ this.changeDisplayOptions.bind(this) }
                 length={ this.state.todoArray.length }
-                chosenFilter={ this.state.filterOption }
+                chosenFilter={ this.state.chosenFilter }
                 someIsCompleted={ this.state.someIsCompleted }
             />
         </div>;

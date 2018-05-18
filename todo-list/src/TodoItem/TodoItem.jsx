@@ -1,61 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './todoItem.less';
 import CONST from '../Constants';
 
-class TodoItem extends Component {
-    constructor({ changeStatus, deleteTodo, rewriteTodo, refreshListOfCompleted }) {
-        super();
-        this.state = {
-            refreshListOfCompleted,
-            changeStatus,
-            deleteTodo,
-            rewriteTodo,
-            lock: true,
-            newTitle: ''
-        }
-    }
-    unLock() {
-        this.setState({ lock: false });
-    }
-    lock({ type, key }) {
-        if (type === CONST.EVENT_BLUR || key === CONST.EVENT_ENTER) {
-            this.setState({ lock: true });
-            this.state.rewriteTodo(this.props.id, this.state.newTitle);
-        }
-    }
-    changeTitle({ target }) {
-        this.setState({ newTitle: target.value });
-    }
-    componentWillUnmount() {
-        this.state.refreshListOfCompleted();
-    }
-    render() {
-        const visibility = ((this.props.filterOption === CONST.ALL_ID)
-            || (this.props.filterOption === CONST.ACTIVE_ID && !this.props.completed)
-            || (this.props.filterOption === CONST.COMPLETED_ID && this.props.completed));
+const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlockTodo, changeStatus, lockAndRewriteTodo }) => {
+        const visibility = ((chosenFilter === CONST.ALL_ID)
+            || (chosenFilter === CONST.ACTIVE_ID && !completed)
+            || (chosenFilter === CONST.COMPLETED_ID && completed));
 
         return (
-            <div id={ this.props.id } key={ this.props.id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }>
+            <div id={ id } key={ id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }>
                 <button
-                    className={ this.props.completed ? CONST.CHECKBUTTON_DONE : CONST.CHECKBUTTON_CLASSNAME }
-                    onClick={ this.state.changeStatus }>&#10004;
+                    className={ completed ? CONST.CHECKBUTTON_DONE : CONST.CHECKBUTTON_CLASSNAME }
+                    onClick={ changeStatus }>&#10004;
                 </button>
                 <input
-                    defaultValue={ this.props.title }
-                    readOnly = { this.state.lock ? CONST.READONLY_ATTR : '' }
-                    className={ this.props.completed ? CONST.TITLE_DONE : CONST.TITLE_CLASSNAME }
-                    onDoubleClick={ this.unLock.bind(this) }
-                    onBlur={ this.lock.bind(this) }
-                    onKeyPress={ this.lock.bind(this) }
-                    onChange={ this.changeTitle.bind(this) }
+                    defaultValue={ title }
+                    readOnly={ lock ? CONST.READONLY_ATTR : '' }
+                    className={ completed ? CONST.TITLE_DONE : CONST.TITLE_CLASSNAME }
+                    onDoubleClick={ unlockTodo }
+                    onBlur={ lockAndRewriteTodo }
+                    onKeyPress={ lockAndRewriteTodo }
                 />
                 <button
                     className={ CONST.DELETE_BUTTON }
-                    onClick={ this.state.deleteTodo }>&#10006;
+                    onClick={ deleteTodo }>&#10006;
                 </button>
             </div>
         )
-    }
-}
+};
 
 export default TodoItem;

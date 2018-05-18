@@ -14,7 +14,7 @@ const Footer = ({ clearCompleted, length, handler, chosenFilter, someIsCompleted
         <FilterButton id={ CONST.ALL_ID } clickHandler={ handler } content="All" chosenFilter={ chosenFilter }/>
         <FilterButton id={ CONST.ACTIVE_ID } clickHandler={ handler } content="Active" chosenFilter={ chosenFilter }/>
         <FilterButton id={ CONST.COMPLETED_ID } clickHandler={ handler } content="Completed" chosenFilter={ chosenFilter }/>
-        <button onClick={ clearCompleted } className={ someIsCompleted ? CONST.BUTTON_CLASSNAME : CONST.BUTTON_HIDDEN }>Clear completed</button>
+        { someIsCompleted && <button onClick={ clearCompleted } className={ CONST.BUTTON_CLASSNAME }>Clear completed</button> }
     </div>
 );
 
