@@ -26,21 +26,18 @@
         border-radius: 50%;
         margin: 1rem;
         outline: none;
-        color: @borderColor;
 
         &--done {
-            flex-basis: 3rem;
-            height: 3rem;
-            cursor: pointer;
-            background-color: inherit;
-            border: 1px solid @borderColor;
-            border-radius: 50%;
-            margin: 1rem;
-            outline: none;
+            color: @greyColor;
         }
 
         &--hidden {
             visibility: hidden;
+        }
+
+        &--visible {
+            visibility: visible;
+            color: @borderColor;
         }
     }
 }

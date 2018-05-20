@@ -3,16 +3,23 @@ import './todoItem.less';
 import CONST from '../Constants';
 
 const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlockTodo, changeStatus, lockAndRewriteTodo }) => {
-        const visibility = ((chosenFilter === CONST.ALL_ID)
-            || (chosenFilter === CONST.ACTIVE_ID && !completed)
-            || (chosenFilter === CONST.COMPLETED_ID && completed));
+    const visibility = ((chosenFilter === CONST.ALL_ID)
+        || (chosenFilter === CONST.ACTIVE_ID && !completed)
+        || (chosenFilter === CONST.COMPLETED_ID && completed));
+    // let visibility;
+    //
+    // if (chosenFilter === CONST.ACTIVE_ID && !completed) {
+    //     visibility = true;
+    // } else if (chosenFilter === CONST.COMPLETED_ID && completed) {
+    //     visibility = true;
+    // } else if (chosenFilter === CONST.ALL_ID) {
+    //     visibility = true;
+    // }
 
-        return (
-            <div id={ id } key={ id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }>
-                <button
-                    className={ completed ? CONST.CHECKBUTTON_DONE : CONST.CHECKBUTTON_CLASSNAME }
-                    onClick={ changeStatus }>&#10004;
-                </button>
+    return (
+        <div id={ id } key={ id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }><button
+            className={ `${ CONST.CHECKBUTTON_CLASSNAME } ${ completed ? CONST.CHECKBUTTON_DONE : '' }` }
+            onClick={ changeStatus }>&#10004;</button>
                 <input
                     defaultValue={ title }
                     readOnly={ lock ? CONST.READONLY_ATTR : '' }

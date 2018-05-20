@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import TodoList from './TodoList';
 // import registerServiceWorker from './registerServiceWorker';
 
 const appRender = () => {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(<TodoList />, document.getElementById('root'));
 };
 
 appRender();

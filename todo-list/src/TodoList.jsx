@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
-import './app.less';
+import './todolist.less';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TodoItem from './TodoItem/TodoItem';
 import CONST from './Constants';
 
-class App extends Component {
+class TodoList extends Component {
     constructor() {
         super();
         this.state = {
             todoArray: [],
-            someIsCompleted: false,
-            everyIsCompleted: false,
-            chosenFilter: CONST.FILTER_DEFAULT
+            numberOfCompleted: 0,
+            chosenFilter: CONST.FILTER_DEFAULT,
+            value: ''
         };
     }
 
-    addTodo({ key, target }) {
-        if (key === CONST.ENTER && target.value.trim()) {
-            this.setState((prevState) => ({
+    addTodo({ key, target: { value } }) {
+        if (key === CONST.ENTER && value.trim()) {
+            this.setState(({ todoArray }) => ({
                 todoArray: [{
-                    title: target.value,
+                    title: value,
                     id: this.generateID(),
                     completed: CONST.COMPLETED_DEFAULT,
                     lock: true
-                }].concat(prevState.todoArray)
+                }, ...todoArray],
+                value: ''
             }));
         }
     }
@@ -33,65 +34,58 @@ class App extends Component {
         return new Date().getTime().toString().substr(5);
     }
 
-    deleteTodo({ target: { parentNode: { id } } }) {
-        this.setState(({ todoArray }) => ({
+    deleteTodo({ target: { className, parentNode: { id }} }) {
+        this.setState(({ todoArray, numberOfCompleted }) => ({
             todoArray: todoArray.filter((todo) => todo.id !== id),
-            someIsCompleted: todoArray.some((todo) => todo.completed),
-            everyIsCompleted: (!todoArray.length) ?  false : todoArray.every((todo) => todo.completed)
+            numberOfCompleted: (className === CONST.CHECKBUTTON_CLASSNAME) ?
+                numberOfCompleted + 1 : numberOfCompleted - 1,
         }));
     }
 
-    refreshListOfCompleted() {
-        this.setState(({ todoArray }) => ({
-            someIsCompleted: todoArray.some((todo) => todo.completed),
-            everyIsCompleted: (!todoArray.length) ?  false : todoArray.every((todo) => todo.completed),
-        }));
-    }
-
-    changeStatus({ target }) {
-        this.setState(({ todoArray }) => ({
+    changeStatus({ target: { className, parentNode: { id }} }) {
+        this.setState(({ todoArray, numberOfCompleted }) => ({
             todoArray: todoArray.map((todo) => {
-                if (todo.id === target.parentNode.id) {
+                if (todo.id === id) {
                     todo.completed = !todo.completed;
                 }
 
                 return todo;
             }),
-            everyIsCompleted: todoArray.every((todo) => todo.completed),
-            someIsCompleted: todoArray.some((todo) => todo.completed)
+            numberOfCompleted: (className.includes(CONST.CHECKBUTTON_DONE)) ?
+                numberOfCompleted - 1 : numberOfCompleted + 1,
         }));
     }
 
-    changeDisplayOptions({ target }) {
-        this.setState({ chosenFilter: target.id });
+    changeDisplayOptions({ target: { id } }) {
+        this.setState({ chosenFilter: id });
     }
 
     checkAll() {
         if (!this.state.todoArray.length) return;
 
-        this.setState(({ todoArray, everyIsCompleted }) => ({
+        const everyIsCompleted = (this.state.numberOfCompleted === this.state.todoArray.length);
+
+        this.setState(({ todoArray }) => ({
             todoArray: todoArray.map((todo) => {
                 todo.completed = !everyIsCompleted;
 
                 return todo;
             }),
-            everyIsCompleted: !everyIsCompleted,
-            someIsCompleted: todoArray.some((todo) => todo.completed)
+            numberOfCompleted: (everyIsCompleted ? 0 : todoArray.length)
         }));
     }
 
     clearCompleted() {
         this.setState(({ todoArray }) => ({
             todoArray: todoArray.filter((todo) => !todo.completed),
-            someIsCompleted: false,
-            everyIsCompleted: false
+            numberOfCompleted: 0
         }));
     }
 
-    unlockTodo({ target }) {
+    unlockTodo({ target: { parentNode: { id } } }) {
         this.setState(({ todoArray }) => ({
             todoArray: todoArray.map((todo) => {
-                if (todo.id === target.parentNode.id) {
+                if (todo.id === id) {
                     todo.lock = false;
                 }
 
@@ -100,11 +94,8 @@ class App extends Component {
         }));
     }
 
-    lockAndRewriteTodo(event) {
-        if (event.type === CONST.KEYPRESS && event.key !== CONST.ENTER) return;
-
-        const id = event.target.parentNode.id;
-        const value = event.target.value;
+    lockAndRewriteTodo({ type, key, target: { value, parentNode: { id } } }) {
+        if (type === CONST.KEYPRESS && key !== CONST.ENTER) return;
 
         this.setState(({ todoArray }) => ({
             todoArray: todoArray.map((todo) => {
@@ -117,17 +108,21 @@ class App extends Component {
             })
         }));
     }
+    controlInput({ target: { value } }) {
+        this.setState({value: value});
+    }
 
     render() {
         return <div className={ CONST.LIST_CLASSNAME }  onKeyPress={ this.addTodo.bind(this) }>
             <Header
                 checkAll={ this.checkAll.bind(this) }
-                everyIsCompleted={ this.state.everyIsCompleted }
+                controlInput={ this.controlInput.bind(this) }
+                numberOfCompleted={ this.state.numberOfCompleted }
                 numberOfTodos={ this.state.todoArray.length }
+                value={ this.state.value }
             />
             { this.state.todoArray.map(({ id, completed, title, lock }) =>
                 <TodoItem
-                    refreshListOfCompleted={ this.refreshListOfCompleted.bind(this) }
                     changeStatus={ this.changeStatus.bind(this) }
                     deleteTodo={ this.deleteTodo.bind(this) }
                     unlockTodo={ this.unlockTodo.bind(this) }
@@ -141,10 +136,10 @@ class App extends Component {
                 handler={ this.changeDisplayOptions.bind(this) }
                 length={ this.state.todoArray.length }
                 chosenFilter={ this.state.chosenFilter }
-                someIsCompleted={ this.state.someIsCompleted }
+                numberOfCompleted={ this.state.numberOfCompleted }
             />
         </div>;
     }
 }
 
-export default App;
+export default TodoList;
