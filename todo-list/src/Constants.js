@@ -6,10 +6,10 @@ const CONST = {
     PLACEHOLDER: 'ToDo',
     HEADER_CLASSNAME: 'header',
     INPUT_CLASSNAME: 'header__todo-input',
-    CHECKBUTTON_BASE: 'header__check-button',
-    CHECKBUTTON_VISIBLE: "header__check-button--visible",
+    ALL_CHECKBUTTON_BASE: 'header__check-button',
+    ALL_CHECKBUTTON_VISIBLE: "header__check-button--visible",
     ALL_CHECKBUTTON_DONE: 'header__check-button--done',
-    CHECKBUTTON_HIDDEN: 'header__check-button--hidden',
+    ALL_CHECKBUTTON_HIDDEN: 'header__check-button--hidden',
     EVENT_BLUR: 'blur',
     EVENT_ENTER: 'Enter',
     ALL_ID: 'all',
@@ -29,7 +29,7 @@ const CONST = {
     BUTTON_CLASSNAME: 'footer-button',
     BUTTON_ACTIVE: 'footer-button--active',
     BUTTON_HIDDEN: 'footer-button--hidden',
-    COMPLETED_DEFAULT: false,
+    UNCOMPLETED_DEFAULT: false,
 };
 
 export default CONST;

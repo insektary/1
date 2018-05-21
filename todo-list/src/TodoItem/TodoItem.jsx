@@ -6,15 +6,6 @@ const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlock
     const visibility = ((chosenFilter === CONST.ALL_ID)
         || (chosenFilter === CONST.ACTIVE_ID && !completed)
         || (chosenFilter === CONST.COMPLETED_ID && completed));
-    // let visibility;
-    //
-    // if (chosenFilter === CONST.ACTIVE_ID && !completed) {
-    //     visibility = true;
-    // } else if (chosenFilter === CONST.COMPLETED_ID && completed) {
-    //     visibility = true;
-    // } else if (chosenFilter === CONST.ALL_ID) {
-    //     visibility = true;
-    // }
 
     return (
         <div id={ id } key={ id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }><button

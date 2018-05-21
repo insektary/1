@@ -14,6 +14,20 @@ class TodoList extends Component {
             chosenFilter: CONST.FILTER_DEFAULT,
             value: ''
         };
+
+        this.addTodo = this.addTodo.bind(this);
+        this.checkAll = this.checkAll.bind(this);
+        this.controlInput = this.controlInput.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
+        this.deleteTodo = this.deleteTodo.bind(this);
+        this.unlockTodo = this.unlockTodo.bind(this);
+        this.lockAndRewriteTodo = this.lockAndRewriteTodo.bind(this);
+        this.clearCompleted = this.clearCompleted.bind(this);
+        this.changeDisplayOptions = this.changeDisplayOptions.bind(this);
+    }
+
+    static generateID() {
+        return new Date().getTime().toString().substr(5);
     }
 
     addTodo({ key, target: { value } }) {
@@ -21,8 +35,8 @@ class TodoList extends Component {
             this.setState(({ todoArray }) => ({
                 todoArray: [{
                     title: value,
-                    id: this.generateID(),
-                    completed: CONST.COMPLETED_DEFAULT,
+                    id: TodoList.generateID(),
+                    completed: CONST.UNCOMPLETED_DEFAULT,
                     lock: true
                 }, ...todoArray],
                 value: ''
@@ -30,15 +44,11 @@ class TodoList extends Component {
         }
     }
 
-    generateID() {
-        return new Date().getTime().toString().substr(5);
-    }
-
     deleteTodo({ target: { parentNode: { id }} }) {
         this.setState(({ todoArray, numberOfCompleted }) => ({
             todoArray: todoArray.filter((todo) => todo.id !== id),
             numberOfCompleted: (todoArray.find((todo) => todo.id === id)).completed ?
-                numberOfCompleted - 1 : numberOfCompleted + 1,
+                numberOfCompleted - 1 : numberOfCompleted,
         }));
     }
 
@@ -110,34 +120,37 @@ class TodoList extends Component {
     }
 
     controlInput({ target: { value } }) {
-        this.setState({value: value});
+        this.setState({ value });
     }
 
     render() {
-        return <div className={ CONST.LIST_CLASSNAME }  onKeyPress={ this.addTodo.bind(this) }>
+        const { numberOfCompleted, todoArray, value, chosenFilter } = this.state;
+
+        return <div className={ CONST.LIST_CLASSNAME }>
             <Header
-                checkAll={ this.checkAll.bind(this) }
-                controlInput={ this.controlInput.bind(this) }
-                numberOfCompleted={ this.state.numberOfCompleted }
-                numberOfTodos={ this.state.todoArray.length }
-                value={ this.state.value }
+                addTodo={ this.addTodo }
+                checkAll={ this.checkAll }
+                controlInput={ this.controlInput }
+                numberOfCompleted={ numberOfCompleted }
+                numberOfTodos={ todoArray.length }
+                value={ value }
             />
             { this.state.todoArray.map(({ id, completed, title, lock }) =>
                 <TodoItem
-                    changeStatus={ this.changeStatus.bind(this) }
-                    deleteTodo={ this.deleteTodo.bind(this) }
-                    unlockTodo={ this.unlockTodo.bind(this) }
-                    lockAndRewriteTodo={ this.lockAndRewriteTodo.bind(this) }
-                    chosenFilter={ this.state.chosenFilter }
+                    changeStatus={ this.changeStatus }
+                    deleteTodo={ this.deleteTodo }
+                    unlockTodo={ this.unlockTodo }
+                    lockAndRewriteTodo={ this.lockAndRewriteTodo }
+                    chosenFilter={ chosenFilter }
                     key={ id } lock={ lock } id={ id } completed={ completed } title={ title }
                 />
             )}
             <Footer
-                clearCompleted={ this.clearCompleted.bind(this) }
-                handler={ this.changeDisplayOptions.bind(this) }
-                length={ this.state.todoArray.length }
-                chosenFilter={ this.state.chosenFilter }
-                numberOfCompleted={ this.state.numberOfCompleted }
+                clearCompleted={ this.clearCompleted }
+                handler={ this.changeDisplayOptions }
+                length={ todoArray.length }
+                chosenFilter={ chosenFilter }
+                numberOfCompleted={ numberOfCompleted }
             />
         </div>;
     }
