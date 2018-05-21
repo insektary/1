@@ -34,15 +34,15 @@ class TodoList extends Component {
         return new Date().getTime().toString().substr(5);
     }
 
-    deleteTodo({ target: { className, parentNode: { id }} }) {
+    deleteTodo({ target: { parentNode: { id }} }) {
         this.setState(({ todoArray, numberOfCompleted }) => ({
             todoArray: todoArray.filter((todo) => todo.id !== id),
-            numberOfCompleted: (className === CONST.CHECKBUTTON_CLASSNAME) ?
-                numberOfCompleted + 1 : numberOfCompleted - 1,
+            numberOfCompleted: (todoArray.find((todo) => todo.id === id)).completed ?
+                numberOfCompleted - 1 : numberOfCompleted + 1,
         }));
     }
 
-    changeStatus({ target: { className, parentNode: { id }} }) {
+    changeStatus({ target: { parentNode: { id }} }) {
         this.setState(({ todoArray, numberOfCompleted }) => ({
             todoArray: todoArray.map((todo) => {
                 if (todo.id === id) {
@@ -51,8 +51,8 @@ class TodoList extends Component {
 
                 return todo;
             }),
-            numberOfCompleted: (className.includes(CONST.CHECKBUTTON_DONE)) ?
-                numberOfCompleted - 1 : numberOfCompleted + 1,
+            numberOfCompleted: (todoArray.find((todo) => todo.id === id)).completed ?
+                numberOfCompleted + 1 : numberOfCompleted - 1,
         }));
     }
 
@@ -108,6 +108,7 @@ class TodoList extends Component {
             })
         }));
     }
+
     controlInput({ target: { value } }) {
         this.setState({value: value});
     }
