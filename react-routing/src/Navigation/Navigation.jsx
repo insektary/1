@@ -1,30 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navigation.less';
 
-const Navigation = () => {
+const Navigation = ({ adminRights, signOut }) => {
     return (
         <div className="nav">
             <ul className="menu">
                 <li>
-                    <Link className="menu-item__link" to="/contacts">
+                    <NavLink className="menu-item__link" activeClassName="menu-item__link--active" to="/contacts">
                         <div className="menu-item">CONTACTS</div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link className="menu-item__link" to="/about">
+                    <NavLink className="menu-item__link" activeClassName="menu-item__link--active" to="/about">
                         <div className="menu-item">ABOUT</div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link className="menu-item__link" to="/news">
+                    <NavLink className="menu-item__link" activeClassName="menu-item__link--active" to="/news">
                         <div className="menu-item">NEWS</div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link className="menu-item__link" to="/signin">
+                    <NavLink className={ adminRights ? "menu-item__link" : "menu-item__link--hidden"} activeClassName="menu-item__link--active" to="/admin">
+                        <div className="menu-item">ADMINISTRATION</div>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={ adminRights ? "menu-item__link--hidden" : "menu-item__link" } activeClassName="menu-item__link--active" to="/signin">
                         <div className="menu-item">SIGN IN</div>
-                    </Link>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={ adminRights ? "menu-item__link" : "menu-item__link--hidden"} onClick={ signOut } to="/">
+                        <div className="menu-item">SIGN OUT</div>
+                    </NavLink>
                 </li>
             </ul>
         </div>

@@ -46,14 +46,6 @@ html {
 
     &:hover {
         background-color: @hoverColor;
-
-        &:after {
-            opacity: 1;
-        }
-
-        &:before {
-            opacity: 1;
-        }
     }
 
     &__link {
@@ -63,6 +55,22 @@ html {
         text-decoration: none;
         line-height: 6rem;
         width: 100%;
+
+        &--hidden {
+            display: none;
+        }
+    }
+}
+
+.menu-item__link--active .menu-item {
+    background-color: @hoverColor;
+
+    &:after {
+        opacity: 1;
+    }
+
+    &:before {
+        opacity: 1;
     }
 }
 
