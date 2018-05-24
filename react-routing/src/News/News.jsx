@@ -10,7 +10,7 @@ const Post = ({ date, title, content, id }) => {
             <div className={ CSS.POST_CONTENT }>{ content }</div>
             <div className={ CSS.POST_FOOTER }>
                 <div className={ CSS.POST_FOOTER_DATE }>{ date }</div>
-                <NavLink  to={`/news/edit/${ id }`}>
+                <NavLink  to={`/news/${ id }/edit`}>
                     <button className={ CSS.POST_FOOTER_EDIT }>Edit</button>
                 </NavLink>
             </div>

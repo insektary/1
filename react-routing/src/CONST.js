@@ -49,6 +49,7 @@ const CSS = {
     EDIT_CONTROL_CANCEL: 'edit-control__cancel',
     ERROR404: 'error404',
     ERROR404_IMAGE: 'error404__image',
+    ERROR204_IMAGE: 'error204__image',
     ERROR404_INFO: 'error404__info',
     ERROR404_BACK: 'error404__back',
     ERROR404_LINK: 'error404__link',

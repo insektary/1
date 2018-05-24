@@ -9,6 +9,7 @@ import Contacts from './Contacts/Contacts';
 import News from './News/News';
 import SignIn from './SignIn/SignIn';
 import Error_404 from './Error_404/Error_404';
+import Error_204 from './Error_204/Error_204';
 import Home from './Home/Home';
 import Admin from './Admin/Admin';
 import Add from './Add/Add';
@@ -27,9 +28,16 @@ class App extends Component {
 
         this.state = {
             news: [],
-            adminRights: false
+            adminRights: App.checkUserStatus()
         }
     };
+
+    static checkUserStatus() {
+        const login = window.localStorage.getItem(CONST.LOGIN_LABEL);
+        const password = window.localStorage.getItem(CONST.PASSWORD_LABEL);
+
+        return (login === CONST.LOGIN && password === CONST.PASSWORD);
+    }
 
     static generateID() {
         return Number(new Date().getTime().toString().substr(5));
@@ -126,10 +134,11 @@ class App extends Component {
                         <Route path="/contacts" component={ Contacts }/>
                         <Route path="/news" exact={ true } render={ () => <News data={ news }/>}/>
                         <Route path="/news/add" render={ () => <Add addNews={ this.addNews }/>}/>
-                        <Route path="/news/edit/:id" render={ (props) =>
+                        <Route path="/news/:id/edit" render={ (props) =>
                             <Edit submitChanges={ this.submitChanges } cancelChanges={ this.cancelChanges } data={ news } {...props}/>}/>
                         <Route path="/signin" render={ () => <SignIn signIn={ this.signIn }/>}/>
                         <Route path="/admin" component={ Admin }/>
+                        <Route path="/error204" component={ Error_204 }/>
                         <Route path="*" component={ Error_404 }/>
                     </Switch>
                 </div>

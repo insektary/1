@@ -13,25 +13,24 @@ class Edit extends Component {
         this.cancelChanges = cancelChanges;
         this.content = content;
         this.title = title;
-        this.data = data;
         this.id = id;
     }
 
     static findNews(data, id) {
-        const { title, content } = data.find((news) => news.key === Number(id)) || {title: CONST.WAIT, content: CONST.WAIT};
+        const { title, content } = data.find((news) => news.key === Number(id)) || { title: CONST.WAIT, content: CONST.WAIT };
 
         return { title, content };
     }
 
     shouldComponentUpdate({ data, match: { params: { id }}}) {
         if (!data.find((news) => news.key === Number(id)) && data.length) {
-            this.props.history.replace('/404');
+            this.props.history.replace('/error204');
         }
 
         const { title, content } = Edit.findNews(data, id);
 
-        this.title = title;
         this.content = content;
+        this.title = title;
 
         return true;
     }
