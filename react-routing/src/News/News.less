@@ -39,6 +39,10 @@
     }
 }
 
+.news-title__add--active .news-title__add {
+    background-color: @hoverColor;
+}
+
 .post {
 
     &__title {
@@ -50,9 +54,26 @@
     &__content {
         padding: 2rem 0 2rem 0;
     }
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.9rem;
 
     &__date {
         padding-left: 2rem;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+        color: @hoverColor;
+    }
+
+    &__edit {
+        color: white;
+        padding: 0.2rem 1rem 0.2rem 1rem;
+        font-family: 'Arial';
+        cursor: pointer;
+        background-color: @hoverColor;
+        border: none;
+        border-radius: 2px;
     }
 }

@@ -3,7 +3,7 @@
 @inputColor: #dcdcdc;
 @logoColor: #6795B8;
 
-.add {
+.edit {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -36,8 +36,12 @@
         width: 96.6%;
         height: 15rem;
     }
+}
 
-    &__submit {
+.edit-control {
+    display: flex;
+
+    &__submit, &__cancel {
         width: 10rem;
         margin-top: 2rem;
         cursor: pointer;
@@ -46,6 +50,7 @@
         border-radius: 5px;
         background-color: @logoColor;
         color: white;
+        margin-right: 2rem;
 
         &:hover {
             background-color: @buttonHoverColor;

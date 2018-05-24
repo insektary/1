@@ -1,32 +1,37 @@
 import React from 'react';
 import './News.less';
 import { NavLink } from 'react-router-dom';
+import { CSS } from '../CONST';
 
-const Post = ({date, title, image, content }) => {
+const Post = ({ date, title, content, id }) => {
     return (
-        <div className="post">
-            <div className="post__title">{ title }</div>
-            <div className="post__content">{ content }</div>
-            <div className="post__date">{ date }</div>
+        <div className={ CSS.POST }>
+            <div className={ CSS.POST_TITLE }>{ title }</div>
+            <div className={ CSS.POST_CONTENT }>{ content }</div>
+            <div className={ CSS.POST_FOOTER }>
+                <div className={ CSS.POST_FOOTER_DATE }>{ date }</div>
+                <NavLink  to={`/news/edit/${ id }`}>
+                    <button className={ CSS.POST_FOOTER_EDIT }>Edit</button>
+                </NavLink>
+            </div>
         </div>
     )
 };
 
-const News = ({ data }) => {
+
+const News = ({ children, data }) => {
     return (
-        <div className="news">
-            <div className="news-title">
-                <div className="news-title__title">News</div>
-                <NavLink  to="/news/add">
-                    <button className="news-title__add">Add</button>
+        <div className={ CSS.NEWS }>
+            <div className={ CSS.NEWS_TITLE }>
+                <div className={ CSS.NEWS_TITLE_TITLE }>News</div>
+                <NavLink  to="/news/add" activeClassName={ CSS.NEWS_TITLE_ADD_ACTIVE }>
+                    <button className={ CSS.NEWS_TITLE_ADD }>Add new</button>
                 </NavLink>
             </div>
-
-
-            <div className="news__content">
+                { children }
+            <div className={ CSS.NEWS_CONTENT }>
                 { data.map(({ title, date, content, key }) =>
-                    <Post date={ date } title={ title } content={ content } key={ key }/>
-                )}
+                    <Post date={ date } title={ title } content={ content } key={ key } id={ key }/>)}
             </div>
         </div>
     )

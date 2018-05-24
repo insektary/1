@@ -1,9 +1,10 @@
 import React from 'react';
 import './Header.less';
+import { CSS } from '../CONST';
 
 const Header = () => {
     return (
-        <div className="header">RACCO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NNEWS</div>
+        <div className={ CSS.HEADER }>RACCO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NNEWS</div>
     )
 };
 

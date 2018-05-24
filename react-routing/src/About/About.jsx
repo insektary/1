@@ -1,13 +1,14 @@
 import React from 'react';
 import './About.less';
+import { CSS } from '../CONST';
 
 const About = () => {
     return(
-        <div className="about">
-            <div className="about__title">
+        <div className={ CSS.ABOUT }>
+            <div className={ CSS.ABOUT_TITLE }>
                 Title about our organization
             </div>
-            <div className="about__content">
+            <div className={ CSS.ABOUT_CONTENT }>
             Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
             totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt,
             explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia

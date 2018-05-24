@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import './Admin.less';
+import { CONST, CSS } from '../CONST';
 
 class Admin extends Component {
 
     checkUser() {
-        const login = window.localStorage.getItem('login');
-        const password = window.localStorage.getItem('password');
+        const login = window.localStorage.getItem(CONST.LOGIN);
+        const password = window.localStorage.getItem(CONST.PASSWORD);
 
-        if (login !== 'login' || password !== 'password') {
+        if (login !== CONST.LOGIN || password !== CONST.PASSWORD) {
             this.props.history.push('/signin');
         }
     }
@@ -19,11 +20,11 @@ class Admin extends Component {
 
     render() {
         return (
-            <div className="admin">
-                <div className="admin__title">
+            <div className={ CSS.ADMIN }>
+                <div className={ CSS.ADMIN_TITLE }>
                     Admin's settings
                 </div>
-                <div className="admin__content">
+                <div className={ CSS.ADMIN_CONTENT }>
 
                 </div>
             </div>

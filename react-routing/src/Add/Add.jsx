@@ -1,9 +1,15 @@
 import React from 'react';
 import './Add.less';
+import { CONST, CSS } from '../CONST';
 
-const Add = () => {
+const Add = ({ addNews }) => {
     return (
-        <div className="add">Добавить новость</div>
+        <form className={ CSS.ADD } onSubmit={ addNews }>
+            <div className={ CSS.ADD_TITLE }>Add news:</div>
+            <input className={ CSS.ADD_NEWTITLE } placeholder={ CONST.TITLE_PLACEHOLDER }/>
+            <textarea className={ CSS.ADD_NEWTEXT } placeholder={ CONST.NEWS_PLACEHOLDER }/>
+            <button className={ CSS.ADD_SUBMIT } type="submit">Add</button>
+        </form>
     )
 };
 
