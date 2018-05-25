@@ -2,13 +2,12 @@ import React from 'react';
 import './About.less';
 import { CSS } from '../CONST';
 
-const About = () => {
-    return(
-        <div className={ CSS.ABOUT }>
-            <div className={ CSS.ABOUT_TITLE }>
-                Title about our organization
-            </div>
-            <div className={ CSS.ABOUT_CONTENT }>
+const About = () => (
+    <div className={ CSS.ABOUT }>
+        <div className={ CSS.ABOUT_TITLE }>
+            Title about our organization
+        </div>
+        <div className={ CSS.ABOUT_CONTENT }>
             Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
             totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt,
             explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia
@@ -26,9 +25,8 @@ const About = () => {
             officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non
             recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias
             consequatur aut perferendis doloribus asperiores repellat.
-            </div>
         </div>
-    )
-};
+    </div>
+)
 
 export default About;

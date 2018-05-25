@@ -22,42 +22,31 @@ class App extends Component {
 
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
-        this.addNews = this.addNews.bind(this);
+        this.addOrChange = this.addOrChange.bind(this);
         this.cancelChanges = this.cancelChanges.bind(this);
-        this.submitChanges = this.submitChanges.bind(this);
 
         this.state = {
             news: [],
-            adminRights: App.checkUserStatus()
-        }
+            adminRights: false
+        };
+        this.newsRequest();
     };
 
-    static checkUserStatus() {
-        const login = window.localStorage.getItem(CONST.LOGIN_LABEL);
-        const password = window.localStorage.getItem(CONST.PASSWORD_LABEL);
-
-        return (login === CONST.LOGIN && password === CONST.PASSWORD);
-    }
-
-    static generateID() {
+    generateID() {
         return Number(new Date().getTime().toString().substr(5));
     }
 
-    static getDate() {
+    getDate() {
         const date = new Date();
 
         return `${ date.getDate() }.${ date.getMonth() }.${ date.getFullYear() }`;
     }
 
-    componentWillMount() {
-        this.newsRequest();
-    }
-
     async newsRequest() {
         let response = await fetch(CONST.DATA_PATH);
-        let parsedResponse = await response.json();
+        let news = await response.json();
 
-        this.setState({news: parsedResponse});
+        this.setState({ news });
     }
 
     signIn() {
@@ -66,54 +55,36 @@ class App extends Component {
 
     signOut() {
         this.setState({ adminRights: false });
-        window.localStorage.clear();
     }
 
-    addNews(event) {
+    addOrChange(event) {
         const [ {value: title}, {value: content} ] = event.target.elements;
+        const id = Number(event.target.id) || this.generateID();
 
-        if (!title.trim() || !content.trim()) {
-            event.preventDefault();
+        if (title.trim() && content.trim()) {
+            this.setState(({ news }) => (news.find((news) => news.id === id) ? {
+                news: news.map((news) => {
+                    if (news.id === id) {
+                        news.title = title;
+                        news.content = content;
+                    }
 
-            return;
-        }
-
-        this.setState(({ news }) => ({
-            news: [{
-                title,
-                content,
-                key: App.generateID(),
-                date: App.getDate()
-            }, ...news]
-        }));
-
-        event.preventDefault();
-        this.props.history.push('/news');
-    }
-
-    submitChanges(event) {
-        const [ {value: newTitle}, {value: newContent} ] = event.target.elements;
-        const id = event.target.id;
-
-        if (!newTitle.trim() || !newContent.trim()) {
-            event.preventDefault();
-
-            return;
-        }
-
-        this.setState(({ news }) => ({
-            news: news.map((news) => {
-                if (news.key === Number(id)) {
-                    news.title = newTitle;
-                    news.content = newContent;
+                    return news;
+                })} : {
+                    news: [{
+                        title,
+                        content,
+                        id,
+                        key: id,
+                        date: this.getDate()
+                    }, ...news]
                 }
+            ));
 
-                return news;
-            })
-        }));
+            this.props.history.push('/news');
+        }
 
         event.preventDefault();
-        this.props.history.push('/news');
     }
 
     cancelChanges() {
@@ -133,11 +104,11 @@ class App extends Component {
                         <Route path="/about" component={ About }/>
                         <Route path="/contacts" component={ Contacts }/>
                         <Route path="/news" exact={ true } render={ () => <News data={ news }/>}/>
-                        <Route path="/news/add" render={ () => <Add addNews={ this.addNews }/>}/>
+                        <Route path="/news/add" render={ () => <Add addOrChange={ this.addOrChange }/>}/>
                         <Route path="/news/:id/edit" render={ (props) =>
-                            <Edit submitChanges={ this.submitChanges } cancelChanges={ this.cancelChanges } data={ news } {...props}/>}/>
+                            <Edit addOrChange={ this.addOrChange } cancelChanges={ this.cancelChanges } data={ news } {...props}/>}/>
                         <Route path="/signin" render={ () => <SignIn signIn={ this.signIn }/>}/>
-                        <Route path="/admin" component={ Admin }/>
+                        <Route path="/admin" render={ () => <Admin adminRights={ adminRights } />}/>
                         <Route path="/error204" component={ Error_204 }/>
                         <Route path="*" component={ Error_404 }/>
                     </Switch>

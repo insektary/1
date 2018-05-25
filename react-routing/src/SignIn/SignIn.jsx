@@ -18,9 +18,6 @@ class SignIn extends Component {
         const [ {value: login}, {value: password} ] = event.target.elements;
 
         if (login === CONST.LOGIN && password === CONST.PASSWORD) {
-            window.localStorage.setItem(CONST.LOGIN_LABEL, login);
-            window.localStorage.setItem(CONST.PASSWORD_LABEL, password);
-
             this.props.signIn();
             this.props.history.push('/admin');
         } else {
@@ -32,6 +29,7 @@ class SignIn extends Component {
 
     render() {
         const { wrong } = this.state;
+        const LOGIN_TEMPLATE = `${ CSS.SIGN_FORM_LOGIN } ${ wrong ? CSS.SIGN_FORM_LOGIN_WRONG : CSS.SIGN_FORM_LOGIN_BASE }`;
 
         return (
             <form className={ CSS.SIGN_FORM } onSubmit={ this.checkUser }>
@@ -40,13 +38,13 @@ class SignIn extends Component {
                     Login or password are incorrect
                 </div>
                 <input
-                    className={`${ CSS.SIGN_FORM_LOGIN } ${ wrong ? CSS.SIGN_FORM_LOGIN_WRONG : CSS.SIGN_FORM_LOGIN_BASE }`}
+                    className={ LOGIN_TEMPLATE }
                     name={ CONST.LOGIN_LABEL }
                     required
                     placeholder={ CONST.LOGIN_PLACEHOLDER }
                 />
                 <input
-                    className={`${ CSS.SIGN_FORM_PASSWORD } ${ wrong ? CSS.SIGN_FORM_PASSWORD_WRONG : CSS.SIGN_FORM_PASSWORD_BASE }`}
+                    className={LOGIN_TEMPLATE}
                     name={ CONST.PASSWORD_LABEL }
                     required
                     type={ CONST.PASSWORD_LABEL }
