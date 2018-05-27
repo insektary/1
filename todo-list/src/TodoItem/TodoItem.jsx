@@ -2,7 +2,7 @@ import React from 'react';
 import './todoItem.less';
 import CONST from '../Constants';
 
-const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlockTodo, changeStatus, lockAndRewriteTodo }) => {
+const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlockTodo, changeStatus, rewriteTodo }) => {
     const visibility = ((chosenFilter === CONST.ALL_ID)
         || (chosenFilter === CONST.ACTIVE_ID && !completed)
         || (chosenFilter === CONST.COMPLETED_ID && completed));
@@ -16,8 +16,8 @@ const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlock
                     readOnly={ lock ? CONST.READONLY_ATTR : '' }
                     className={ completed ? CONST.TITLE_DONE : CONST.TITLE_CLASSNAME }
                     onDoubleClick={ unlockTodo }
-                    onBlur={ lockAndRewriteTodo }
-                    onKeyPress={ lockAndRewriteTodo }
+                    onBlur={ rewriteTodo }
+                    onKeyPress={ rewriteTodo }
                 />
                 <button
                     className={ CONST.DELETE_BUTTON }

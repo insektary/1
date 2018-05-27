@@ -1,159 +1,65 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import './todolist.less';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TodoItem from './TodoItem/TodoItem';
 import CONST from './Constants';
 
-class TodoList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            todoArray: [],
-            numberOfCompleted: 0,
-            chosenFilter: CONST.FILTER_DEFAULT,
-            value: ''
-        };
+const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearCompleted,
+                      deleteTodo, changeStatus, addTodo, unlockTodo, rewriteTodo }) => {
+    return <div className={ CONST.LIST_CLASSNAME }>
+        <Header
+            addTodo={ addTodo }
+            checkAll={ checkAll }
+            todoList={ todoList }
+        />
+        { todoList.map(({ id, completed, title, lock }) => <TodoItem
+            deleteTodo={ deleteTodo } changeStatus={ changeStatus }
+            unlockTodo={ unlockTodo } rewriteTodo={ rewriteTodo }
+            chosenFilter={ chosenFilter } key={ id } lock={ lock }
+            id={ id } completed={ completed } title={ title }/>
+        )}
+        <Footer
+            changeFilter={ changeFilter }
+            clearCompleted={ clearCompleted }
+            todoList={ todoList }
+            chosenFilter={ chosenFilter }
+        />
+    </div>;
+};
 
-        this.addTodo = this.addTodo.bind(this);
-        this.checkAll = this.checkAll.bind(this);
-        this.controlInput = this.controlInput.bind(this);
-        this.changeStatus = this.changeStatus.bind(this);
-        this.deleteTodo = this.deleteTodo.bind(this);
-        this.unlockTodo = this.unlockTodo.bind(this);
-        this.lockAndRewriteTodo = this.lockAndRewriteTodo.bind(this);
-        this.clearCompleted = this.clearCompleted.bind(this);
-        this.changeDisplayOptions = this.changeDisplayOptions.bind(this);
-    }
-
-    static generateID() {
-        return new Date().getTime().toString().substr(5);
-    }
-
-    addTodo({ key, target: { value } }) {
-        if (key === CONST.ENTER && value.trim()) {
-            this.setState(({ todoArray }) => ({
-                todoArray: [{
-                    title: value,
-                    id: TodoList.generateID(),
-                    completed: CONST.UNCOMPLETED_DEFAULT,
-                    lock: true
-                }, ...todoArray],
-                value: ''
-            }));
+export default connect(
+    state => (state),
+    dispatch => ({
+        checkAll() {
+            dispatch({ type: 'CHECK_ALL' });
+        },
+        changeFilter({ target: { id }}) {
+            dispatch({ type: 'CHANGE_FILTER',  filter: id });
+        },
+        clearCompleted() {
+            dispatch({ type: 'CLEAR_COMPLETED' });
+        },
+        deleteTodo({ target: { parentNode: { id }}}) {
+            dispatch({ type: 'DELETE_TODO', id: id });
+        },
+        changeStatus({ target: { parentNode: { id }}}) {
+            dispatch({ type: 'CHANGE_STATUS', id: id})
+        },
+        addTodo({ key, target }) {
+            if (key === CONST.ENTER && target.value.trim()) {
+                dispatch({ type: 'ADD_TODO', title: target.value });
+                target.value = '';
+            }
+        },
+        unlockTodo({ target: { parentNode: { id }}}) {
+            dispatch({ type: 'UNLOCK_TODO', id: id });
+        },
+        rewriteTodo({ key, target }) {
+            if (key === CONST.ENTER && target.value.trim()) {
+                dispatch({ type: 'REWRITE_TODO', id: target.parentNode.id, title: target.title });
+            }
         }
-    }
-
-    deleteTodo({ target: { parentNode: { id }} }) {
-        this.setState(({ todoArray, numberOfCompleted }) => ({
-            todoArray: todoArray.filter((todo) => todo.id !== id),
-            numberOfCompleted: (todoArray.find((todo) => todo.id === id)).completed ?
-                numberOfCompleted - 1 : numberOfCompleted,
-        }));
-    }
-
-    changeStatus({ target: { parentNode: { id }} }) {
-        this.setState(({ todoArray, numberOfCompleted }) => ({
-            todoArray: todoArray.map((todo) => {
-                if (todo.id === id) {
-                    todo.completed = !todo.completed;
-                }
-
-                return todo;
-            }),
-            numberOfCompleted: (todoArray.find((todo) => todo.id === id)).completed ?
-                numberOfCompleted + 1 : numberOfCompleted - 1,
-        }));
-    }
-
-    changeDisplayOptions({ target: { id } }) {
-        this.setState({ chosenFilter: id });
-    }
-
-    checkAll() {
-        if (!this.state.todoArray.length) return;
-
-        const everyIsCompleted = (this.state.numberOfCompleted === this.state.todoArray.length);
-
-        this.setState(({ todoArray }) => ({
-            todoArray: todoArray.map((todo) => {
-                todo.completed = !everyIsCompleted;
-
-                return todo;
-            }),
-            numberOfCompleted: (everyIsCompleted ? 0 : todoArray.length)
-        }));
-    }
-
-    clearCompleted() {
-        this.setState(({ todoArray }) => ({
-            todoArray: todoArray.filter((todo) => !todo.completed),
-            numberOfCompleted: 0
-        }));
-    }
-
-    unlockTodo({ target: { parentNode: { id } } }) {
-        this.setState(({ todoArray }) => ({
-            todoArray: todoArray.map((todo) => {
-                if (todo.id === id) {
-                    todo.lock = false;
-                }
-
-                return todo;
-            })
-        }));
-    }
-
-    lockAndRewriteTodo({ type, key, target: { value, parentNode: { id } } }) {
-        if (type === CONST.KEYPRESS && key !== CONST.ENTER) return;
-
-        this.setState(({ todoArray }) => ({
-            todoArray: todoArray.map((todo) => {
-                if (todo.id === id) {
-                    todo.title = value;
-                    todo.lock = true;
-                }
-
-                return todo;
-            })
-        }));
-    }
-
-    controlInput({ target: { value } }) {
-        this.setState({ value });
-    }
-
-    render() {
-        const { numberOfCompleted, todoArray, value, chosenFilter } = this.state;
-
-        return <div className={ CONST.LIST_CLASSNAME }>
-            <Header
-                addTodo={ this.addTodo }
-                checkAll={ this.checkAll }
-                controlInput={ this.controlInput }
-                numberOfCompleted={ numberOfCompleted }
-                numberOfTodos={ todoArray.length }
-                value={ value }
-            />
-            { this.state.todoArray.map(({ id, completed, title, lock }) =>
-                <TodoItem
-                    changeStatus={ this.changeStatus }
-                    deleteTodo={ this.deleteTodo }
-                    unlockTodo={ this.unlockTodo }
-                    lockAndRewriteTodo={ this.lockAndRewriteTodo }
-                    chosenFilter={ chosenFilter }
-                    key={ id } lock={ lock } id={ id } completed={ completed } title={ title }
-                />
-            )}
-            <Footer
-                clearCompleted={ this.clearCompleted }
-                handler={ this.changeDisplayOptions }
-                length={ todoArray.length }
-                chosenFilter={ chosenFilter }
-                numberOfCompleted={ numberOfCompleted }
-            />
-        </div>;
-    }
-}
-
-export default TodoList;
+    })
+)(TodoList);

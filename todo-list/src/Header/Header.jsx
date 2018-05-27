@@ -2,12 +2,12 @@ import React from 'react';
 import './header.less';
 import CONST from '../Constants';
 
-const Header = ({ checkAll, numberOfCompleted, value, numberOfTodos, controlInput, addTodo }) => {
+const Header = ({ checkAll, todoList, addTodo }) => {
     let modifier;
 
-    if (!numberOfTodos) {
+    if (!todoList.length) {
         modifier = CONST.ALL_CHECKBUTTON_HIDDEN;
-    } else if (numberOfTodos === numberOfCompleted) {
+    } else if (todoList.every(({ completed }) => completed)) {
         modifier = CONST.ALL_CHECKBUTTON_DONE;
     } else {
         modifier = CONST.ALL_CHECKBUTTON_VISIBLE;
@@ -15,17 +15,8 @@ const Header = ({ checkAll, numberOfCompleted, value, numberOfTodos, controlInpu
 
     return (
         <div className={ CONST.HEADER_CLASSNAME }>
-            <button
-                className={ `${ CONST.ALL_CHECKBUTTON_BASE } ${ modifier }` }
-                onClick={ checkAll }>&#9660;
-            </button>
-            <input
-                className={ CONST.INPUT_CLASSNAME }
-                placeholder={ CONST.PLACEHOLDER }
-                value={ value }
-                onChange={ controlInput }
-                onKeyPress={ addTodo }
-            />
+            <button className={ `${ CONST.ALL_CHECKBUTTON_BASE } ${ modifier }` } onClick={ checkAll }>&#9660;</button>
+            <input className={ CONST.INPUT_CLASSNAME } placeholder={ CONST.PLACEHOLDER } onKeyPress={ addTodo }/>
         </div>
     )
 };
