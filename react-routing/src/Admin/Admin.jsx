@@ -3,17 +3,19 @@ import { withRouter } from 'react-router';
 import './Admin.less';
 import { CSS } from '../CONST';
 
+const { ADMIN } = CSS;
+
 const Admin = ({ adminRights, history }) => {
     if (!adminRights) {
         history.push('/signin');
     }
 
     return (
-        <div className={ CSS.ADMIN }>
-            <div className={ CSS.ADMIN_TITLE }>
+        <div className={ ADMIN.CONTAINER }>
+            <div className={ ADMIN.TITLE }>
                 Admin's settings
             </div>
-            <div className={ CSS.ADMIN_CONTENT }>
+            <div className={ ADMIN.CONTENT }>
 
             </div>
         </div>

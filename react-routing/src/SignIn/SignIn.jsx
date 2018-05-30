@@ -3,6 +3,8 @@ import { withRouter } from 'react-router';
 import './SignIn.less';
 import { CONST, CSS } from '../CONST';
 
+const { SIGN_FORM, ALERT_MESSAGE } = CSS;
+
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,7 @@ class SignIn extends Component {
         const [ {value: login}, {value: password} ] = event.target.elements;
 
         if (login === CONST.LOGIN && password === CONST.PASSWORD) {
-            this.props.signIn();
+            this.props.onSignIn();
             this.props.history.push('/admin');
         } else {
             this.setState({ wrong: true });
@@ -29,12 +31,12 @@ class SignIn extends Component {
 
     render() {
         const { wrong } = this.state;
-        const LOGIN_TEMPLATE = `${ CSS.SIGN_FORM_LOGIN } ${ wrong ? CSS.SIGN_FORM_LOGIN_WRONG : CSS.SIGN_FORM_LOGIN_BASE }`;
+        const LOGIN_TEMPLATE = `${ SIGN_FORM.LOGIN } ${ wrong ? SIGN_FORM.LOGIN_WRONG : SIGN_FORM.LOGIN_BASE }`;
 
         return (
-            <form className={ CSS.SIGN_FORM } onSubmit={ this.checkUser }>
+            <form className={ SIGN_FORM.CONTAINER } onSubmit={ this.checkUser }>
                 <div
-                    className={ wrong ? CSS.ALERT_MESSAGE_VISIBLE : CSS.ALERT_MESSAGE_HIDDEN }>
+                    className={ wrong ? ALERT_MESSAGE.VISIBLE : ALERT_MESSAGE.HIDDEN }>
                     Login or password are incorrect
                 </div>
                 <input
@@ -51,7 +53,7 @@ class SignIn extends Component {
                     placeholder={ CONST.PASSWORD_PLACEHOLDER }
                 />
                 <button
-                    className={ CSS.SIGN_FORM_SUBMIT }
+                    className={ SIGN_FORM.SUBMIT }
                     type={ CONST.SUBMIT_TYPE }>Sign in!
                 </button>
             </form>

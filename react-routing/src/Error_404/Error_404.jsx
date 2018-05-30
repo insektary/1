@@ -4,20 +4,22 @@ import { NavLink } from 'react-router-dom';
 import createHistory from "history/createBrowserHistory";
 import { CSS } from '../CONST';
 
+const { ERROR404 } = CSS;
+
 const Error_404 = () => {
     const history = createHistory();
 
     return (
-        <div className={ CSS.ERROR404 }>
-            <div className={ CSS.ERROR404_IMAGE }>
+        <div className={ ERROR404.CONTAINER }>
+            <div className={ ERROR404.IMAGE }>
             </div>
-            <div className={ CSS.ERROR404_INFO }>
+            <div className={ ERROR404.INFO }>
                 Ooops! It seems that there is no such page.
                 You can return to the
                 <button
-                    className={ CSS.ERROR404_BACK }
+                    className={ ERROR404.BACK }
                     onClick={ history.goBack }>previous page
-                </button> or <NavLink className={ CSS.ERROR404_LINK } to="/">home</NavLink>
+                </button> or <NavLink className={ ERROR404.LINK } to="/">home</NavLink>
             </div>
         </div>
     )

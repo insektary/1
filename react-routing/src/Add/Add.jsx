@@ -2,12 +2,14 @@ import React from 'react';
 import './Add.less';
 import { CONST, CSS } from '../CONST';
 
+const { ADD } = CSS;
+
 const Add = ({ addOrChange }) => (
-    <form className={ CSS.ADD } onSubmit={ addOrChange }>
-        <div className={ CSS.ADD_TITLE }>Add news:</div>
-        <input className={ CSS.ADD_NEWTITLE } placeholder={ CONST.TITLE_PLACEHOLDER }/>
-        <textarea className={ CSS.ADD_NEWTEXT } placeholder={ CONST.NEWS_PLACEHOLDER }/>
-        <button className={ CSS.ADD_SUBMIT } type="submit">Add</button>
+    <form className={ ADD.CONTAINER } onSubmit={ addOrChange }>
+        <div className={ ADD.TITLE }>Add news:</div>
+        <input className={ ADD.NEWTITLE } placeholder={ CONST.TITLE_PLACEHOLDER }/>
+        <textarea className={ ADD.NEWTEXT } placeholder={ CONST.NEWS_PLACEHOLDER }/>
+        <button className={ ADD.SUBMIT } type="submit">Add</button>
     </form>
 )
 

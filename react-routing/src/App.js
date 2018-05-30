@@ -20,8 +20,8 @@ class App extends Component {
     constructor() {
         super();
 
-        this.signIn = this.signIn.bind(this);
-        this.signOut = this.signOut.bind(this);
+        this.onSignIn = this.onSignIn.bind(this);
+        this.onSignOut = this.onSignOut.bind(this);
         this.addOrChange = this.addOrChange.bind(this);
         this.cancelChanges = this.cancelChanges.bind(this);
 
@@ -33,7 +33,7 @@ class App extends Component {
     };
 
     generateID() {
-        return Number(new Date().getTime().toString().substr(5));
+        return new Date().getTime().toString().substr(5);
     }
 
     getDate() {
@@ -49,17 +49,17 @@ class App extends Component {
         this.setState({ news });
     }
 
-    signIn() {
+    onSignIn() {
         this.setState({ adminRights: true });
     }
 
-    signOut() {
+    onSignOut() {
         this.setState({ adminRights: false });
     }
 
     addOrChange(event) {
         const [ {value: title}, {value: content} ] = event.target.elements;
-        const id = Number(event.target.id) || this.generateID();
+        const id = event.target.id || this.generateID();
 
         if (title.trim() && content.trim()) {
             this.setState(({ news }) => (news.find((news) => news.id === id) ? {
@@ -97,7 +97,7 @@ class App extends Component {
         return (
             <div className={ CSS.APP }>
                 <Header/>
-                <Navigation adminRights={ adminRights } signOut={ this.signOut }/>
+                <Navigation adminRights={ adminRights } onSignOut={ this.onSignOut }/>
                 <div className={ CSS.CONTENT }>
                     <Switch>
                         <Route path="/" exact={ true } component={ Home }/>
@@ -105,9 +105,10 @@ class App extends Component {
                         <Route path="/contacts" component={ Contacts }/>
                         <Route path="/news" exact={ true } render={ () => <News data={ news }/>}/>
                         <Route path="/news/add" render={ () => <Add addOrChange={ this.addOrChange }/>}/>
-                        <Route path="/news/:id/edit" render={ (props) =>
-                            <Edit addOrChange={ this.addOrChange } cancelChanges={ this.cancelChanges } data={ news } {...props}/>}/>
-                        <Route path="/signin" render={ () => <SignIn signIn={ this.signIn }/>}/>
+                        <Route path="/news/:id/edit" render={ (props) => <Edit
+                            addOrChange={ this.addOrChange }
+                            cancelChanges={ this.cancelChanges } news={ news } {...props}/>}/>
+                        <Route path="/signin" render={ () => <SignIn onSignIn={ this.onSignIn }/>}/>
                         <Route path="/admin" render={ () => <Admin adminRights={ adminRights } />}/>
                         <Route path="/error204" component={ Error_204 }/>
                         <Route path="*" component={ Error_404 }/>

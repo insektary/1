@@ -2,26 +2,28 @@ import React from 'react';
 import './Contacts.less';
 import { CSS } from '../CONST';
 
+const { CONTACTS, ADDRESS, PHONE, EMAIL } = CSS;
+
 const Contacts = () => (
-    <div className={ CSS.CONTACTS }>
-        <div className={ CSS.CONTACTS_TITLE }>
+    <div className={ CONTACTS.CONTAINER }>
+        <div className={ CONTACTS.TITLE }>
             Contacts:
         </div>
-        <div className={ CSS.CONTACTS_CONTENT }>
-            <div className={ CSS.ADDRESS }>
-                <span className={ CSS.ADDRESS_TITLE }>&#9978; Address:</span>
-                <div className={ CSS.ADDRESS_CONTENT }>390017, Россия, г. Рязань, Ряжское шоссе, 19</div>
+        <div className={ CONTACTS.CONTENT }>
+            <div className={ ADDRESS.CONTAINER }>
+                <span className={ ADDRESS.TITLE }>&#9978; Address:</span>
+                <div className={ ADDRESS.CONTENT }>390017, Россия, г. Рязань, Ряжское шоссе, 19</div>
             </div>
-            <div className={ CSS.PHONE }>
-                <span className={ CSS.PHONE_ITEM }>&#9742; Phone:</span>
-                <ul className={ CSS.PHONE_LIST }>
-                    <li className={ CSS.PHONE_ITEM }>8-364-57-32-43</li>
-                    <li className={ CSS.PHONE_ITEM }>8-354-34-23-76</li>
+            <div className={ PHONE.CONTAINER }>
+                <span className={ PHONE.ITEM }>&#9742; Phone:</span>
+                <ul className={ PHONE.LIST }>
+                    <li className={ PHONE.ITEM }>8-364-57-32-43</li>
+                    <li className={ PHONE.ITEM }>8-354-34-23-76</li>
                 </ul>
             </div>
-            <div className={ CSS.EMAIL }>
-                <span className={ CSS.EMAIL_TITLE }>&#128386; Email:</span>
-                <div className={ CSS.EMAIL_CONTENT }>example_address@mail.ru</div>
+            <div className={ EMAIL.CONTAINER }>
+                <span className={ EMAIL.TITLE }>&#128386; Email:</span>
+                <div className={ EMAIL.CONTENT }>example_address@mail.ru</div>
             </div>
         </div>
     </div>
