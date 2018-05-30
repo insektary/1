@@ -1,0 +1,50 @@
+@defaultColor: white;
+@borderColor: #dbdbdb;
+@backgroundColor: #c1c1c1;
+@greyColor: grey;
+
+.footer {
+    width: 100%;
+    display: flex;
+    color: @greyColor;
+    padding-left: 0.4rem;
+
+    &--hidden {
+        width: 100%;
+        color: @greyColor;
+        padding-left: 0.4rem;
+        display: none;
+    }
+
+    &__counter {
+        height: 2rem;
+        font-size: 1.4rem;
+        line-height: 2rem;
+        margin-right: 5rem;
+    }
+}
+
+.footer-button {
+    background-color: @defaultColor;
+    border: none;
+    cursor: pointer;
+    height: 2rem;
+    color: @greyColor;
+    margin: 0 0.1rem 0 0.1rem;
+    outline: none;
+
+    &--active {
+        background-color: @backgroundColor;
+        cursor: pointer;
+        height: 2rem;
+        color: @greyColor;
+        margin: 0 0.1rem 0 0.1rem;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+    }
+
+    &--hidden {
+        display: none;
+    }
+}
