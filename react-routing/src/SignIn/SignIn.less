@@ -1,0 +1,58 @@
+@inputColor: #dcdcdc;
+@logoColor: #6795B8;
+@hoverColor:  #00aa00;
+
+.alert-message {
+    &--visible {
+        color: red;
+        font-family: Arial;
+        font-size: 1.6rem;
+        visibility: visible;
+        padding-bottom: 0.8rem;
+    }
+
+    &--hidden {
+        font-family: Arial;
+        font-size: 1.6rem;
+        padding-bottom: 0.8rem;
+        visibility: hidden;
+    }
+}
+
+.sign-form {
+    display: flex;
+    flex-direction: column;
+    padding-top: 4rem;
+    width: 30rem;
+    margin: auto;
+
+    &__login {
+        font-size: 2.4rem;
+        color: grey;
+        margin-bottom: 2rem;
+        border: 1px solid @inputColor;
+        border-radius: 5px;
+        padding: 0.5rem;
+
+        &--base {
+            border: 1px solid @inputColor;
+        }
+
+        &--wrong {
+            border: 1px solid red;
+        }
+    }
+
+    &__submit {
+        cursor: pointer;
+        font-size: 2.4rem;
+        border: 1px solid @inputColor;
+        border-radius: 5px;
+        background-color: @logoColor;
+        color: white;
+
+        &:hover {
+            background-color: @hoverColor;
+        }
+    }
+}

@@ -1,0 +1,79 @@
+@titleColor: #6f9fd8;
+@hoverColor: #6791c6;
+
+.news {
+    font-family: Arial;
+    padding-top: 5rem;
+
+    &__content {
+        font-size: 1.6rem;
+        text-align: justify;
+        color: grey;
+    }
+}
+
+.news-title {
+    background-color: @titleColor;
+    height: 5rem;
+    color: white;
+    font-size: 2.6rem;
+    line-height: 5rem;
+    padding-left: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    &__add {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-family: Arial;
+        color: white;
+        font-size: 2.6rem;
+        padding: 0 2rem 0 2rem;
+        outline: none;
+        height: 4.9rem;
+
+        &:hover {
+            background-color: @hoverColor;
+        }
+    }
+}
+
+.news-title__add--active .news-title__add {
+    background-color: @hoverColor;
+}
+
+.post {
+
+    &__title {
+        padding-top: 3rem;
+        padding-left: 2rem;
+        font-size: 2.4rem;
+    }
+
+    &__content {
+        padding: 2rem 0 2rem 0;
+    }
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.9rem;
+
+    &__date {
+        padding-left: 2rem;
+        font-size: 1.4rem;
+        color: @hoverColor;
+    }
+
+    &__edit {
+        color: white;
+        padding: 0.2rem 1rem 0.2rem 1rem;
+        font-family: 'Arial';
+        cursor: pointer;
+        background-color: @hoverColor;
+        border: none;
+        border-radius: 2px;
+    }
+}

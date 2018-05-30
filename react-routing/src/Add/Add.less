@@ -1,0 +1,54 @@
+@buttonHoverColor: #00aa00;
+@hoverColor: #6791c6;
+@inputColor: #dcdcdc;
+@logoColor: #6795B8;
+
+.add {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 0 0 0;
+
+    &__title {
+        font-family: 'Arial';
+        font-size: 2.6rem;
+        color: @hoverColor;
+        padding: 1rem 0 1rem 0;
+    }
+
+    &__new-title {
+        font-size: 2.4rem;
+        color: grey;
+        margin-bottom: 2rem;
+        border: 1px solid @inputColor;
+        border-radius: 5px;
+        padding: 0.5rem;
+        width: 50rem;
+    }
+
+    &__new-text {
+        font-family: 'Arial';
+        font-size: 1.6rem;
+        color: grey;
+        border: 1px solid @inputColor;
+        border-radius: 5px;
+        resize: none;
+        width: 96.6%;
+        height: 15rem;
+    }
+
+    &__submit {
+        width: 10rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        font-size: 2.4rem;
+        border: 1px solid @inputColor;
+        border-radius: 5px;
+        background-color: @logoColor;
+        color: white;
+
+        &:hover {
+            background-color: @buttonHoverColor;
+        }
+    }
+}

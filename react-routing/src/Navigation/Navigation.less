@@ -1,0 +1,77 @@
+@testColor: #6B9AD0;
+@hoverColor: #6791c6;
+@arrowColor: #9dcfff;
+
+html {
+    font-size: 10px;
+}
+
+.nav {
+    background-color: @testColor;
+}
+
+.menu {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    border-bottom: 0.5rem solid @arrowColor;
+}
+.menu-item {
+    position: relative;
+    font-size: 2rem;
+    width: 16rem;
+    text-align: center;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 43%;
+        bottom: -2rem;
+        border: 1rem solid transparent;
+        border-top-color: @hoverColor;
+        opacity: 0;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 38.4%;
+        bottom: -3.6rem;
+        border: 1.8rem solid transparent;
+        border-top-color: @arrowColor;
+        opacity: 0;
+    }
+
+    &:hover {
+        background-color: @hoverColor;
+    }
+
+    &__link {
+        color: white;
+        font-family: 'Arial', sans-serif;
+        font-stretch: extra-condensed;
+        text-decoration: none;
+        line-height: 6rem;
+        width: 100%;
+
+        &--hidden {
+            display: none;
+        }
+    }
+}
+
+.menu-item__link--active .menu-item {
+    background-color: @hoverColor;
+
+    &:after {
+        opacity: 1;
+    }
+
+    &:before {
+        opacity: 1;
+    }
+}
+
+
