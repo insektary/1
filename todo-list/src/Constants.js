@@ -30,6 +30,16 @@ const CONST = {
     BUTTON_ACTIVE: 'footer-button--active',
     BUTTON_HIDDEN: 'footer-button--hidden',
     UNCOMPLETED_DEFAULT: false,
+    ACTIONS: {
+        CHECK_ALL: "CHECK_ALL",
+        CHANGE_FILTER: "CHANGE_FILTER",
+        CLEAR_COMPLETED: "CLEAR_COMPLETED",
+        DELETE_TODO: "DELETE_TODO",
+        ADD_TODO: "ADD_TODO",
+        UNLOCK_TODO: "UNLOCK_TODO",
+        REWRITE_TODO: "REWRITE_TODO",
+        CHANGE_STATUS: "CHANGE_STATUS"
+    }
 };
 
 export default CONST;

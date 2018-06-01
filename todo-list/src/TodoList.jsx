@@ -5,6 +5,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TodoItem from './TodoItem/TodoItem';
 import CONST from './Constants';
+import middlewareActionCreators from './actionCreators/middlewareActionCreators';
 
 const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearCompleted,
                       deleteTodo, changeStatus, addTodo, unlockTodo, rewriteTodo }) => {
@@ -31,35 +32,5 @@ const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearComplet
 
 export default connect(
     state => (state),
-    dispatch => ({
-        checkAll() {
-            dispatch({ type: 'CHECK_ALL' });
-        },
-        changeFilter({ target: { id }}) {
-            dispatch({ type: 'CHANGE_FILTER',  filter: id });
-        },
-        clearCompleted() {
-            dispatch({ type: 'CLEAR_COMPLETED' });
-        },
-        deleteTodo({ target: { parentNode: { id }}}) {
-            dispatch({ type: 'DELETE_TODO', id: id });
-        },
-        changeStatus({ target: { parentNode: { id }}}) {
-            dispatch({ type: 'CHANGE_STATUS', id: id})
-        },
-        addTodo({ key, target }) {
-            if (key === CONST.ENTER && target.value.trim()) {
-                dispatch({ type: 'ADD_TODO', title: target.value });
-                target.value = '';
-            }
-        },
-        unlockTodo({ target: { parentNode: { id }}}) {
-            dispatch({ type: 'UNLOCK_TODO', id: id });
-        },
-        rewriteTodo({ key, target }) {
-            if (key === CONST.ENTER && target.value.trim()) {
-                dispatch({ type: 'REWRITE_TODO', id: target.parentNode.id, title: target.title });
-            }
-        }
-    })
+    middlewareActionCreators
 )(TodoList);
