@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom reducers.test.js components.test.js actionCreators.test.js --coverage",
+    "test": "react-app-rewired test --env=jsdom reducers.test.js middlewareActionCreators.test.js components.test.js actionCreators.test.js Footer.test.js Header.test.js TodoItem.test.js TodoList.test.js --coverage",
     "eject": "react-scripts eject"
   }
 }

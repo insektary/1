@@ -20,8 +20,8 @@ const actionCreators = {
         return { type: ACTIONS.DELETE_TODO, id };
     },
 
-    addTodo({ target: { value } }) {
-        return { type: ACTIONS.ADD_TODO, title: value };
+    addTodo({ target: { value }}, id) {
+        return { type: ACTIONS.ADD_TODO, title: value, id };
     },
 
     unlockTodo({ target: { parentNode: { id }}}) {

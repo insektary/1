@@ -10,23 +10,28 @@ const randomNumber = faker.random.number().toString();
 describe('action creators testing', () => {
 
     test('checkAll creator', () => {
-        expect(actionCreators.checkAll()).toEqual({ type: ACTIONS.CHECK_ALL });
+        expect(actionCreators.checkAll())
+            .toEqual({ type: ACTIONS.CHECK_ALL });
     });
 
     test('changeFilter creator', () => {
-        expect(actionCreators.changeFilter({ target: { id: randomNumber } })).toEqual({ type: ACTIONS.CHANGE_FILTER,  filter: randomNumber });
+        expect(actionCreators.changeFilter({ target: { id: randomNumber } }))
+            .toEqual({ type: ACTIONS.CHANGE_FILTER,  filter: randomNumber });
     });
 
     test('clearCompleted creator', () => {
-        expect(actionCreators.clearCompleted()).toEqual({ type: ACTIONS.CLEAR_COMPLETED });
+        expect(actionCreators.clearCompleted())
+            .toEqual({ type: ACTIONS.CLEAR_COMPLETED });
     });
 
     test('deleteTodo creator', () => {
-        expect(actionCreators.deleteTodo({ target: { parentNode: { id: randomNumber }}})).toEqual({ type: ACTIONS.DELETE_TODO, id: randomNumber });
+        expect(actionCreators.deleteTodo({ target: { parentNode: { id: randomNumber }}}))
+            .toEqual({ type: ACTIONS.DELETE_TODO, id: randomNumber });
     });
 
     test('addTodo creator', () => {
-        expect(actionCreators.addTodo({ key: CONST.ENTER, target: { value: randomTitle } })).toEqual({ type: ACTIONS.ADD_TODO, title: randomTitle });
+        expect(actionCreators.addTodo({ key: CONST.ENTER, target: { value: randomTitle }}, randomNumber))
+            .toEqual({ type: ACTIONS.ADD_TODO, title: randomTitle, id: randomNumber });
     });
 
     test('unlockTodo creator', () => {

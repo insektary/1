@@ -7,7 +7,7 @@ import TodoItem from './TodoItem/TodoItem';
 import CONST from './Constants';
 import middlewareActionCreators from './actionCreators/middlewareActionCreators';
 
-const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearCompleted,
+export const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearCompleted,
                       deleteTodo, changeStatus, addTodo, unlockTodo, rewriteTodo }) => {
     return <div className={ CONST.LIST_CLASSNAME }>
         <Header

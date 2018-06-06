@@ -1,5 +1,3 @@
-const generateID = () => new Date().getTime().toString().substr(5);
-
 const todoList = (state = [], action) => {
     switch (action.type) {
         case 'ADD_TODO':
@@ -7,7 +5,7 @@ const todoList = (state = [], action) => {
                 ...state,
                 {
                     title: action.title,
-                    id: generateID(),
+                    id: action.id,
                     completed: false,
                     lock: true
                 }
@@ -42,8 +40,6 @@ const todoList = (state = [], action) => {
                 return todo;
             });
         case 'CHECK_ALL':
-            if (!state.length) return;
-
             const everyIsCompleted = state.every(({ completed }) => completed);
 
             return state.map((todo) => {
