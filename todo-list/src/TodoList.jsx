@@ -1,22 +1,24 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './todolist.less';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TodoItem from './TodoItem/TodoItem';
-import CONST from './Constants';
-import middlewareActionCreators from './actionCreators/middlewareActionCreators';
+import * as actionCreator from './actionCreators/actionCreators';
+import { CSS } from './Constants';
 
-export const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clearCompleted,
-                      deleteTodo, changeStatus, addTodo, unlockTodo, rewriteTodo }) => {
-    return <div className={ CONST.LIST_CLASSNAME }>
+export const TodoList = ({ todoList, chosenFilter, actions }) => {
+    const { addTodo, checkAll, changeStatus, deleteTodo, unlockTodo, rewriteTodo, changeFilter, clearCompleted } = actions;
+
+    return <div className={ CSS.LIST }>
         <Header
             addTodo={ addTodo }
             checkAll={ checkAll }
             todoList={ todoList }
         />
         { todoList.map(({ id, completed, title, lock }) => <TodoItem
-            deleteTodo={ deleteTodo } changeStatus={ changeStatus }
+            changeStatus={ changeStatus } deleteTodo={ deleteTodo }
             unlockTodo={ unlockTodo } rewriteTodo={ rewriteTodo }
             chosenFilter={ chosenFilter } key={ id } lock={ lock }
             id={ id } completed={ completed } title={ title }/>
@@ -30,7 +32,17 @@ export const TodoList = ({ todoList, chosenFilter, checkAll, changeFilter, clear
     </div>;
 };
 
+const mapStateToProps = state => ({
+    todoList: state.todoList,
+    chosenFilter: state.chosenFilter
+});
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(actionCreator, dispatch)
+});
+
+
 export default connect(
-    state => (state),
-    middlewareActionCreators
+    mapStateToProps,
+    mapDispatchToProps
 )(TodoList);

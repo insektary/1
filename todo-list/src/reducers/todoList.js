@@ -1,45 +1,47 @@
-const todoList = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD_TODO':
+import { ACTIONS } from '../Constants';
+
+const todoList = (state = [], { type, title, id }) => {
+    switch (type) {
+        case ACTIONS.ADD_TODO:
             return [
                 ...state,
                 {
-                    title: action.title,
-                    id: action.id,
+                    title,
+                    id,
                     completed: false,
                     lock: true
                 }
             ];
-        case 'DELETE_TODO':
-            return state.filter(({ id }) => id !== action.id);
-        case 'CHANGE_STATUS':
-            return state.map((todo) => {
-                if (todo.id === action.id) {
-                    todo.completed = !todo.completed;
+        case ACTIONS.DELETE_TODO:
+            return state.filter(({ id: currentId }) => currentId !== id);
+        case ACTIONS.CHANGE_STATUS:
+            return state.map(({ title, completed, lock, id: currentId }) => {
+                if (currentId === id) {
+                    return { title, completed: !completed, lock, id: currentId}
                 }
 
-                return todo;
+                return { title, completed, lock, id: currentId}
             });
-        case 'CLEAR_COMPLETED':
+        case ACTIONS.CLEAR_COMPLETED:
             return state.filter((todo) => !todo.completed);
-        case 'UNLOCK_TODO':
+        case ACTIONS.UNLOCK_TODO:
             return state.map((todo) => {
-                if (todo.id === action.id) {
+                if (todo.id === id) {
                     todo.lock = false;
                 }
 
                 return todo;
             });
-        case 'REWRITE_TODO':
+        case ACTIONS.REWRITE_TODO:
             return state.map((todo) => {
-                if (todo.id === action.id) {
-                    todo.title = action.title;
+                if (todo.id === id) {
+                    todo.title = title;
                     todo.lock = true;
                 }
 
                 return todo;
             });
-        case 'CHECK_ALL':
+        case ACTIONS.CHECK_ALL:
             const everyIsCompleted = state.every(({ completed }) => completed);
 
             return state.map((todo) => {

@@ -3,9 +3,7 @@ import faker from 'faker';
 
 import chosenFilter from './chosenFilter';
 import todoList from './todoList';
-import CONST from '../Constants';
-
-const { ACTIONS } = CONST;
+import { ACTIONS } from '../Constants';
 
 describe('filter reduce tests', () => {
 
@@ -21,262 +19,121 @@ describe('filter reduce tests', () => {
         expect(chosenFilter('all', { type: ACTIONS.CHANGE_FILTER, filter: 'active' })).toBe('active');
     });
 
-    test('unknown action', () => {
-        expect(chosenFilter('all', { type: undefined })).toBe('all');
+    test('unknown action and initial state', () => {
+        expect(chosenFilter(undefined, { type: undefined })).toBe('all');
     })
 
 });
 
-// const randomId = () => Math.round(Math.random() * 9);
-//
-// let testList = new Array(10).fill(0);
-//
-// testList = testList.map((todo) => ({
-//     title: faker.name.title(),
-//     id: faker.random.number().toString(),
-//     completed: faker.random.boolean(),
-//     lock: true
-// }));
-//
-// const idMap = testList.map(({ id }) => id);
-//
-// describe('todoList reduce tests', () => {
-//
-//     test('add new todo', () => {
-//         const newTodoTitle = faker.name.title();
-//         const newTodoId = faker.random.number().toString();
-//
-//         expect(todoList(testList, { type: ACTIONS.ADD_TODO, title: newTodoTitle, id: newTodoId }))
-//             .toEqual(expect.arrayContaining(testList));
-//
-//         expect(todoList(testList, { type: ACTIONS.ADD_TODO, title: newTodoTitle, id: newTodoId }))
-//             .toContainEqual({ title: newTodoTitle, completed: false, lock: true, id: newTodoId });
-//     });
-//
-//     test('change todo status', () => {
-//         const randomIndex = randomId();
-//         const currentStatus = testList[randomIndex].completed;
-//
-//         expect(todoList(testList, { type: ACTIONS.CHANGE_STATUS, id: idMap[randomIndex] }))
-//             .toContainEqual({ title: testList[randomIndex].title, id: idMap[randomIndex], lock: true, completed: !currentStatus });
-//     });
-//
-//     test('deleted all completed', () => {
-//         expect(todoList(testArray, { type: ACTIONS.CLEAR_COMPLETED })).noCompleted();
-//     });
-//
-//     test('unlock todo', () => {
-//         const randomIndex = randomId();
-//
-//         expect(todoList(testList, { type: ACTIONS.UNLOCK_TODO, id: idMap[randomIndex] }))
-//             .toContainEqual({ title: testList[randomIndex].title, id: idMap[randomIndex], lock: false, completed: testList[randomIndex].completed });
-//     });
-//
-//     test('rewrite todo', () => {
-//         const randomIndex = randomId();
-//         const newTodoTitle = faker.name.title();
-//
-//         expect(todoList(testList, { type: ACTIONS.REWRITE_TODO, id: idMap[randomIndex], title: newTodoTitle }))
-//             .toContainEqual({ title: newTodoTitle, id: idMap[randomIndex], lock: true, completed: testList[randomIndex].completed });
-//     });
-//
-//     test('check all', () => {
-//         expect(todoList(testArray, { type: ACTIONS.CHECK_ALL })).checkAll();
-//     });
-//
-//     test('delete todo', () => {
-//         const randomIndex = randomId();
-//
-//         expect(todoList(testList, { type: ACTIONS.DELETE_TODO, id: idMap[randomIndex] })).not.toContain(testList[randomIndex])
-//     });
-//
-// });
+describe('todoList reduce tests', () => {
+    const LENGTH = 10;
+    let testList = new Array(LENGTH).fill(0);
 
-describe('todoList reducer testing', () => {
-    let testList = [];
+    const selectRandomPosition = () => Math.round(Math.random() * (LENGTH - 1));
 
     beforeEach(() => {
-        testList = [
-            {
-                title: 'title1',
-                id: '1',
-                completed: false,
-                lock: true
-            },
-            {
-                title: 'title2',
-                id: '2',
-                completed: true,
-                lock: true
-            },
-            {
-                title: 'title3',
-                id: '3',
-                completed: true,
-                lock: true
-            }
-        ];
+        testList = testList.map((todo) => ({
+            title: faker.name.title(),
+            id: faker.random.number().toString(),
+            completed: faker.random.boolean(),
+            lock: true
+        }));
     });
 
-    test('addTodo', () => {
-        expect(todoList(testList, { type: ACTIONS.ADD_TODO, title: 'title4', id: '4' }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'title2',
-                    id: '2',
-                    completed: true,
-                    lock: true
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                },
-                {
-                    title: 'title4',
-                    id: '4',
-                    completed: false,
-                    lock: true
-                }
-            ])
+    test('add new todo', () => {
+        const title = faker.name.title();
+        const id = faker.random.number().toString();
+        const action = { type: ACTIONS.ADD_TODO, title, id };
+
+        let newList = todoList(testList, action);
+        let addedToDo = newList[10];
+
+        expect(testList).not.toBe(newList);
+
+        expect(newList.length).toBe(11);
+
+        const checkedArray = [...testList, addedToDo];
+
+        testList.forEach((todo, i) => {
+            let checkedTODO = checkedArray[i];
+
+            expect(todo).toEqual(checkedTODO);
+        });
+
+        expect(addedToDo).toEqual({ title, completed: false, lock: true, id });
     });
 
     test('change todo status', () => {
-        expect(todoList(testList, { type: ACTIONS.CHANGE_STATUS, id: '2' }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'title2',
-                    id: '2',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                }
-            ])
+        const randomPosition = selectRandomPosition();
+        const id = testList[randomPosition].id;
+        const action = { type: ACTIONS.CHANGE_STATUS, id };
+
+        const newList = todoList(testList, action);
+
+        expect(testList).not.toBe(newList);
+
+        expect(newList[randomPosition].completed).toBe(!testList[randomPosition].completed);
     });
 
     test('deleted all completed', () => {
-        expect(todoList(testList, { type: ACTIONS.CLEAR_COMPLETED }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                }
-            ])
+        const newList = todoList(testList, { type: ACTIONS.CLEAR_COMPLETED });
+
+        expect(newList.every(({ completed }) => !completed)).toBe(true);
+
+        newList.forEach((todo) => expect(testList).toContainEqual(todo));
     });
 
     test('unlock todo', () => {
-        expect(todoList(testList, { type: ACTIONS.UNLOCK_TODO, id: '2' }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'title2',
-                    id: '2',
-                    completed: true,
-                    lock: false
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                }
-            ])
+        const randomPosition = selectRandomPosition();
+        const id = testList[randomPosition].id;
+        const action = { type: ACTIONS.UNLOCK_TODO, id };
+
+        const newList = todoList(testList, action);
+
+        expect(testList).not.toBe(newList);
+
+        expect(newList.length).toBe(10);
+
+        expect(newList[randomPosition].lock).toBe(false);
     });
 
     test('rewrite todo', () => {
-        expect(todoList(testList, { type: ACTIONS.REWRITE_TODO, id: '2', title: 'newTodoTitle' }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'newTodoTitle',
-                    id: '2',
-                    completed: true,
-                    lock: true
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                }
-            ]);
+        const randomPosition = selectRandomPosition();
+        const id = testList[randomPosition].id;
+        const action = { type: ACTIONS.REWRITE_TODO, id, title: 'newTitle' };
+
+        const newList = todoList(testList, action);
+
+        expect(testList).not.toBe(newList);
+
+        expect(newList.length).toBe(10);
+
+        expect (newList[randomPosition].lock).toBe(true);
+        expect (newList[randomPosition].title).toBe('newTitle');
     });
 
     test('check all', () => {
-        expect(todoList(testList, { type: ACTIONS.CHECK_ALL }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: true,
-                    lock: true
-                },
-                {
-                    title: 'title2',
-                    id: '2',
-                    completed: true,
-                    lock: true
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                }
-            ])
+        const newList = todoList(testList, { type: ACTIONS.CHECK_ALL });
+
+        expect(newList.length).toBe(10);
+
+        expect(newList.every(({ completed }) => completed)).toBe(true);
     });
 
     test('delete todo', () => {
-        expect(todoList(testList, { type: ACTIONS.DELETE_TODO, id: '2' }))
-            .toEqual([
-                {
-                    title: 'title1',
-                    id: '1',
-                    completed: false,
-                    lock: true
-                },
-                {
-                    title: 'title3',
-                    id: '3',
-                    completed: true,
-                    lock: true
-                }
-            ])
+        const randomPosition = selectRandomPosition();
+        const id = testList[randomPosition].id;
+
+        const newList = todoList(testList, { type: ACTIONS.DELETE_TODO, id });
+
+        expect(newList.length).toBe(9);
+
+        newList.forEach((todo) => expect(testList).toContainEqual(todo));
     });
 
-    test('unknown action', () => {
-        expect(todoList(testList, { type: undefined }))
-            .toEqual(testList);
+        test('unknown action and initial state', () => {
+        expect(todoList(undefined, { type: undefined }))
+            .toEqual([]);
     })
 
 });

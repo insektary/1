@@ -1,27 +1,31 @@
 import React from 'react';
 import './todoItem.less';
-import CONST from '../Constants';
+import { CSS, ID, EVENTS } from '../Constants';
 
-const TodoItem = ({ chosenFilter, completed, deleteTodo, lock, id, title, unlockTodo, changeStatus, rewriteTodo }) => {
-    const visibility = ((chosenFilter === CONST.ALL_ID)
-        || (chosenFilter === CONST.ACTIVE_ID && !completed)
-        || (chosenFilter === CONST.COMPLETED_ID && completed));
+const TodoItem = ({ chosenFilter, completed, lock, id, title, changeStatus, deleteTodo, unlockTodo, rewriteTodo }) => {
+    const visibility = ((chosenFilter === ID.ALL)
+        || (chosenFilter === ID.ACTIVE && !completed)
+        || (chosenFilter === ID.COMPLETED && completed));
 
     return (
-        <div id={ id } key={ id } className={ visibility ? CONST.ITEM_CLASSNAME : CONST.ITEM_HIDDEN }><button
-            className={ `${ CONST.CHECKBUTTON_CLASSNAME } ${ completed ? CONST.CHECKBUTTON_DONE : '' }` }
-            onClick={ changeStatus }>&#10004;</button>
+        <div id={ id } key={ id } className={ visibility ? CSS.ITEM : CSS.ITEM_HIDDEN }><button
+            className={ `${ CSS.CHECKBUTTON } ${ completed ? CSS.CHECKBUTTON_DONE : '' }` }
+            onClick={ (event) => changeStatus(event) }>&#10004;</button>
                 <input
                     defaultValue={ title }
-                    readOnly={ lock ? CONST.READONLY_ATTR : '' }
-                    className={ completed ? CONST.TITLE_DONE : CONST.TITLE_CLASSNAME }
-                    onDoubleClick={ unlockTodo }
-                    onBlur={ rewriteTodo }
-                    onKeyPress={ rewriteTodo }
+                    readOnly={ lock ? CSS.READONLY_ATTR : '' }
+                    className={ completed ? CSS.TITLE_DONE : CSS.TITLE }
+                    onDoubleClick={ (event) => unlockTodo(event) }
+                    onBlur={ (event) => rewriteTodo(event) }
+                    onKeyPress={ (event) => {
+                        if (event.key === EVENTS.ENTER && event.target.value.trim()) {
+                            rewriteTodo(event);
+                        }
+                    }}
                 />
                 <button
-                    className={ CONST.DELETE_BUTTON }
-                    onClick={ deleteTodo }>&#10006;
+                    className={ CSS.DELETE_BUTTON }
+                    onClick={ (event) => deleteTodo(event) }>&#10006;
                 </button>
             </div>
         )

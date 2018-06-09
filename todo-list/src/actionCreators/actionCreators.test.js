@@ -1,8 +1,6 @@
 import faker from 'faker';
-import actionCreators from './actionCreators';
-import CONST from '../Constants';
-
-const { ACTIONS } = CONST;
+import * as actionCreators from './actionCreators';
+import { ACTIONS, EVENTS } from '../Constants';
 
 const randomTitle = faker.name.title();
 const randomNumber = faker.random.number().toString();
@@ -30,7 +28,7 @@ describe('action creators testing', () => {
     });
 
     test('addTodo creator', () => {
-        expect(actionCreators.addTodo({ key: CONST.ENTER, target: { value: randomTitle }}, randomNumber))
+        expect(actionCreators.addTodo({ key: EVENTS.ENTER, target: { value: randomTitle }}, randomNumber))
             .toEqual({ type: ACTIONS.ADD_TODO, title: randomTitle, id: randomNumber });
     });
 
@@ -39,7 +37,7 @@ describe('action creators testing', () => {
     });
 
     test('rewriteTodo creator', () => {
-        expect(actionCreators.rewriteTodo({ key: CONST.ENTER, target: { value: randomTitle, parentNode: { id: randomNumber }}})).toEqual({ type: ACTIONS.REWRITE_TODO, id: randomNumber, title: randomTitle });
+        expect(actionCreators.rewriteTodo({ key: EVENTS.ENTER, target: { value: randomTitle, parentNode: { id: randomNumber }}})).toEqual({ type: ACTIONS.REWRITE_TODO, id: randomNumber, title: randomTitle });
     });
 
     test('changeStatus creator', () => {

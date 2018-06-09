@@ -1,9 +1,9 @@
 import React from 'react';
 import './footer.less';
-import CONST from '../Constants';
+import { CSS, ID } from '../Constants';
 import FilterButton from './FilterButton';
 
-const Footer = ({ clearCompleted, todoList, changeFilter, chosenFilter }) => {
+const Footer = ({ todoList, chosenFilter, changeFilter, clearCompleted }) => {
     const numberOfCompleted = todoList.reduce((counter, { completed }) => {
         if (completed) {
             return counter + 1;
@@ -13,12 +13,12 @@ const Footer = ({ clearCompleted, todoList, changeFilter, chosenFilter }) => {
     }, 0);
 
     return (
-        <div className={ todoList.length ? CONST.FOOTER_CLASSNAME : CONST.FOOTER_HIDDEN }>
-            <div className={ CONST.COUNTER_CLASSNAME }>{ todoList.length - numberOfCompleted } items left</div>
-            <FilterButton id={ CONST.ALL_ID } changeFilter={ changeFilter } content="All" chosenFilter={ chosenFilter }/>
-            <FilterButton id={ CONST.ACTIVE_ID } changeFilter={ changeFilter } content="Active" chosenFilter={ chosenFilter }/>
-            <FilterButton id={ CONST.COMPLETED_ID } changeFilter={ changeFilter } content="Completed" chosenFilter={ chosenFilter }/>
-            <button onClick={ clearCompleted } className={ numberOfCompleted ? CONST.BUTTON_CLASSNAME : CONST.BUTTON_HIDDEN }>Clear completed</button>
+        <div className={ todoList.length ? CSS.FOOTER : CSS.FOOTER_HIDDEN }>
+            <div className={ CSS.COUNTER }>{ todoList.length - numberOfCompleted } items left</div>
+            <FilterButton id={ ID.ALL } changeFilter={ (event) => changeFilter(event) } content="All" chosenFilter={ chosenFilter }/>
+            <FilterButton id={ ID.ACTIVE } changeFilter={ (event) => changeFilter(event) } content="Active" chosenFilter={ chosenFilter }/>
+            <FilterButton id={ ID.COMPLETED } changeFilter={ (event) => changeFilter(event) } content="Completed" chosenFilter={ chosenFilter }/>
+            <button id={ ID.CLEAR_COMPLETED } onClick={ () => clearCompleted() } className={ numberOfCompleted ? CSS.BUTTON : CSS.BUTTON_HIDDEN }>Clear completed</button>
         </div>
     )
 };

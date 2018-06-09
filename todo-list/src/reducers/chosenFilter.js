@@ -1,5 +1,7 @@
+import { ACTIONS } from '../Constants';
+
 const chosenFilter = (state = 'all', action) => {
-    if (action.type === 'CHANGE_FILTER') {
+    if (action.type === ACTIONS.CHANGE_FILTER) {
         return action.filter;
     }
 
