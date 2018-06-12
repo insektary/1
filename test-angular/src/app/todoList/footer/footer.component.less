@@ -1,0 +1,43 @@
+@fontColor: grey;
+@defaultColor: white;
+@hoverColor: #c8c8c8;
+
+.footer {
+  height: 2rem;
+  font-size: 1.4rem;
+  color: @fontColor;
+  display: flex;
+  padding: 0 0.4rem 0 0.4rem;
+  line-height: 2rem;
+  justify-content: space-between;
+
+  &__clear {
+    cursor: pointer;
+    background-color: @defaultColor;
+    border: none;
+    outline: none;
+    color: @fontColor;
+  }
+}
+
+.filter {
+
+  &__item {
+    display: none;
+
+    & + label {
+      cursor: pointer;
+    }
+  }
+
+  & input[type="radio"]:checked + label {
+    background-color: @hoverColor;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  & input[type="radio"] + label {
+    padding: 0.3rem;
+  }
+}
+

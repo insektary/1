@@ -1,0 +1,18 @@
+<div class="list">
+  <app-header
+    [addTodo]="addTodo"
+    [checkAll]="checkAll"
+  ></app-header>
+  <app-todoitem
+    *ngFor="let item of list"
+    [item]="item"
+    [deleteTodo]="deleteTodo"
+    [unlockTodo]="unlockTodo"
+    [rewriteTodo]="rewriteTodo"
+    [changeStatus]="changeStatus"
+  ></app-todoitem>
+  <app-footer
+    [changeFilter]="changeFilter"
+    [clearCompleted]="clearCompleted"
+  ></app-footer>
+</div>

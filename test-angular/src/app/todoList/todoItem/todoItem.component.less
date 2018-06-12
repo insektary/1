@@ -1,0 +1,52 @@
+@defaultColor: white;
+@fontColor: grey;
+@borderColor: #c8c8c8;
+@completedColor: green;
+@deleteColor: red;
+
+.todoitem {
+  display: flex;
+
+  &__check, &__delete {
+    background-color: @defaultColor;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+    outline: none;
+    margin: 0.5rem;
+  }
+
+  &__check {
+    border: 1px solid @borderColor;
+    border-radius: 50%;
+    color: transparent;
+
+    &--completed {
+      color: @completedColor;
+    }
+  }
+
+  &__delete {
+    border: none;
+    color: transparent;
+
+    &:hover {
+      color: @deleteColor;
+    }
+  }
+
+  &__name {
+    height: 4rem;
+    font-size: 2rem;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: @fontColor;
+
+    &--completed {
+      color: @borderColor;
+      text-decoration: line-through;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+<div class="footer">
+  <span class="footer__counter">1 item left</span>
+  <div class="filter" (change)="changeFilter()">
+    <input class="filter__item" id="all" type="radio" name="filter" checked>
+    <label for="all">All</label>
+    <input class="filter__item" id="active"  type="radio" name="filter">
+    <label for="active">Active</label>
+    <input class="filter__item" id="completed" type="radio" name="filter">
+    <label for="completed">Completed</label>
+  </div>
+  <button class="footer__clear" (click)="clearCompleted()">Clear completed</button>
+</div>

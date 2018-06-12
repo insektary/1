@@ -1,0 +1,13 @@
+<div class="todoitem" [id]="item.id">
+  <button
+    class="todoitem__check"
+    [ngClass]="{'todoitem__check--completed': item.completed}"
+    (click)="changeStatus()">&#10004;</button>
+  <input
+    class="todoitem__name"
+    [ngClass]="{'todoitem__name--completed': item.completed}"
+    [value]="item.title"
+    (dblclick)="unlockTodo()"
+    (blur)="rewriteTodo()">
+  <button class="todoitem__delete" (click)="deleteTodo()">&#10006;</button>
+</div>
