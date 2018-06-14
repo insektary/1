@@ -2,9 +2,12 @@
   <app-header
     [addTodo]="addTodo"
     [checkAll]="checkAll"
+    [inputValue]="inputValue"
+    [list]="list"
+    [numberOfCompleted]="numberOfCompleted"
   ></app-header>
   <app-todoitem
-    *ngFor="let item of list"
+    *ngFor="let item of list | filter:chosenFilter"
     [item]="item"
     [deleteTodo]="deleteTodo"
     [unlockTodo]="unlockTodo"
@@ -14,5 +17,8 @@
   <app-footer
     [changeFilter]="changeFilter"
     [clearCompleted]="clearCompleted"
+    [listLength]="list.length"
+    [numberOfCompleted]="numberOfCompleted"
+    [chosenFilter]="chosenFilter"
   ></app-footer>
 </div>

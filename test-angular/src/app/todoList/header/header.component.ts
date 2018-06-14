@@ -9,4 +9,7 @@ import { Component, Input } from '@angular/core';
 export class HeaderComponent {
   @Input() addTodo;
   @Input() checkAll;
+  @Input() inputValue;
+  @Input() list;
+  @Input() numberOfCompleted;
 }
