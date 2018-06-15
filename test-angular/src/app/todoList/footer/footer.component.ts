@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -6,9 +6,17 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./footer.component.less']
 })
 export class FooterComponent {
-  @Input() changeFilter;
-  @Input() clearCompleted;
   @Input() listLength;
   @Input() numberOfCompleted;
-  @Input() chosenFilter;
+
+  @Output() clearCompleted: EventEmitter<any> = new EventEmitter();
+  @Output() changeFilter: EventEmitter<any> = new EventEmitter();
+
+  onClearCompleted() {
+    this.clearCompleted.emit();
+  }
+
+  onChangeFilter($event) {
+    this.changeFilter.emit($event);
+  }
 }

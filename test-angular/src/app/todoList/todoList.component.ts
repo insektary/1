@@ -8,43 +8,28 @@ import { TodoList } from "../app.model";
 })
 export class TodoListComponent {
   store: TodoList;
-  inputValue: string;
 
   constructor(todoList: TodoList) {
     this.store = todoList;
-    this.inputValue = '';
-
-    this.clearCompleted = this.clearCompleted.bind(this);
-    this.changeFilter = this.changeFilter.bind(this);
-    this.changeStatus = this.changeStatus.bind(this);
-    this.rewriteTodo = this.rewriteTodo.bind(this);
-    this.unlockTodo = this.unlockTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
-    this.checkAll = this.checkAll.bind(this);
-    this.addTodo = this.addTodo.bind(this);
   }
 
-  addTodo() {
-    this.store.addTodo(this.inputValue);
-
-    this.inputValue = '';
+  addTodo(value) {
+    this.store.addTodo(value);
   }
 
-  deleteTodo({ target: { parentNode: { id }}}) {
+  deleteTodo({ id }) {
     this.store.deleteTodo(id);
   }
 
-  unlockTodo({ target: { parentNode: { id }}}) {
+  unlockTodo({ id }) {
     this.store.unlockTodo(id);
   }
 
-  rewriteTodo({ type, key, target: { value, parentNode: { id }}}) {
-    if (type === 'keypress' && key !== 'Enter') return;
-
-    this.store.rewriteTodo(id, value);
+  rewriteTodo({ id, title }) {
+    this.store.rewriteTodo(id, title);
   }
 
-  changeStatus({ target: { parentNode: { id }}}) {
+  changeStatus({ id }) {
     this.store.changeStatus(id);
   }
 

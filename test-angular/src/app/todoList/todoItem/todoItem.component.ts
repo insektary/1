@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-todoitem',
@@ -8,8 +8,25 @@ import { Component, Input } from '@angular/core';
 
 export class TodoItemComponent {
   @Input() item;
-  @Input() deleteTodo;
-  @Input() unlockTodo;
-  @Input() rewriteTodo;
-  @Input() changeStatus;
+
+  @Output() deleteTodo: EventEmitter<any> = new EventEmitter();
+  @Output() unlockTodo: EventEmitter<any> = new EventEmitter();
+  @Output() rewriteTodo: EventEmitter<any> = new EventEmitter();
+  @Output() changeStatus: EventEmitter<any> = new EventEmitter();
+
+  onDeleteTodo() {
+    this.deleteTodo.emit(this.item);
+  }
+
+  onUnlockTodo() {
+    this.unlockTodo.emit(this.item);
+  }
+
+  onRewriteTodo() {
+    this.rewriteTodo.emit(this.item);
+  }
+
+  onChangeStatus() {
+    this.changeStatus.emit(this.item);
+  }
 }

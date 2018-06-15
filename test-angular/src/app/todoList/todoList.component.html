@@ -1,27 +1,22 @@
 <div class="list">
-  <div class="header">
-    <button
-      class="header__checkbutton"
-      [ngClass]="{'header__checkbutton--hidden': !store.list.length, 'header__checkbutton--completed': (store.list.length === store.numberOfCompleted)}"
-      (click)="checkAll()">&#9660;</button>
-    <input
-      [(ngModel)]="inputValue"
-      class="header__input"
-      (keydown.enter)="addTodo()">
-  </div>
+  <app-header
+    [numberOfCompleted]="store.numberOfCompleted"
+    [list]="store.list"
+    (addTodo)="addTodo($event)"
+    (checkAll)="checkAll()"
+  ></app-header>
   <app-todoitem
     *ngFor="let item of store.list | filter:store.chosenFilter"
     [item]="item"
-    [deleteTodo]="deleteTodo"
-    [unlockTodo]="unlockTodo"
-    [rewriteTodo]="rewriteTodo"
-    [changeStatus]="changeStatus"
+    (deleteTodo)="deleteTodo(item)"
+    (unlockTodo)="unlockTodo(item)"
+    (rewriteTodo)="rewriteTodo(item)"
+    (changeStatus)="changeStatus(item)"
   ></app-todoitem>
   <app-footer
-    [changeFilter]="changeFilter"
-    [clearCompleted]="clearCompleted"
+    (changeFilter)="changeFilter($event)"
     [listLength]="store.list.length"
     [numberOfCompleted]="store.numberOfCompleted"
-    [chosenFilter]="chosenFilter"
+    (clearCompleted)="clearCompleted()"
   ></app-footer>
 </div>
