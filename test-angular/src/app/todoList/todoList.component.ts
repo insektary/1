@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { Todo } from './todo.module';
+import { TodoList } from "../app.model";
 
 @Component({
   selector: 'app-todolist',
   templateUrl: './todoList.component.html',
   styleUrls: ['./todoList.component.less']
 })
-
 export class TodoListComponent {
-  list: Todo[] = [];
-  chosenFilter: string = 'all';
-  inputValue: string = '';
-  numberOfCompleted: number = 0;
+  store: TodoList;
+  inputValue: string;
 
-  constructor() {
+  constructor(todoList: TodoList) {
+    this.store = todoList;
+    this.inputValue = '';
+
     this.clearCompleted = this.clearCompleted.bind(this);
     this.changeFilter = this.changeFilter.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
@@ -24,90 +24,40 @@ export class TodoListComponent {
     this.addTodo = this.addTodo.bind(this);
   }
 
-  generateID(): string {
-    return new Date().getTime().toString().substr(5);
-  }
+  addTodo() {
+    this.store.addTodo(this.inputValue);
 
-  addTodo({ key, target: { value }}) {
-    if (key === 'Enter' && value.trim()) {
-      this.list = [{
-        title: value,
-        id: this.generateID(),
-        completed: false,
-        lock: true
-        }, ...this.list];
-
-      this.inputValue = '';
-    } else {
-      this.inputValue = value;
-    }
+    this.inputValue = '';
   }
 
   deleteTodo({ target: { parentNode: { id }}}) {
-    this.numberOfCompleted = (this.list.find((todo) => todo.id === id)).completed ?
-      this.numberOfCompleted - 1 : this.numberOfCompleted;
-
-    this.list = this.list.filter((todo) => todo.id !== id);
+    this.store.deleteTodo(id);
   }
 
   unlockTodo({ target: { parentNode: { id }}}) {
-    this.list = this.list.map((todo) => {
-      if (todo.id === id) {
-        todo.lock = false;
-      }
-
-      return todo;
-    })
-
+    this.store.unlockTodo(id);
   }
 
   rewriteTodo({ type, key, target: { value, parentNode: { id }}}) {
     if (type === 'keypress' && key !== 'Enter') return;
 
-    this.list = this.list.map((todo) => {
-      if (todo.id === id) {
-        todo.title = value;
-        todo.lock = true;
-      }
-
-      return todo;
-    })
+    this.store.rewriteTodo(id, value);
   }
 
   changeStatus({ target: { parentNode: { id }}}) {
-    this.list = this.list.map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-
-        this.numberOfCompleted = (todo.completed ? this.numberOfCompleted + 1 : this.numberOfCompleted - 1);
-      }
-
-      return todo;
-    })
+    this.store.changeStatus(id);
   }
 
   checkAll() {
-    if (!this.list.length) return;
-
-    const everyIsCompleted = (this.numberOfCompleted === this.list.length);
-
-    this.list = this.list.map((todo) => {
-      todo.completed = !everyIsCompleted;
-
-      return todo;
-    });
-
-    this.numberOfCompleted = (everyIsCompleted ? 0 : this.list.length);
-
+    this.store.checkAll();
   }
 
   changeFilter({ target: { id }}) {
-    this.chosenFilter = id;
+    this.store.changeFilter(id);
   }
 
   clearCompleted() {
-    this.list = this.list.filter((todo) => !todo.completed);
-
-    this.numberOfCompleted = 0;
+    this.store.clearCompleted();
   }
+
 }

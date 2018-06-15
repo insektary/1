@@ -1,4 +1,6 @@
 @borderColor: #c8c8c8;
+@defaultColor: white;
+@fontColor: grey;
 
 .list {
   width: 35rem;
@@ -7,3 +9,38 @@
   border-radius: 3px;
   box-shadow: 5px 5px 5px 0 @borderColor;
 }
+
+.header {
+  display: flex;
+
+  &__checkbutton {
+    background-color: @defaultColor;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid @borderColor;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin: 0.5rem;
+    color: @borderColor;
+
+    &--hidden {
+      visibility: hidden;
+    }
+
+    &--completed {
+      color: black;
+    }
+  }
+
+  &__input {
+    height: 4rem;
+    border: none;
+    width: 100%;
+    outline: none;
+    font-size: 2rem;
+    color: @fontColor;
+  }
+}
+

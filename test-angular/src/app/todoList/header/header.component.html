@@ -3,5 +3,8 @@
     class="header__checkbutton"
     [ngClass]="{'header__checkbutton--hidden': !list.length, 'header__checkbutton--completed': (list.length === numberOfCompleted)}"
     (click)="checkAll()">&#9660;</button>
-  <input value={{inputValue}} class="header__input" (keypress)="addTodo($event)">
+  <input
+    [(ngModel)]="inputValue"
+    class="header__input"
+    (keypress)="addTodo($event)">
 </div>

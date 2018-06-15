@@ -5,7 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less']
 })
-
 export class HeaderComponent {
   @Input() addTodo;
   @Input() checkAll;
