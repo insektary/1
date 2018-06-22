@@ -1,0 +1,51 @@
+.page {
+  background-color: #0a4b3e;
+  height: 100vh;
+}
+
+.main {
+  padding: 3rem 0 0 5rem;
+  display: flex;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 3rem;
+
+  &__open {
+    color: grey;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    font-family: 'Arial';
+    font-size: 1.6rem;
+    border: 1px solid grey;
+  }
+}
+
+.hoverage {
+  position: absolute;
+  background-color: #252525;
+  opacity: 0.7;
+  top: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+}
+
+.shift-list {
+  display: flex;
+  width: 3rem;
+  font-family: 'Arial';
+  color: white;
+  padding-left: 7rem;
+  font-size: 2rem;
+
+  &--hidden {
+    display: none;
+  }
+}

@@ -1,0 +1,26 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div [ngClass]="{'hoverage': editMode}"></div>
+<div class="page">
+  <div class="main">
+    <user-card [store]="store" [size]="'big'"></user-card>
+    <div class="control">
+      <button class="control__open" (click)="changeMode()">Open</button>
+    </div>
+  </div>
+  <div
+    [ngClass]="{'shift-list': true, 'shift-list--hidden': editMode }"
+    *ngFor="let item of store.shiftList">
+    <div>{{item.start}}</div>
+    <div>&nbsp;-&nbsp;</div>
+    <div>{{item.end}}</div>
+  </div>
+  <edit-form
+    *ngIf="editMode"
+    [store]="store"
+    (closeEditForm)="closeEditForm()"
+    (addShift)="addShift()"
+  ></edit-form>
+</div>
+
+
+

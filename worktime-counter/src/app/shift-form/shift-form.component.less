@@ -1,0 +1,42 @@
+.shift {
+  width: 100rem;
+  background-color: #e6e6e6;
+  padding: 1rem 0 1rem 0;
+  font-size: 2rem;
+  font-family: 'Arial';
+  color: grey;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+
+  & label {
+    margin: 0 1rem 0 5rem;
+  }
+
+  &__input {
+    font-size: 2rem;
+    color: grey;
+    border: none;
+    border-radius: 3px;
+  }
+
+  &__delete {
+    font-size: 2rem;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    position: relative;
+    left: 19.7rem;
+  }
+
+  &--novalid {
+    border: 1px solid red;
+  }
+
+  &--crossnovalid {
+    border: 1px solid orange;
+  }
+}
+

@@ -1,0 +1,21 @@
+<div [ngClass]="{'shift': true, 'shift--novalid': (!item.isValid && (item.start || item.end)), 'shift--crossnovalid': (!item.crossValid)}">
+  <label>Start</label>
+  <input
+    size="1.6" maxlength="5"
+    class="shift__input"
+    type="text"
+    [(ngModel)]="item.start"
+    [mask]="timeMask">
+  <label>End</label>
+  <input
+    size="1.6" maxlength="5"
+    class="shift__input"
+    type="text"
+    [(ngModel)]="item.end"
+    [mask]="timeMask">
+  <label>Type</label>
+  <select class="shift__input">
+    <option>First</option>
+  </select>
+  <button class="shift__delete" (click)="onDeleteShift()">Delete</button>
+</div>

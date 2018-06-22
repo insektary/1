@@ -1,0 +1,18 @@
+<div class="edit">
+  <div class="head">
+    <user-card [store]="store" [size]="'medium'"></user-card>
+    <button class="head__close" (click)="onCloseEditForm()">&#10006;</button>
+  </div>
+  <shift-form
+    *ngFor="let item of store.shiftList"
+    [item]="item"
+  ></shift-form>
+  <button class="edit__add" (click)="onAddShift()">+</button>
+  <div class="edit-control">
+    <button
+      [ngClass]="{
+      'edit-control__button-apply': true,
+      'edit-control__button-apply--disabled': !isValid }">&#10004;</button>
+    <button class="edit-control__button-close" (click)="onCloseEditForm()">&#10006;</button>
+  </div>
+</div>

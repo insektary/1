@@ -1,0 +1,77 @@
+.edit {
+  background-color: lightgrey;
+  width: 100rem;
+  position: absolute;
+  top: 22rem;
+  left: calc((100vw - 100rem) / 2);
+  text-align: center;
+  padding: 1rem;
+  z-index: 2;
+
+  &__add {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 3rem;
+    outline: none;
+    color: grey;
+    border: 1px solid grey;
+  }
+
+  &--closed {
+    display: none;
+  }
+}
+
+.edit-control {
+  display: flex;
+  flex-direction: row-reverse;
+
+  &__button-apply {
+    cursor: pointer;
+    width: 8rem;
+    height: 3rem;
+    color: white;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    margin-left: 1rem;
+    background-color: green;
+
+    &--disabled {
+      cursor: default;
+      background-color: grey;
+    }
+  }
+
+  &__button-close {
+    cursor: pointer;
+    width: 8rem;
+    height: 3rem;
+    color: white;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    margin-left: 1rem;
+    background-color: red;
+  }
+}
+
+.head {
+  display: flex;
+
+  &__close {
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    color: red;
+    outline: none;
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid grey;
+    position: relative;
+    top: -5rem;
+    left: 72.5rem;
+  }
+}
