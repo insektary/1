@@ -1,21 +1,17 @@
-import {Component, DoCheck} from '@angular/core';
-import { MetadataService } from "./metadata.service";
-import { ShiftFormService } from "./shift-form/shift-form.service";
+import {Component} from '@angular/core';
+import { MetadataService } from './metadata.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements DoCheck {
+export class AppComponent {
   store: MetadataService;
-  editMode: boolean = true;
-  subscription: any;
+  editMode = true;
 
-  constructor(private shiftFormService: ShiftFormService) {
+  constructor() {
     this.store = new MetadataService();
-    this.subscription = this.shiftFormService.getNavChangeEmitter()
-      .subscribe(item => this.deleteShift(item));
   }
 
   changeMode() {
@@ -26,16 +22,10 @@ export class AppComponent implements DoCheck {
     this.editMode = false;
   }
 
-  addShift() {
-    this.store.addShift();
-  }
+  submitChanges(localStore) {
+    this.store.submitChanges(localStore);
 
-  deleteShift(item) {
-    this.store.deleteShift(item);
-  }
-
-  ngDoCheck() {
-    this.store.checkCrossValid();
+    this.editMode = false;
   }
 
 }

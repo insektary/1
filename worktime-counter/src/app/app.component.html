@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div [ngClass]="{'hoverage': editMode}"></div>
 <div class="page">
   <div class="main">
@@ -8,7 +7,7 @@
     </div>
   </div>
   <div
-    [ngClass]="{'shift-list': true, 'shift-list--hidden': editMode }"
+    [ngClass]="{'shift-list': true}"
     *ngFor="let item of store.shiftList">
     <div>{{item.start}}</div>
     <div>&nbsp;-&nbsp;</div>
@@ -19,6 +18,7 @@
     [store]="store"
     (closeEditForm)="closeEditForm()"
     (addShift)="addShift()"
+    (submitChanges)="submitChanges($event)"
   ></edit-form>
 </div>
 

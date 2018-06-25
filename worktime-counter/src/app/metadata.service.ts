@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-class Shift {
+export class Shift {
   start = '';
   end = '';
   id: string;
   shiftType: string;
-  isValid: boolean = false;
-  crossValid: boolean = true;
+  isValid = false;
+  crossValid = true;
 
   private generateID(): string {
     return new Date().getTime().toString().substr(5);
@@ -42,36 +42,8 @@ export class MetadataService {
     this.shiftList.push(new Shift('', '', 'default'));
   }
 
-  deleteShift(item) {
-    this.shiftList = this.shiftList.filter(({ id }) => id !== item.id);
+  submitChanges(localStore) {
+    this.shiftList = localStore;
   }
 
-  timeToNumber(strTime) {
-    const arr = strTime.split(':');
-
-    return Number(arr[0] + arr[1]);
-  }
-
-  checkCrossValid() {
-    this.shiftList.forEach((shift) => shift.crossValid = true);
-
-    this.shiftList.forEach((shift) => {
-      if (!shift.isValid) return;
-
-      const firstStart = this.timeToNumber(shift.start);
-      const firstEnd = this.timeToNumber(shift.end);
-
-      this.shiftList.forEach((secondShift) => {
-        if (!secondShift.isValid || secondShift.id === shift.id) return;
-
-        const secondStart = this.timeToNumber(secondShift.start);
-        const secondEnd = this.timeToNumber(secondShift.end);
-
-        if (firstStart <= secondEnd && firstEnd >= secondStart) {
-          shift.crossValid = false;
-          secondShift.crossValid = false;
-        }
-      })
-    })
-  }
 }

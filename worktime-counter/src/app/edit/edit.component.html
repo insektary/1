@@ -4,15 +4,19 @@
     <button class="head__close" (click)="onCloseEditForm()">&#10006;</button>
   </div>
   <shift-form
-    *ngFor="let item of store.shiftList"
+    *ngFor="let item of localStore"
     [item]="item"
+    (deleteShift)="deleteShift(item)"
   ></shift-form>
-  <button class="edit__add" (click)="onAddShift()">+</button>
+  <button class="edit__add" (click)="addShift()">+</button>
   <div class="edit-control">
     <button
       [ngClass]="{
       'edit-control__button-apply': true,
-      'edit-control__button-apply--disabled': !isValid }">&#10004;</button>
+      'edit-control__button-apply--disabled': !isValid }"
+      (click)="onSubmitChanges()"
+      [disabled]="!isValid"
+    >&#10004;</button>
     <button class="edit-control__button-close" (click)="onCloseEditForm()">&#10006;</button>
   </div>
 </div>
