@@ -9,7 +9,7 @@ import { Mask } from '@fagnerlima/ng-mask';
 export class ShiftForm implements DoCheck {
   @Input() item;
 
-  @Output() deleteShift: EventEmitter<any> = new EventEmitter();
+  @Output() deleteShift: EventEmitter<void> = new EventEmitter();
 
   readonly timeMask: Mask = new Mask('00:00');
 
@@ -17,20 +17,23 @@ export class ShiftForm implements DoCheck {
     this.deleteShift.emit();
   }
 
-  ngDoCheck() {
+  checkOnCorrectly({start, end}) {
 
-    // console.log('check');
-    const start = this.item.start.split(':');
-    const end = this.item.end.split(':');
+    const arrStart = start.split(':');
+    const arrEnd = end.split(':');
 
-    if ((this.item.start.length === 5 && this.item.end.length === 5)
-      && (Number(end[0]) < 24 && Number(start[0]) < 24)
-      && (Number(end[1]) < 60 && Number(start[0]) < 60)
-      && (Number(end[0] + end[1]) > Number(start[0] + start[1]))) {
-        this.item.isValid = true;
+    if ((start.length === 5 && end.length === 5)
+      && (Number(arrEnd[0]) < 24 && Number(arrStart[0]) < 24)
+      && (Number(arrEnd[1]) < 60 && Number(arrStart[0]) < 60)
+      && (Number(arrEnd[0] + arrEnd[1]) > Number(arrStart[0] + arrStart[1]))) {
+      return true;
     } else {
-      this.item.isValid = false;
+      return false;
     }
+  }
+
+  ngDoCheck() {
+    this.item.isValid = this.checkOnCorrectly(this.item);
   }
 
 }

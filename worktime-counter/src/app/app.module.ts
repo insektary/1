@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EditComponent } from './edit/edit.component';
-import { MetadataService } from './metadata.service';
+import { DataService } from './data.service';
 import { UserCard } from './user-card/user-card.component';
 import { ShiftForm } from './shift-form/shift-form.component';
 import { NgMaskModule } from '@fagnerlima/ng-mask';
@@ -22,7 +22,7 @@ import {ShiftFormService} from './shift-form/shift-form.service';
     NgMaskModule,
     FormsModule
   ],
-  providers: [MetadataService, ShiftFormService],
+  providers: [DataService, ShiftFormService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

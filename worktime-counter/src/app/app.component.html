@@ -18,7 +18,8 @@
     [store]="store"
     (closeEditForm)="closeEditForm()"
     (addShift)="addShift()"
-    (submitChanges)="submitChanges($event)"
+    (submitChanges)="submitChanges()"
+    (dataWasChanged)="checkCrossValid()"
   ></edit-form>
 </div>
 
