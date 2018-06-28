@@ -1,7 +1,7 @@
 <div class="header">
   <button
     class="header__checkbutton"
-    [ngClass]="{'header__checkbutton--hidden': !list.length, 'header__checkbutton--completed': (list.length === numberOfCompleted)}"
+    [ngClass]="{'header__checkbutton--hidden': !list.length, 'header__checkbutton--completed': allIsCompleted}"
     (click)="onCheckAll()">&#9660;</button>
   <input
     [(ngModel)]="currentValue"

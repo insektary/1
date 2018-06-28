@@ -1,6 +1,3 @@
-import { NgModule } from "@angular/core";
-
-@NgModule()
 export class Todo {
   public title: string;
   public id: string;
@@ -20,3 +17,11 @@ export class Todo {
     this.completed = false;
   }
 }
+
+export interface TodoList {
+  todoList: ReadonlyArray<Todo>;
+}
+
+export const initialTodoListState: TodoList = {
+  todoList: [],
+};
