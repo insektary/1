@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EditComponent } from './edit/edit.component';
-import { DataService } from './data.service';
 import { UserCard } from './user-card/user-card.component';
 import { ShiftForm } from './shift-form/shift-form.component';
 import { NgMaskModule } from '@fagnerlima/ng-mask';
 import { FormsModule } from '@angular/forms';
-import {ShiftFormService} from './shift-form/shift-form.service';
+import {StoreModule} from '@ngrx/store';
+import {userReducer} from './state-managment/reducers/user.reducer';
+import {editModeReducer} from "./state-managment/reducers/edit-mode.reducer";
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import {ShiftFormService} from './shift-form/shift-form.service';
   imports: [
     BrowserModule,
     NgMaskModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({'user': userReducer, 'edit-mode': editModeReducer})
   ],
-  providers: [DataService, ShiftFormService],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

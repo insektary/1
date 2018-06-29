@@ -1,6 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import { DataService } from './data.service';
-import {User} from "./user";
+import {Observable} from 'rxjs/internal/Observable';
+import {User} from './state-managment/state/user';
+import { Store } from '@ngrx/store';
+import {AppState} from './state-managment/state/app.state';
+import {select} from '@ngrx/store';
+import {EditMode} from './state-managment/state/edit-mode';
+import * as Actions from './state-managment/actions/actions';
 
 @Component({
   selector: 'app-root',
@@ -8,66 +13,53 @@ import {User} from "./user";
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  store: User;
-  editMode = false;
+  user$: Observable<User>;
+  editMode$: Observable<EditMode>;
 
-  constructor(private _dataService: DataService) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.getShiftList();
-  }
-
-  getShiftList() {
-    this.store = this._dataService.getUser();
+    this.user$ = this.store.pipe(select('user'));
+    this.editMode$ = this.store.pipe(select('edit-mode'));
   }
 
   changeMode() {
-    this.editMode = true;
-  }
-
-  closeEditForm() {
-    this.editMode = false;
-  }
-
-  submitChanges() {
-    this.store.submitChanges();
-
-    this.editMode = false;
+    this.store.dispatch(new Actions.ChangeEditMode());
   }
 
   timeToNumber(strTime) {
-    const arr = strTime.split(':');
+    // const arr = strTime.split(':');
 
-    return Number(arr[0] + arr[1]);
+    // return Number(arr[0] + arr[1]);
   }
 
   checkCrossValid() {
-    this.store.editList.forEach((shift) => shift.crossValid = true);
-
-    this.store.editList.forEach(({ isValid, start, end, id, crossValid }) => {
-      if (!isValid) {
-
-        return;
-      }
-
-      const firstStart = this.timeToNumber(start);
-      const firstEnd = this.timeToNumber(end);
-
-      this.store.editList.forEach((secondShift) => {
-        if (!secondShift.isValid || secondShift.id === id) {
-
-          return;
-        }
-
-        const secondStart = this.timeToNumber(secondShift.start);
-        const secondEnd = this.timeToNumber(secondShift.end);
-
-        if (firstStart <= secondEnd && firstEnd >= secondStart) {
-          crossValid = false;
-          secondShift.crossValid = false;
-        }
-      });
-    });
+    // this.store.editList.forEach((shift) => shift.crossValid = true);
+    //
+    // this.store.editList.forEach(({ isValid, start, end, id, crossValid }) => {
+    //   if (!isValid) {
+    //
+    //     return;
+    //   }
+    //
+    //   const firstStart = this.timeToNumber(start);
+    //   const firstEnd = this.timeToNumber(end);
+    //
+    //   this.store.editList.forEach((secondShift) => {
+    //     if (!secondShift.isValid || secondShift.id === id) {
+    //
+    //       return;
+    //     }
+    //
+    //     const secondStart = this.timeToNumber(secondShift.start);
+    //     const secondEnd = this.timeToNumber(secondShift.end);
+    //
+    //     if (firstStart <= secondEnd && firstEnd >= secondStart) {
+    //       crossValid = false;
+    //       secondShift.crossValid = false;
+    //     }
+    //   });
+    // });
   }
 
 }

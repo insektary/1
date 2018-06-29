@@ -1,25 +1,20 @@
-<div [ngClass]="{'hoverage': editMode}"></div>
+<div [ngClass]="{'hoverage': editMode$ | async}"></div>
 <div class="page">
   <div class="main">
-    <user-card [store]="store" [size]="'big'"></user-card>
+    <user-card [store]="user$ | async" [size]="'big'"></user-card>
     <div class="control">
       <button class="control__open" (click)="changeMode()">Open</button>
     </div>
   </div>
   <div
-    [ngClass]="{'shift-list': true}"
-    *ngFor="let item of store.shiftList">
+    class="shift-list"
+    *ngFor="let item of (user$ | async).shiftList">
     <div>{{item.start}}</div>
     <div>&nbsp;-&nbsp;</div>
     <div>{{item.end}}</div>
   </div>
   <edit-form
-    *ngIf="editMode"
-    [store]="store"
-    (closeEditForm)="closeEditForm()"
-    (addShift)="addShift()"
-    (submitChanges)="submitChanges()"
-    (dataWasChanged)="checkCrossValid()"
+    *ngIf="editMode$ | async"
   ></edit-form>
 </div>
 

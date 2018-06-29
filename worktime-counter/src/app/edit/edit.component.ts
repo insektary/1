@@ -1,38 +1,44 @@
-import {Component, Input, Output, EventEmitter, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
+import { Store } from '@ngrx/store';
+import {AppState} from '../state-managment/state/app.state';
+import * as Actions from '../state-managment/actions/actions';
+import {Observable} from 'rxjs/internal/Observable';
+import {User} from '../state-managment/state/user';
+import {select} from '@ngrx/store';
+
 
 @Component({
   selector: 'edit-form',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less']
 })
-export class EditComponent implements DoCheck {
-  @Input() store;
+export class EditComponent implements DoCheck, OnInit {
+  user$: Observable<User>;
 
-  @Output() closeEditForm: EventEmitter<void> = new EventEmitter();
-  @Output() submitChanges: EventEmitter<void> = new EventEmitter();
-  @Output() dataWasChanged: EventEmitter<void> = new EventEmitter();
+  // isValid: boolean;
 
-  isValid: boolean;
+  constructor(private store: Store<AppState>) {}
 
-  onCloseEditForm() {
-    this.closeEditForm.emit();
+  ngOnInit() {
+    this.user$ = this.store.pipe(select('user'));
   }
 
-  onSubmitChanges() {
-    this.submitChanges.emit();
+  onCloseEditForm() {
+    this.store.dispatch(new Actions.ChangeEditMode());
   }
 
   addShift() {
-    this.store.addShift();
+    this.store.dispatch(new Actions.AddShift());
   }
 
-  deleteShift(item) {
-    this.store.deleteShift(item);
+  submitChanges() {
+    this.store.dispatch(new Actions.SubmitChanges());
+    this.store.dispatch(new Actions.ChangeEditMode());
   }
 
   ngDoCheck() {
-    this.dataWasChanged.emit();
+    // this.dataWasChanged.emit();
 
-    this.isValid = this.store.editList.every(({ isValid, crossValid }) => (isValid && crossValid));
+    // this.isValid = this.store.editList.every(({ isValid, crossValid }) => (isValid && crossValid));
   }
 }
