@@ -3,7 +3,7 @@ import {ChosenFilter, initialChosenFilterState} from '../state/chosen-filter.sta
 
 export const chosenFilterReducer = (state = initialChosenFilterState, action: ChangeFilter): ChosenFilter => {
   if (action.type === ActionTypes.CHANGE_FILTER) {
-    return { chosenFilter: action.id};
+    return action.id;
   }
 
   return state;

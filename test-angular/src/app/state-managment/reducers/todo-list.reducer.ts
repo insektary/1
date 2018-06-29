@@ -4,59 +4,49 @@ import {initialTodoListState, Todo, TodoList} from '../state/todo-list.state';
 export const todoListReducer = (state = initialTodoListState, action: Actions): TodoList => {
   switch (action.type) {
     case ActionTypes.ADD_TODO:
-      return {
-        todoList: [...state.todoList, new Todo(action.title)]
-      };
+      return [...state, new Todo(action.title)];
     case ActionTypes.DELETE_TODO:
-      return {
-        todoList: state.todoList.filter(({ id }) => id !== action.id)
-      };
+      return state.filter(({ id }) => id !== action.id);
     case ActionTypes.CHANGE_STATUS:
-      return {
-        todoList: state.todoList.map((todo) => {
-          if (todo.id === action.id) {
-            todo.completed = !todo.completed;
-          }
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          todo.completed = !todo.completed;
+        }
 
-          return todo;
-      })};
+        return todo;
+      });
     case ActionTypes.CLEAR_COMPLETED:
-      return {
-        todoList: state.todoList.filter((todo) => !todo.completed)
-      };
+      return state.filter((todo) => !todo.completed);
     case ActionTypes.UNLOCK_TODO:
-      return {
-        todoList: state.todoList.map((todo) => {
-          if (todo.id === action.id) {
-            todo.lock = false;
-          }
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          todo.lock = false;
+        }
 
-          return todo;
-      })};
+        return todo;
+      });
     case ActionTypes.REWRITE_TODO:
-      return {
-        todoList: state.todoList.map((todo) => {
-          if (todo.id === action.id) {
-            todo.title = action.title;
-            todo.lock = true;
-          }
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          todo.title = action.title;
+          todo.lock = true;
+        }
 
-          return todo;
-      })};
+        return todo;
+      });
     case ActionTypes.CHECK_ALL:
-      if (!state.todoList.length) {
+      if (!state.length) {
 
         return;
       }
 
-      const everyIsCompleted = state.todoList.every(({ completed }) => completed);
+      const everyIsCompleted = state.every(({ completed }) => completed);
 
-      return {
-        todoList: state.todoList.map((todo) => {
+      return state.map((todo) => {
           todo.completed = !everyIsCompleted;
 
           return todo;
-      })};
+      });
     default:
       return state;
   }

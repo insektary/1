@@ -18,10 +18,6 @@ export class Todo {
   }
 }
 
-export interface TodoList {
-  todoList: ReadonlyArray<Todo>;
-}
+export type TodoList = ReadonlyArray<Todo>;
 
-export const initialTodoListState: TodoList = {
-  todoList: [],
-};
+export const initialTodoListState: TodoList = [];

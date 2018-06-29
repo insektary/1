@@ -1,11 +1,11 @@
 <div class="list">
   <app-header
-    [list]="(list$ | async).todoList"
+    [list]="(list$ | async)"
     (addTodo)="addTodo($event)"
     (checkAll)="checkAll()"
   ></app-header>
   <app-todoitem
-    *ngFor="let item of (list$ | async).todoList | filter:(filter$ | async).chosenFilter"
+    *ngFor="let item of (list$ | async) | filter:(filter$ | async)"
     [item]="item"
     (deleteTodo)="deleteTodo(item)"
     (unlockTodo)="unlockTodo(item)"
@@ -14,7 +14,7 @@
   ></app-todoitem>
   <app-footer
     (changeFilter)="changeFilter($event)"
-    [list]="(list$ | async).todoList"
+    [list]="(list$ | async)"
     (clearCompleted)="clearCompleted()"
   ></app-footer>
 </div>

@@ -1,7 +1,3 @@
-export interface ChosenFilter {
-  chosenFilter: string;
-}
+export type ChosenFilter = string;
 
-export const initialChosenFilterState: ChosenFilter = {
-  chosenFilter: 'all'
-};
+export const initialChosenFilterState: ChosenFilter = 'all';
