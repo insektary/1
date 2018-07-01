@@ -1,18 +1,21 @@
 <div class="edit">
   <div class="head">
-    <user-card [store]="user$ | async" [size]="'medium'"></user-card>
+    <app-user-card [store]="user$ | async" [size]="'medium'"></app-user-card>
     <button class="head__close" (click)="onCloseEditForm()">&#10006;</button>
   </div>
-  <shift-form
+  <app-shift-form
     *ngFor="let shift of (user$ | async).editList"
     [shift]="shift"
-  ></shift-form>
+  ></app-shift-form>
   <button class="edit__add" (click)="addShift()">+</button>
   <div class="edit-control">
     <button
-      [ngClass]="{'edit-control__button-apply': true, 'edit-control__button-apply--disabled': isValid }"
+      [ngClass]="{
+        'edit-control__button-apply': true,
+        'edit-control__button-apply--disabled': !(user$ | async).formValid
+      }"
       (click)="submitChanges()"
-      [disabled]=""
+      [disabled]="!(user$ | async).formValid"
     >&#10004;</button>
     <button class="edit-control__button-close" (click)="onCloseEditForm()">&#10006;</button>
   </div>

@@ -3,8 +3,8 @@ export class Shift {
   end: string;
   id: string;
   shiftType: string;
-  isValid: boolean = false;
-  intersectionValid: boolean = true;
+  isValid = false;
+  intersectionValid = true;
 
   private generateID(): string {
     return new Date().getTime().toString().substr(5);

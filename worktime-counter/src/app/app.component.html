@@ -1,7 +1,7 @@
 <div [ngClass]="{'hoverage': editMode$ | async}"></div>
 <div class="page">
   <div class="main">
-    <user-card [store]="user$ | async" [size]="'big'"></user-card>
+    <app-user-card [store]="user$ | async" [size]="'big'"></app-user-card>
     <div class="control">
       <button class="control__open" (click)="changeMode()">Open</button>
     </div>
@@ -13,9 +13,9 @@
     <div>&nbsp;-&nbsp;</div>
     <div>{{item.end}}</div>
   </div>
-  <edit-form
+  <app-edit-form
     *ngIf="editMode$ | async"
-  ></edit-form>
+  ></app-edit-form>
 </div>
 
 

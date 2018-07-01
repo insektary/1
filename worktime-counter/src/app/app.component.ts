@@ -27,39 +27,4 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new Actions.ChangeEditMode());
   }
 
-  timeToNumber(strTime) {
-    // const arr = strTime.split(':');
-
-    // return Number(arr[0] + arr[1]);
-  }
-
-  checkCrossValid() {
-    // this.store.editList.forEach((shift) => shift.crossValid = true);
-    //
-    // this.store.editList.forEach(({ isValid, start, end, id, crossValid }) => {
-    //   if (!isValid) {
-    //
-    //     return;
-    //   }
-    //
-    //   const firstStart = this.timeToNumber(start);
-    //   const firstEnd = this.timeToNumber(end);
-    //
-    //   this.store.editList.forEach((secondShift) => {
-    //     if (!secondShift.isValid || secondShift.id === id) {
-    //
-    //       return;
-    //     }
-    //
-    //     const secondStart = this.timeToNumber(secondShift.start);
-    //     const secondEnd = this.timeToNumber(secondShift.end);
-    //
-    //     if (firstStart <= secondEnd && firstEnd >= secondStart) {
-    //       crossValid = false;
-    //       secondShift.crossValid = false;
-    //     }
-    //   });
-    // });
-  }
-
 }

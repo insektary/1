@@ -8,14 +8,12 @@ import {select} from '@ngrx/store';
 
 
 @Component({
-  selector: 'edit-form',
+  selector: 'app-edit-form',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less']
 })
-export class EditComponent implements DoCheck, OnInit {
+export class EditComponent implements OnInit {
   user$: Observable<User>;
-
-  // isValid: boolean;
 
   constructor(private store: Store<AppState>) {}
 
@@ -36,9 +34,4 @@ export class EditComponent implements DoCheck, OnInit {
     this.store.dispatch(new Actions.ChangeEditMode());
   }
 
-  ngDoCheck() {
-    // this.dataWasChanged.emit();
-
-    // this.isValid = this.store.editList.every(({ isValid, crossValid }) => (isValid && crossValid));
-  }
 }

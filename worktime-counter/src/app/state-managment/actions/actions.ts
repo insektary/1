@@ -8,7 +8,9 @@ export enum ActionTypes {
   CHECK_INTERSECTION = 'CHECK_INTERSECTION',
   CHANGE_EDITMODE = 'CHANGE_EDITMODE',
   SUBMIT_CHANGES = 'SUBMIT_CHANGES',
-  UPDATE_SHIFT = 'UPDATE_SHIFT'
+  UPDATE_SHIFT = 'UPDATE_SHIFT',
+  CHECK_FORM_VALID = 'CHECK_FORM_VALID',
+  SYNC_DATA = 'SYNC_DATA'
 }
 
 export class AddShift implements Action {
@@ -69,6 +71,14 @@ export class UpdateShift implements Action {
   }
 }
 
+export class CheckFormValid implements Action {
+  readonly type = ActionTypes.CHECK_FORM_VALID;
+}
+
+export class SyncData implements Action {
+  readonly type = ActionTypes.SYNC_DATA;
+}
+
 export type Actions =
   | AddShift
   | DeleteShift
@@ -77,4 +87,6 @@ export type Actions =
   | CheckIntersection
   | ChangeEditMode
   | SubmitChanges
-  | UpdateShift;
+  | UpdateShift
+  | CheckFormValid
+  | SyncData;
